@@ -1,15 +1,16 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Momentum.App")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Momentum")]
+[assembly: AssemblyDescription("Momentum helps to focus on your daily goals.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Momentum.App")]
+[assembly: AssemblyCompany("bsautermeister.de")]
+[assembly: AssemblyProduct("Momentum")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -27,3 +28,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: ComVisible(false)]
+[assembly: NeutralResourcesLanguage("en-US")]
+
