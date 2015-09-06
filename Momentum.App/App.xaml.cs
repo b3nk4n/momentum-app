@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Momentum.App.Views;
+using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Logging;
 using Windows.ApplicationModel.Activation;
