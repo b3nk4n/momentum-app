@@ -1,8 +1,9 @@
-﻿<Application
+﻿<uwpcCommon:UniversalApp
     x:Class="Momentum.App.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:uwpcCommon="using:UWPCore.Framework.Common"
     xmlns:local="using:Momentum.App"
-    RequestedTheme="Light">
+    RequestedTheme="Dark">
 
-</Application>
+</uwpcCommon:UniversalApp>
