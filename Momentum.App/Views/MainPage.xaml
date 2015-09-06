@@ -5,9 +5,29 @@
     xmlns:local="using:Momentum.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:localViewModels="using:Momentum.App.ViewModels"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <localViewModels:MainPageViewModel />
+    </Page.DataContext>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Image Source="{Binding BackgroundImageSource}" />
         
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="10:45" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
+            <TextBlock Text="Good morning, Benny." Style="{StaticResource SubtitleTextBlockStyle}" TextAlignment="Center" />
+            
+            <TextBlock x:Uid="WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
+            <TextBox TextAlignment="Center" />
+        </StackPanel>
+
+
+
+        <TextBlock Text="Quote of the day here..." Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" Margin="0,0,0,32" VerticalAlignment="Bottom" />
+
+        <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Bottom" Command="{Binding NavigateAboutCommand}"/>
     </Grid>
 </Page>
