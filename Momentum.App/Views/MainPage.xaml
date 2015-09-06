@@ -14,7 +14,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Image Source="{Binding BackgroundImageSource}" />
+        <Image Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" />
         
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="10:45" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
