@@ -17,9 +17,21 @@ namespace Momentum.App.Services
         public const string BASE_URI = "http://www.bing.com";
         public const string IMAGE_SOURCE_URI = BASE_URI + "/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=";
 
+        public const string BACKGROUND_IMAGE_LOCAL_NAME = "back_image.jpg";
+
         IHttpService _httpService;
         ISerializationService _serializationService;
         IWebDownloadService _webDownloadService;
+
+        /// <summary>
+        /// The time stamp the last time an image has been loaded successfully.
+        /// </summary>
+        private static StoredObjectBase<int> BackgroundImageDay = new LocalObject<int>("_backImageDay_", -1);
+
+        /// <summary>
+        /// The saved copyright of the last loaded background image for reuse.
+        /// </summary>
+        private static StoredObjectBase<string> LastBackgroundImageCopyright = new LocalObject<string>("_backImageCopyright_", "© Unknown");
 
         /// <summary>
         /// Creates a BingImageService instance.
@@ -36,6 +48,16 @@ namespace Momentum.App.Services
 
         public async Task<BingImageResult> LoadImageAsync()
         {
+            // reuse the image, when we are at the same day
+            if (DateTime.Now.Day == BackgroundImageDay.Value)
+            {
+                return new BingImageResult()
+                {
+                    Copryright = LastBackgroundImageCopyright.Value,
+                    ImageSource = new BitmapImage(new Uri(IOConstants.APPDATA_LOCAL_SCHEME + "/" + BACKGROUND_IMAGE_LOCAL_NAME))
+                };
+            }
+
             var jsonString = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
 
             if (!string.IsNullOrEmpty(jsonString))
@@ -47,14 +69,14 @@ namespace Momentum.App.Services
                     var imageItem = imageModel.images[0];
 
                     // download image
-                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute));
+                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME);
 
                     if (imageFile != null)
                     {
+                        BackgroundImageDay.Value = DateTime.Now.Day;
+
                         // create image source
-                        var bitmapImage = new BitmapImage();
-                        bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache; // TODO: what is its purpose?
-                        bitmapImage.UriSource = new Uri(imageFile.Path);
+                        var bitmapImage = new BitmapImage(new Uri(imageFile.Path));
 
                         var result = new BingImageResult()
                         {
