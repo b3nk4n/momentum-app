@@ -43,6 +43,8 @@ namespace Momentum.App.ViewModels
         /// <returns>The async task to wait for.</returns>
         private async Task LoadBackgroundImageAsync()
         {
+            IsLoadingBackground = true;
+
             var backgroundImageResult = await _bingImageService.LoadImageAsync();
 
             if (backgroundImageResult != null)
@@ -50,6 +52,8 @@ namespace Momentum.App.ViewModels
                 BackgroundImageSource = backgroundImageResult.ImageSource;
                 BackgroundCopyright = backgroundImageResult.Copryright;
             }
+
+            IsLoadingBackground = false;
         }
 
         /// <summary>
@@ -73,5 +77,11 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public string BackgroundCopyright { get { return _backgroundCopyright; } set { Set(ref _backgroundCopyright, value); } }
         private string _backgroundCopyright;
+
+        /// <summary>
+        /// Gets or sets whether the loading of the background image is in progress.
+        /// </summary>
+        public bool IsLoadingBackground { get { return _isLoadingBackground; } set { Set(ref _isLoadingBackground, value); } }
+        private bool _isLoadingBackground;
     }
 }
