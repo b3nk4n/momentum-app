@@ -6,4 +6,12 @@
     xmlns:local="using:Momentum.App"
     RequestedTheme="Dark">
 
+    <uwpcCommon:UniversalApp.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///UWPCore.Framework/Styles/SystemIcons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </uwpcCommon:UniversalApp.Resources>
+
 </uwpcCommon:UniversalApp>

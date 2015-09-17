@@ -67,6 +67,16 @@ namespace Momentum.App.ViewModels
         }
 
         /// <summary>
+        /// Gets the command to navigate to the settings page.
+        /// </summary>
+        public DelegateCommand NavigateSettingsCommand { get { return _navigateSettingsCommand ?? (_navigateSettingsCommand = new DelegateCommand(ExecuteNavigateSettings)); } }
+        DelegateCommand _navigateSettingsCommand = default(DelegateCommand);
+        private void ExecuteNavigateSettings()
+        {
+            //NavigationService.Navigate(typeof(SettingsPage));
+        }
+
+        /// <summary>
         /// Gets or sets the app background image.
         /// </summary>
         public ImageSource BackgroundImageSource { get { return _backgroundImageSource; } set { Set(ref _backgroundImageSource, value); } }

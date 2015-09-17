@@ -8,6 +8,15 @@
     xmlns:localViewModels="using:Momentum.App.ViewModels"
     mc:Ignorable="d">
 
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Settings" Command="{Binding NavigateSettingsCommand}" />
+                <AppBarButton Label="About" Command="{Binding NavigateAboutCommand}" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
     <Page.DataContext>
         <localViewModels:MainPageViewModel />
     </Page.DataContext>
@@ -15,22 +24,18 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Image Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        
+
         <ProgressRing Margin="0,0,0,240" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
-        
+
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="10:45" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
             <TextBlock Text="Good morning, Benny." Style="{StaticResource SubtitleTextBlockStyle}" TextAlignment="Center" />
-            
+
             <TextBlock x:Uid="WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
             <TextBox TextAlignment="Center" />
         </StackPanel>
 
-
-
         <TextBlock Text="Quote of the day here..." Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" Margin="0,0,0,32" VerticalAlignment="Bottom" />
-
-        <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Bottom" Command="{Binding NavigateAboutCommand}"/>
 
         <TextBlock Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
