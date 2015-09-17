@@ -43,10 +43,13 @@ namespace Momentum.App.ViewModels
         /// <returns>The async task to wait for.</returns>
         private async Task LoadBackgroundImageAsync()
         {
-            var backgroundImageSource = await _bingImageService.LoadImageAsync();
+            var backgroundImageResult = await _bingImageService.LoadImageAsync();
 
-            if (backgroundImageSource != null)
-                BackgroundImageSource = backgroundImageSource;
+            if (backgroundImageResult != null)
+            {
+                BackgroundImageSource = backgroundImageResult.ImageSource;
+                BackgroundCopyright = backgroundImageResult.Copryright;
+            }
         }
 
         /// <summary>
@@ -60,9 +63,15 @@ namespace Momentum.App.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the app icon.
+        /// Gets or sets the app background image.
         /// </summary>
         public ImageSource BackgroundImageSource { get { return _backgroundImageSource; } set { Set(ref _backgroundImageSource, value); } }
         private ImageSource _backgroundImageSource;
+
+        /// <summary>
+        /// Gets or sets the background image copyright.
+        /// </summary>
+        public string BackgroundCopyright { get { return _backgroundCopyright; } set { Set(ref _backgroundCopyright, value); } }
+        private string _backgroundCopyright;
     }
 }

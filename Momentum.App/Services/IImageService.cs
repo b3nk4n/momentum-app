@@ -12,7 +12,7 @@ namespace Momentum.App.Services
         /// Loads an image from the web.
         /// </summary>
         /// <returns>Returns the laoded image or NULL in case of an error.</returns>
-        Task<ImageSource> LoadImageAsync();
+        Task<BingImageResult> LoadImageAsync();
 
         /// <summary>
         /// Gets or sets the region language for the images to load.

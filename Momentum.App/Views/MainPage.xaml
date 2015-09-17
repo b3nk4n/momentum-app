@@ -29,5 +29,7 @@
         <TextBlock Text="Quote of the day here..." Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" Margin="0,0,0,32" VerticalAlignment="Bottom" />
 
         <Button Content="About" HorizontalAlignment="Left" VerticalAlignment="Bottom" Command="{Binding NavigateAboutCommand}"/>
+
+        <TextBlock Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
 </Page>

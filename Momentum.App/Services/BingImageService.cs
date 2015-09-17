@@ -1,8 +1,6 @@
 ﻿using Momentum.App.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
@@ -21,6 +19,7 @@ namespace Momentum.App.Services
 
         IHttpService _httpService;
         ISerializationService _serializationService;
+        IWebDownloadService _webDownloadService;
 
         /// <summary>
         /// Creates a BingImageService instance.
@@ -30,11 +29,12 @@ namespace Momentum.App.Services
         {
             _httpService = new HttpService();
             _serializationService = new DataContractSerializationService();
+            _webDownloadService = new WebDownloadService();
 
             RegionLanguageIso = regionLanguageIso;
         }
 
-        public async Task<ImageSource> LoadImageAsync()
+        public async Task<BingImageResult> LoadImageAsync()
         {
             var jsonString = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
 
@@ -44,12 +44,38 @@ namespace Momentum.App.Services
                 
                 if (imageModel.images.Count > 0)
                 {
-                    var imageUrl = imageModel.images[0].url;
+                    var imageItem = imageModel.images[0];
 
-                    var bitmapImage = new BitmapImage();
-                    bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache; // TODO: what is its purpose?
-                    bitmapImage.UriSource = new Uri(BASE_URI + imageUrl, UriKind.Absolute);
-                    return bitmapImage;
+                    //var bitmapImage = new BitmapImage();
+                    //bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache; // TODO: what is its purpose?
+                    //bitmapImage.UriSource = new Uri(BASE_URI + imageUrl, UriKind.Absolute);
+                    //return bitmapImage;
+
+                    // download image
+                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute));
+
+                    if (imageFile != null)
+                    {
+                        // create image source
+                        var bitmapImage = new BitmapImage();
+                        bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache; // TODO: what is its purpose?
+                        bitmapImage.UriSource = new Uri(imageFile.Path);
+
+                        var result = new BingImageResult()
+                        {
+                            ImageSource = bitmapImage,
+                        };
+
+                        // trim copyright
+                        Regex regName = new Regex(@"\((.*)\)");
+                        Match match = regName.Match(imageItem.copyright);
+                        if (match.Success)
+                        {
+                            result.Copryright = match.Groups[1].Value;
+                        }
+
+                        return result;
+                    }
                 }
             }
 
