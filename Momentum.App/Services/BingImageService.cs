@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
-using Windows.UI.Xaml.Media;
+using UWPCore.Framework.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Momentum.App.Services
@@ -46,11 +46,6 @@ namespace Momentum.App.Services
                 {
                     var imageItem = imageModel.images[0];
 
-                    //var bitmapImage = new BitmapImage();
-                    //bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache; // TODO: what is its purpose?
-                    //bitmapImage.UriSource = new Uri(BASE_URI + imageUrl, UriKind.Absolute);
-                    //return bitmapImage;
-
                     // download image
                     var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute));
 
@@ -79,9 +74,22 @@ namespace Momentum.App.Services
                 }
             }
 
-            return null;
+            return GetDefaultImage();
         }
 
         public string RegionLanguageIso { get; set; }
+
+        /// <summary>
+        /// Gets the default background image.
+        /// </summary>
+        /// <returns>Returns the default background image.</returns>
+        private BingImageResult GetDefaultImage()
+        {
+            return new BingImageResult()
+            {
+                Copryright = "© Dave Lane/NASA",
+                ImageSource = new BitmapImage(new Uri(IOConstants.APPX_SCHEME + "/Assets/Images/CapReefMilky_EN-US.jpg"))
+            };
+        }
     }
 }
