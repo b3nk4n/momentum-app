@@ -25,9 +25,9 @@
                 <uwpcControls:AboutControl Margin="16">
                     <uwpcControls:AboutControl.DataContext>
                         <uwpcViewModels:AboutViewModel
-                            AppTitle="Momentum"
+                            AppTitle="Impetus"
                             AppDeveloper="Benjamin Sautermeister"
-                            AppDescription="Momentum helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
+                            AppDescription="Impetus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
                             AppVersion="Version 1.0"
                             AppIcon="/Assets/Square150x150Logo.png"
                             ShowPrivacyInfoText="Privacy info"

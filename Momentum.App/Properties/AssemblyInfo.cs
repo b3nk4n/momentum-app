@@ -1,16 +1,15 @@
 ﻿using System.Resources;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Momentum")]
-[assembly: AssemblyDescription("Momentum helps to focus on your daily goals.")]
+[assembly: AssemblyTitle("Impetus")]
+[assembly: AssemblyDescription("Impetus helps to focus on your daily goals.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("bsautermeister.de")]
-[assembly: AssemblyProduct("Momentum")]
+[assembly: AssemblyProduct("Impetus")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
