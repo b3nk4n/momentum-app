@@ -91,6 +91,8 @@ namespace Momentum.App.Services
                             result.Copryright = match.Groups[1].Value;
                         }
 
+                        LastBackgroundImageCopyright.Value = result.Copryright;
+
                         return result;
                     }
                 }
