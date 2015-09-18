@@ -15,14 +15,16 @@ namespace Momentum.App.ViewModels
     /// </summary>
     public class MainPageViewModel : ViewModelBase
     {
-        private BingImageService _bingImageService;
+        private IImageService _imageService;
+        private IQuoteService _quoteService;
 
         /// <summary>
         /// Creates a MainPageViewModel instance.
         /// </summary>
         public MainPageViewModel()
         {
-            _bingImageService = new BingImageService(ApplicationLanguages.Languages[0]);
+            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
+            _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -30,6 +32,7 @@ namespace Momentum.App.ViewModels
             base.OnNavigatedTo(parameter, mode, state);
 
             await LoadBackgroundImageAsync();
+            await LoadQuoteAsync();
         }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)
@@ -45,7 +48,7 @@ namespace Momentum.App.ViewModels
         {
             IsLoadingBackground = true;
 
-            var backgroundImageResult = await _bingImageService.LoadImageAsync();
+            var backgroundImageResult = await _imageService.LoadImageAsync();
 
             if (backgroundImageResult != null)
             {
@@ -54,6 +57,21 @@ namespace Momentum.App.ViewModels
             }
 
             IsLoadingBackground = false;
+        }
+
+        /// <summary>
+        /// Loads the quote.
+        /// </summary>
+        /// <returns>The async task to wait for.</returns>
+        private async Task LoadQuoteAsync()
+        {
+            var quoteData = await _quoteService.LoadQuoteAsync();
+
+            if (quoteData != null)
+            {
+                QuoteText = quoteData.quote;
+                QuoteAuthor = quoteData.author;
+            }
         }
 
         /// <summary>
@@ -93,5 +111,17 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public bool IsLoadingBackground { get { return _isLoadingBackground; } set { Set(ref _isLoadingBackground, value); } }
         private bool _isLoadingBackground;
+
+        /// <summary>
+        /// Gets or sets the quote text.
+        /// </summary>
+        public string QuoteText { get { return _quoteText; } set { Set(ref _quoteText, value); } }
+        private string _quoteText;
+
+        /// <summary>
+        /// Gets or sets the quote text.
+        /// </summary>
+        public string QuoteAuthor { get { return _quoteAuthor; } set { Set(ref _quoteAuthor, value); } }
+        private string _quoteAuthor;
     }
 }

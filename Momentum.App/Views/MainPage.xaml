@@ -35,7 +35,11 @@
             <TextBox TextAlignment="Center" />
         </StackPanel>
 
-        <TextBlock Text="Quote of the day here..." Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" Margin="0,0,0,32" VerticalAlignment="Bottom" />
+        <StackPanel Margin="0,0,0,32" VerticalAlignment="Bottom">
+            <TextBlock Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" />
+            <TextBlock Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="11" TextAlignment="Center" />
+        </StackPanel>
+        
 
         <TextBlock Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
