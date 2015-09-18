@@ -1,8 +1,5 @@
 ﻿using Momentum.App.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
@@ -10,6 +7,9 @@ using UWPCore.Framework.Storage;
 
 namespace Momentum.App.Services
 {
+    /// <summary>
+    /// Quote service class to load daily qoutes from the web.
+    /// </summary>
     public class QuoteService : IQuoteService
     {
         public const string QUOTE_URI = "http://www.bsautermeister.de/impetus/api/quotes.php?format=json&method=random";
@@ -85,10 +85,13 @@ namespace Momentum.App.Services
                 author = "Confucius",
                 quote = "\"Id does not matter how slowly you go as long as you do not stop.\""
             };
-
-
         }
 
+        /// <summary>
+        /// Gets the quote data and ensures that the quote has quotations.
+        /// </summary>
+        /// <param name="data">The quote data to fix.</param>
+        /// <returns>Returns the fixed quote data.</returns>
         private QuoteDataModel GetWithFixedQuotations(QuoteDataModel data)
         {
             if (!data.quote.StartsWith("\""))

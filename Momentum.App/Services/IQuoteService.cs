@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace Momentum.App.Services
 {
+    /// <summary>
+    /// Quote service interface to load daily qoutes from the web.
+    /// </summary>
     public interface IQuoteService
     {
         /// <summary>
