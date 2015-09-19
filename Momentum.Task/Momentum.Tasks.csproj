@@ -7,8 +7,8 @@
     <ProjectGuid>{2E38F107-B59E-418C-89FC-A6881B6C4529}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Momentum.Task</RootNamespace>
-    <AssemblyName>Momentum.Task</AssemblyName>
+    <RootNamespace>Momentum.Tasks</RootNamespace>
+    <AssemblyName>Momentum.Tasks</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -121,6 +121,10 @@
     <ProjectReference Include="..\..\UWPCore.Framework\Framework\UWPCore.Framework\UWPCore.Framework.csproj">
       <Project>{a730354a-b009-4392-8d04-e065347e548a}</Project>
       <Name>UWPCore.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Momentum.Common\Momentum.Common.csproj">
+      <Project>{df24b453-c34f-4eca-8ef6-cee31eb35eef}</Project>
+      <Name>Momentum.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

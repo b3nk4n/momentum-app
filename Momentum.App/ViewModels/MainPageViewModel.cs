@@ -2,11 +2,14 @@
 using Momentum.App.Views;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UWPCore.Framework.Accounts;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
 using Windows.Globalization;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System;
+using Momentum.Common;
 
 namespace Momentum.App.ViewModels
 {
@@ -17,6 +20,7 @@ namespace Momentum.App.ViewModels
     {
         private IImageService _imageService;
         private IQuoteService _quoteService;
+        private IUserInfoService _userInfoService;
 
         /// <summary>
         /// Creates a MainPageViewModel instance.
@@ -25,6 +29,7 @@ namespace Momentum.App.ViewModels
         {
             _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
             _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
+            _userInfoService = new UserInfoService();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -33,6 +38,7 @@ namespace Momentum.App.ViewModels
 
             await LoadBackgroundImageAsync();
             await LoadQuoteAsync();
+            await LoadUserNameAsync();
         }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)
@@ -74,6 +80,20 @@ namespace Momentum.App.ViewModels
             }
         }
 
+        private async Task LoadUserNameAsync()
+        {
+            var userNameFromSettings = AppSettings.UserName.Value;
+
+            if (string.IsNullOrEmpty(userNameFromSettings))
+            {
+                UserName = await _userInfoService.GetFirstNameAsync();
+            }
+            else
+            {
+                UserName = userNameFromSettings;
+            }
+        }
+
         /// <summary>
         /// Gets the command to navigate to the about page.
         /// </summary>
@@ -111,6 +131,12 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public bool IsLoadingBackground { get { return _isLoadingBackground; } set { Set(ref _isLoadingBackground, value); } }
         private bool _isLoadingBackground;
+
+        /// <summary>
+        /// Gets or sets the user name.
+        /// </summary>
+        public string UserName { get { return _userName; } set { Set(ref _userName, value); } }
+        private string _userName;
 
         /// <summary>
         /// Gets or sets the quote text.

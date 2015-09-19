@@ -92,6 +92,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="project.json" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
@@ -156,6 +157,14 @@
     <ProjectReference Include="..\..\UWPCore.Framework\Framework\UWPCore.Framework\UWPCore.Framework.csproj">
       <Project>{a730354a-b009-4392-8d04-e065347e548a}</Project>
       <Name>UWPCore.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Momentum.Common\Momentum.Common.csproj">
+      <Project>{df24b453-c34f-4eca-8ef6-cee31eb35eef}</Project>
+      <Name>Momentum.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Momentum.Task\Momentum.Tasks.csproj">
+      <Project>{2e38f107-b59e-418c-89fc-a6881b6c4529}</Project>
+      <Name>Momentum.Tasks</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,14 +1,15 @@
 ﻿using System;
+using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
 
-namespace Momentum.Task
+namespace Momentum.Tasks
 {
     /// <summary>
     /// Background task to update the tile and push a notification in the morning.
     /// </summary>
-    public class BackgroundTask : IBackgroundTask
+    public sealed class BackgroundTask : IBackgroundTask
     {
         private IToastService _toastService;
 
@@ -20,8 +21,10 @@ namespace Momentum.Task
         public void Run(IBackgroundTaskInstance taskInstance)
         {
             var deferral = taskInstance.GetDeferral();
-            var adaptiveToastModel = CreateToast();
 
+            Logger.WriteLine("BG THREAD");
+
+            var adaptiveToastModel = CreateToast();
             var toastNotification = _toastService.AdaptiveFactory.Create(adaptiveToastModel);
             _toastService.Show(toastNotification);
 
@@ -41,14 +44,18 @@ namespace Momentum.Task
                     Bindings = {
                         new AdaptiveBinding()
                         {
+                            DisplayName = "Display name",
+                            Branding = VisualBranding.NameAndLogo,
                             Template = VisualTemplate.ToastGeneric,
                             Children =
                             {
-                                new AdaptiveImage()
+                                new AdaptiveText()
                                 {
-                                    Alt = "Cap Reef Milky",
-                                    Source = "msappx:///Assets/Images/CapReefMilky_EN-US.jpg",
-                                    HintCrop = ImageHintCrop.Circle
+                                    Content = "Good morning, Benny."
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = "It's me again..."
                                 }
                             }
                         }
@@ -63,7 +70,13 @@ namespace Momentum.Task
                             Type = InputType.Text,
                             PlaceHolderContent = "What is your focus for today?",
                             Id = "focus",
-                            Title = "Good morning, Benny."
+                        },
+                        new AdaptiveAction()
+                        {
+                            ActivationType = ToastActivationType.Background,
+                            Content = "OK",
+                            Arguments = "ok",
+                            HintInputId = "message"
                         }
                     }
                 }
