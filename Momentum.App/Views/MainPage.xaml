@@ -35,7 +35,7 @@
             </TextBlock>
 
             <TextBlock x:Uid="WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
-            <TextBox TextAlignment="Center" />
+            <TextBox Text="{Binding TodaysFocus, Mode=TwoWay}" TextAlignment="Center" />
         </StackPanel>
 
         <StackPanel Margin="0,0,0,32" VerticalAlignment="Bottom">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Momentum.Common;
+using System;
 using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
@@ -51,7 +52,7 @@ namespace Momentum.Tasks
                             {
                                 new AdaptiveText()
                                 {
-                                    Content = "Good morning, Benny."
+                                    Content = string.Format("Good morning, {0}.", AppSettings.UserName.Value)
                                 },
                                 new AdaptiveText()
                                 {

@@ -10,6 +10,11 @@ namespace Momentum.Common
         /// <summary>
         /// The user name of the user.
         /// </summary>
-        public static StoredObjectBase<string> UserName = new RoamingObject<string>("_roamingUserName_", string.Empty);
+        public static RoamingObject<string> UserName = new RoamingObject<string>("_roamingUserName_", string.Empty);
+
+        /// <summary>
+        /// The user focus of today as JSON.
+        /// </summary>
+        public static RoamingObject<string> TodaysFocusJson = new RoamingObject<string>("HighPriority", string.Empty);
     }
 }

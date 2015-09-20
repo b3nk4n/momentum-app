@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Logging;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel;
 
 namespace Momentum.App
 {
@@ -35,6 +36,11 @@ namespace Momentum.App
             // start the user experience
             NavigationService.Navigate(DefaultPage);
             return Task.FromResult<object>(null);
+        }
+
+        public override Task OnSuspendingAsync(SuspendingEventArgs e)
+        {
+            return base.OnSuspendingAsync(e);
         }
     }
 }

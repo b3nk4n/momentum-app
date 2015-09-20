@@ -10,6 +10,13 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System;
 using Momentum.Common;
+using Windows.Storage;
+using Windows.Foundation;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Resources;
+using Momentum.App.Models;
+using UWPCore.Framework.Data;
 
 namespace Momentum.App.ViewModels
 {
@@ -21,6 +28,9 @@ namespace Momentum.App.ViewModels
         private IImageService _imageService;
         private IQuoteService _quoteService;
         private IUserInfoService _userInfoService;
+        private ISerializationService _serializationService;
+
+        TypedEventHandler<ApplicationData, object> dataChangedHandler = null;
 
         /// <summary>
         /// Creates a MainPageViewModel instance.
@@ -30,20 +40,52 @@ namespace Momentum.App.ViewModels
             _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
             _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
             _userInfoService = new UserInfoService();
+            _serializationService = new DataContractSerializationService();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             base.OnNavigatedTo(parameter, mode, state);
 
+            UpdateTodaysFocusFromSettings();
+
+            dataChangedHandler = new TypedEventHandler<ApplicationData, object>(DataChangedHandler);
+            ApplicationData.Current.DataChanged += dataChangedHandler;
+
             await LoadBackgroundImageAsync();
             await LoadQuoteAsync();
             await LoadUserNameAsync();
         }
 
+        // TODO: FIXME - currently it is not garanteed that this event is called when the app is terminated/suspended... (save it directly or adjust the FW?)
         public override void OnNavigatingFrom(NavigatingEventArgs args)
         {
             base.OnNavigatingFrom(args);
+
+            ApplicationData.Current.DataChanged -= dataChangedHandler;
+            dataChangedHandler = null;
+
+            // save when todays focus message has changed
+            if (_oldTodaysFocus != TodaysFocus)
+            {
+                _todaysFocusTimestamp = DateTime.Now;
+                var todaysFocusModel = new TodaysFocusModel()
+                {
+                    Message = TodaysFocus,
+                    Timestamp = _todaysFocusTimestamp
+                };
+                AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(todaysFocusModel);
+            }
+        }
+
+        private async void DataChangedHandler(ApplicationData appData, object o)
+        {
+            // dataChangeHandler may be invoked on a background thread, so use the Dispatcher to invoke the UI-related code on the UI thread
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                UserName = AppSettings.UserName.Value;
+                UpdateTodaysFocusFromSettings();
+            });
         }
 
         /// <summary>
@@ -80,17 +122,48 @@ namespace Momentum.App.ViewModels
             }
         }
 
+        /// <summary>
+        /// Loads the roaming user name.
+        /// </summary>
+        /// <returns>The async task to wait for.</returns>
         private async Task LoadUserNameAsync()
         {
             var userNameFromSettings = AppSettings.UserName.Value;
 
             if (string.IsNullOrEmpty(userNameFromSettings))
             {
-                UserName = await _userInfoService.GetFirstNameAsync();
+                var name = await _userInfoService.GetFirstNameAsync();
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    var loaded = new ResourceLoader();
+                    UserName = loaded.GetString("DefaultUserName");
+                }
+                else
+                {
+                    UserName = name;
+                }  
+
+                AppSettings.UserName.Value = UserName;
             }
             else
             {
                 UserName = userNameFromSettings;
+            }
+        }
+
+        private void UpdateTodaysFocusFromSettings()
+        {
+            var todaysFocusJson = AppSettings.TodaysFocusJson.Value;
+            if (!string.IsNullOrEmpty(todaysFocusJson))
+            {
+                var todaysFocusModel = _serializationService.DeserializeJson<TodaysFocusModel>(todaysFocusJson);
+                if (todaysFocusModel != null)
+                {
+                    _todaysFocusTimestamp = todaysFocusModel.Timestamp;
+                    TodaysFocus = todaysFocusModel.Message;
+                    _oldTodaysFocus = todaysFocusModel.Message;
+                }
             }
         }
 
@@ -111,7 +184,7 @@ namespace Momentum.App.ViewModels
         DelegateCommand _navigateSettingsCommand = default(DelegateCommand);
         private void ExecuteNavigateSettings()
         {
-            //NavigationService.Navigate(typeof(SettingsPage));
+            NavigationService.Navigate(typeof(SettingsPage));
         }
 
         /// <summary>
@@ -137,6 +210,14 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public string UserName { get { return _userName; } set { Set(ref _userName, value); } }
         private string _userName;
+
+        /// <summary>
+        /// Gets or sets the user todays focus message.
+        /// </summary>
+        public string TodaysFocus { get { return _todaysFocusMessage; } set { Set(ref _todaysFocusMessage, value); } }
+        private string _todaysFocusMessage;
+        private DateTime _todaysFocusTimestamp;
+        private string _oldTodaysFocus;
 
         /// <summary>
         /// Gets or sets the quote text.
