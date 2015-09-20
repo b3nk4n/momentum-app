@@ -1,8 +1,8 @@
 ﻿using Momentum.Common;
 using Momentum.Common.Models;
 using System;
+using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
-using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
@@ -17,6 +17,8 @@ namespace Momentum.Tasks
     {
         private IToastService _toastService;
         private ISerializationService _serializationService;
+
+        private Localizer _localizer = new Localizer("Momentum.Common");
 
         public BackgroundTask()
         {
@@ -78,7 +80,7 @@ namespace Momentum.Tasks
         /// Creates the toast notification.
         /// </summary>
         /// <returns>The created toast notification.</returns>
-        private static AdaptiveToastModel CreateToast()
+        private AdaptiveToastModel CreateToast()
         {
             return new AdaptiveToastModel()
             {
@@ -87,7 +89,6 @@ namespace Momentum.Tasks
                     Bindings = {
                         new AdaptiveBinding()
                         {
-                            DisplayName = "Display name",
                             Branding = VisualBranding.NameAndLogo,
                             Template = VisualTemplate.ToastGeneric,
                             Children =
@@ -111,7 +112,7 @@ namespace Momentum.Tasks
                         new AdaptiveInput()
                         {
                             Type = InputType.Text,
-                            PlaceHolderContent = "What is your focus for today?",
+                            PlaceHolderContent = _localizer.Get("WhatsYourFocus.Text"),
                             Id = "message",
                         },
                         new AdaptiveAction()

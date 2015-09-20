@@ -11,8 +11,8 @@
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Settings" Command="{Binding NavigateSettingsCommand}" />
-                <AppBarButton Label="About" Command="{Binding NavigateAboutCommand}" />
+                <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarSettings" Label="Settings" Command="{Binding NavigateSettingsCommand}" />
+                <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarAbout" Label="About" Command="{Binding NavigateAboutCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
@@ -34,7 +34,7 @@
                 <Run Text="{Binding UserName}" /><Run Text="." />
             </TextBlock>
 
-            <TextBlock x:Uid="WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
+            <TextBlock x:Uid="/Momentum.Common/Resources/WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
             <TextBox Text="{Binding TodaysFocus, Mode=TwoWay}" TextAlignment="Center" />
         </StackPanel>
 
