@@ -1,4 +1,4 @@
-﻿using Momentum.App.Models;
+﻿using Momentum.Common.Models;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using UWPCore.Framework.Networking;
 using UWPCore.Framework.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Momentum.App.Services
+namespace Momentum.Common.Services
 {
     /// <summary>
     /// The Bing image service implementation to load the daily picture of the region.

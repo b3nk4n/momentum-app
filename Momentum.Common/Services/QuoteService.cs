@@ -1,11 +1,11 @@
-﻿using Momentum.App.Models;
+﻿using Momentum.Common.Models;
 using System;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
 using UWPCore.Framework.Storage;
 
-namespace Momentum.App.Services
+namespace Momentum.Common.Services
 {
     /// <summary>
     /// Quote service class to load daily qoutes from the web.

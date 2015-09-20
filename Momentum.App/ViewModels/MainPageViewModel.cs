@@ -1,22 +1,22 @@
-﻿using Momentum.App.Services;
-using Momentum.App.Views;
+﻿using Momentum.App.Views;
+using Momentum.Common;
+using Momentum.Common.Models;
+using Momentum.Common.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UWPCore.Framework.Accounts;
+using UWPCore.Framework.Data;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
-using Windows.Globalization;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using System;
-using Momentum.Common;
-using Windows.Storage;
-using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
-using Momentum.App.Models;
-using UWPCore.Framework.Data;
+using Windows.Foundation;
+using Windows.Globalization;
+using Windows.Storage;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 namespace Momentum.App.ViewModels
 {

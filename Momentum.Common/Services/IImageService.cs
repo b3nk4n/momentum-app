@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 
-namespace Momentum.App.Services
+namespace Momentum.Common.Services
 {
     /// <summary>
     /// Simple service interface to load wallpaper images from the web.

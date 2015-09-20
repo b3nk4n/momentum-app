@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Momentum.App.Models
+namespace Momentum.Common.Models
 {
     [DataContract]
     public class ImageModel

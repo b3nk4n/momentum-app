@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Media;
 
-namespace Momentum.App.Services
+namespace Momentum.Common.Services
 {
     public class BingImageResult
     {
