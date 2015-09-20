@@ -20,12 +20,12 @@ namespace Momentum.App.Services
         /// <summary>
         /// The time stamp the last time an quote has been loaded successfully.
         /// </summary>
-        private static StoredObjectBase<int> QuoteDay = new LocalObject<int>("_quoteDay_", -1);
+        private static StoredObjectBase<DateTimeOffset> QuoteDay = new LocalObject<DateTimeOffset>("quoteDate", DateTimeOffset.MinValue);
 
         /// <summary>
         /// The saved quote data of the last loaded quote for reuse.
         /// </summary>
-        private static StoredObjectBase<string> LastQuoteDataModel = new LocalObject<string>("_quoteDataModel_", null);
+        private static StoredObjectBase<string> LastQuoteDataModel = new LocalObject<string>("quoteDataModel", null);
 
         /// <summary>
         /// Creates a QuoteService instance.
@@ -42,7 +42,7 @@ namespace Momentum.App.Services
         public async Task<QuoteDataModel> LoadQuoteAsync()
         {
             // reuse the quote, when we are at the same day
-            if (DateTime.Now.Day == QuoteDay.Value)
+            if (DateTimeOffset.Now.Day == QuoteDay.Value.Day)
             {
                 var quoteJson = LastQuoteDataModel.Value;
 
@@ -61,7 +61,7 @@ namespace Momentum.App.Services
 
                 if (quoteResult.data != null)
                 {
-                    QuoteDay.Value = DateTime.Now.Day;
+                    QuoteDay.Value = DateTimeOffset.Now;
 
                     LastQuoteDataModel.Value = _serializationService.SerializeJson(quoteResult.data);
 

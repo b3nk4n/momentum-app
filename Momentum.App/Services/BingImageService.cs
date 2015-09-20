@@ -26,12 +26,12 @@ namespace Momentum.App.Services
         /// <summary>
         /// The time stamp the last time an image has been loaded successfully.
         /// </summary>
-        private static StoredObjectBase<int> BackgroundImageDay = new LocalObject<int>("_backImageDay_", -1);
+        private static StoredObjectBase<DateTimeOffset> BackgroundImageDay = new LocalObject<DateTimeOffset>("backImageDate", DateTimeOffset.MinValue);
 
         /// <summary>
         /// The saved copyright of the last loaded background image for reuse.
         /// </summary>
-        private static StoredObjectBase<string> LastBackgroundImageCopyright = new LocalObject<string>("_backImageCopyright_", "© Unknown");
+        private static StoredObjectBase<string> LastBackgroundImageCopyright = new LocalObject<string>("backImageCopyright", "© Unknown");
 
         /// <summary>
         /// Creates a BingImageService instance.
@@ -49,7 +49,7 @@ namespace Momentum.App.Services
         public async Task<BingImageResult> LoadImageAsync()
         {
             // reuse the image, when we are at the same day
-            if (DateTime.Now.Day == BackgroundImageDay.Value)
+            if (DateTimeOffset.Now.Day == BackgroundImageDay.Value.Day)
             {
                 return new BingImageResult()
                 {
@@ -73,7 +73,7 @@ namespace Momentum.App.Services
 
                     if (imageFile != null)
                     {
-                        BackgroundImageDay.Value = DateTime.Now.Day;
+                        BackgroundImageDay.Value = DateTime.Now;
 
                         // create image source
                         var bitmapImage = new BitmapImage(new Uri(imageFile.Path));
