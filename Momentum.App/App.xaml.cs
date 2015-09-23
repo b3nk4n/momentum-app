@@ -4,6 +4,7 @@ using UWPCore.Framework.Common;
 using UWPCore.Framework.Logging;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel;
+using UWPCore.Framework.Devices;
 
 namespace Momentum.App
 {
@@ -22,6 +23,14 @@ namespace Momentum.App
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
+        }
+
+        public async override Task OnInitializeAsync()
+        {
+            await base.OnInitializeAsync();
+
+            var _statusBarService = new StatusBarService();
+            await _statusBarService.HideAsync();
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args, ILaunchArgs launchArgs)

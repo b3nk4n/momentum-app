@@ -1,6 +1,7 @@
 ﻿using System;
 using UWPCore.Framework.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Momentum.App.Views
