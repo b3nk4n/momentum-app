@@ -3,7 +3,7 @@
   <Identity Name="20506BenjaminSautermeiste.Impetus" Publisher="CN=E658962E-3EEA-4A7B-9BDA-D69C021B84FB" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="0b8dc9f1-a787-4319-bebc-aaada0d17fad" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Impetus</DisplayName>
+    <DisplayName>Daily Focus</DisplayName>
     <PublisherDisplayName>Benjamin Sautermeister</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Momentum.App.App">
-      <uap:VisualElements DisplayName="Impetus" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Impetus helps to focus on your daily goals." BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Impetus" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png">
+      <uap:VisualElements DisplayName="Daily Focus" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Daily Focus helps to focus on your daily goals." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Daily Focus" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
@@ -26,14 +26,14 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="steelBlue" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.ToastNotificationSaveTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-          </BackgroundTasks>
-        </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.TimedUpdaterTask">
           <BackgroundTasks>
             <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.ToastNotificationSaveTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
       </Extensions>

@@ -25,9 +25,9 @@
                 <uwpcControls:AboutControl Margin="16">
                     <uwpcControls:AboutControl.DataContext>
                         <uwpcViewModels:AboutViewModel
-                            AppTitle="Impetus"
+                            AppTitle="Daily Focus"
                             AppDeveloper="Benjamin Sautermeister"
-                            AppDescription="Impetus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
+                            AppDescription="Daily Focus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
                             AppVersion="Version 1.0"
                             AppIcon="/Assets/Square150x150Logo.png"
                             ShowPrivacyInfoText="Privacy info"

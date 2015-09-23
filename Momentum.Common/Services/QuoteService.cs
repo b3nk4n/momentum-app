@@ -12,7 +12,7 @@ namespace Momentum.Common.Services
     /// </summary>
     public class QuoteService : IQuoteService
     {
-        public const string QUOTE_URI = "http://www.bsautermeister.de/impetus/api/quotes.php?format=json&method=random";
+        public const string QUOTE_URI = "http://www.bsautermeister.de/dailyfocus/api/quotes.php?format=json&method=random";
 
         IHttpService _httpService;
         ISerializationService _serializationService;
