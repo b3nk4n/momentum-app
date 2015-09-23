@@ -25,14 +25,14 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="steelBlue" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.TimedUpdaterTask">
-          <BackgroundTasks>
-            <Task Type="timer" />
-          </BackgroundTasks>
-        </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.ToastNotificationSaveTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.TimedUpdaterTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
       </Extensions>

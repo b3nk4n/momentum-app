@@ -1,10 +1,12 @@
 ﻿using Momentum.Common.Models;
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
 using UWPCore.Framework.Storage;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Momentum.Common.Services
@@ -54,7 +56,7 @@ namespace Momentum.Common.Services
                 return new BingImageResult()
                 {
                     Copryright = LastBackgroundImageCopyright.Value,
-                    ImageSource = new BitmapImage(new Uri(IOConstants.APPDATA_LOCAL_SCHEME + "/" + BACKGROUND_IMAGE_LOCAL_NAME))
+                    ImagePath = string.Format("{0}\\{1}", ApplicationData.Current.LocalFolder.Path, BACKGROUND_IMAGE_LOCAL_NAME)
                 };
             }
 
@@ -80,7 +82,8 @@ namespace Momentum.Common.Services
 
                         var result = new BingImageResult()
                         {
-                            ImageSource = bitmapImage,
+                            //ImageSource = bitmapImage,
+                            ImagePath = imageFile.Path
                         };
 
                         // trim copyright
@@ -112,7 +115,7 @@ namespace Momentum.Common.Services
             return new BingImageResult()
             {
                 Copryright = "© Dave Lane/NASA",
-                ImageSource = new BitmapImage(new Uri(IOConstants.APPX_SCHEME + "/Assets/Images/CapReefMilky_EN-US.jpg"))
+                ImagePath = IOConstants.APPX_SCHEME + "/Assets/Images/CapReefMilky_EN-US.jpg"
             };
         }
     }

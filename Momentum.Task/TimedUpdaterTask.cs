@@ -1,11 +1,14 @@
 ﻿using Momentum.Common;
 using Momentum.Common.Models;
+using Momentum.Common.Services;
 using System;
+using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
+using Windows.Globalization;
 
 namespace Momentum.Tasks
 {
@@ -15,39 +18,127 @@ namespace Momentum.Tasks
     public sealed class TimedUpdaterTask : IBackgroundTask
     {
         private IToastService _toastService;
+        private ITileService _tileService;
         private ISerializationService _serializationService;
+        private IImageService _imageService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
         public TimedUpdaterTask()
         {
             _toastService = new ToastService();
+            _tileService = new TileService();
             _serializationService = new DataContractSerializationService();
+            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
         }
 
-        public void Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
             var deferral = taskInstance.GetDeferral();
 
-            var lastestFocus = GetLatestFocus();
+            var latestFocus = GetLatestFocus();
 
+            UpdateToasts(latestFocus);
+
+            await UpdateLiveTile(latestFocus);
+
+            deferral.Complete();
+        }
+
+        /// <summary>
+        /// Updates the action center and the toast notification messages.
+        /// </summary>
+        /// <param name="latestFocus">The latest focus message.</param>
+        private void UpdateToasts(TodaysFocusModel latestFocus)
+        {
             // clear history to make sure that there are no multiple daily focus messages
             _toastService.ClearHistory();
 
-            // only one popup per day
-            if (lastestFocus.Timestamp.Date != DateTime.Now.Date)
+            // only one (successfull) popup per day
+            if (latestFocus.Timestamp.Date != DateTime.Now.Date)
             {
-                if (!string.IsNullOrEmpty(lastestFocus.Message))
-                    ResetTodaysFocusMessage(lastestFocus);
+                // reset focus message
+                if (!string.IsNullOrEmpty(latestFocus.Message))
+                    ResetTodaysFocusMessage(latestFocus);
 
-                // create toast message when there was no focus message for today
+                // create toast message
                 var adaptiveToastModel = CreateToast();
-                var xml = adaptiveToastModel.GetXmlDocument().ToString();
                 var toastNotification = _toastService.AdaptiveFactory.Create(adaptiveToastModel);
                 _toastService.Show(toastNotification);
             }
+        }
 
-            deferral.Complete();
+        /// <summary>
+        /// Updates the tile notifications.
+        /// </summary>
+        /// <param name="latestFocus">The latest focus message.</param>
+        private async Task UpdateLiveTile(TodaysFocusModel latestFocus)
+        {
+            var imageResult = await _imageService.LoadImageAsync();
+
+            var adaptiveTileModel = new AdaptiveTileModel()
+            {
+                Visual = new AdaptiveVisual()
+                {
+                    Branding = VisualBranding.NameAndLogo,
+                    Bindings =
+                    {
+                        new AdaptiveBinding()
+                        {
+                            Template = VisualTemplate.TileMedium,
+                            Children =
+                            {
+                                new AdaptiveImage()
+                                {
+                                    Source = imageResult?.ImagePath,
+                                    Placement = ImagePlacement.Background
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = "Today's focus",
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintWrap = true
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = latestFocus.Message,
+                                    HintStyle = TextStyle.Caption,
+                                    HintWrap = true
+                                }
+                            }
+                        },
+                        new AdaptiveBinding()
+                        {
+                            Template = VisualTemplate.TileWide,
+                            Children =
+                            {
+                                new AdaptiveImage()
+                                {
+                                    Source = imageResult?.ImagePath,
+                                    Placement = ImagePlacement.Background
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = "Tagesziel",
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintWrap = true
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = latestFocus.Message,
+                                    HintStyle = TextStyle.Body,
+                                    HintWrap = true
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var tileNotification = _tileService.AdaptiveFactory.Create(adaptiveTileModel);
+
+            tileNotification.ExpirationTime = DateTimeOffset.Now.Date.AddDays(1);
+            _tileService.GetUpdaterForApplication().Update(tileNotification);
         }
 
         /// <summary>

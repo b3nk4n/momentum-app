@@ -16,6 +16,7 @@ using Windows.Globalization;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace Momentum.App.ViewModels
@@ -100,7 +101,7 @@ namespace Momentum.App.ViewModels
 
             if (backgroundImageResult != null)
             {
-                BackgroundImageSource = backgroundImageResult.ImageSource;
+                BackgroundImageSource = new BitmapImage(new Uri(backgroundImageResult.ImagePath));
                 BackgroundCopyright = backgroundImageResult.Copryright;
             }
 
