@@ -6,21 +6,20 @@ using UWPCore.Framework.Data;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
-using Windows.UI.Notifications;
 
 namespace Momentum.Tasks
 {
     /// <summary>
     /// Background task to update the tile and push a notification in the morning.
     /// </summary>
-    public sealed class BackgroundTask : IBackgroundTask
+    public sealed class TimedUpdaterTask : IBackgroundTask
     {
         private IToastService _toastService;
         private ISerializationService _serializationService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
-        public BackgroundTask()
+        public TimedUpdaterTask()
         {
             _toastService = new ToastService();
             _serializationService = new DataContractSerializationService();
@@ -30,35 +29,20 @@ namespace Momentum.Tasks
         {
             var deferral = taskInstance.GetDeferral();
 
-            // check for toast input
-            var details = taskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
-            if (details != null)
-            {
-                string arguments = details.Argument;
-                var userInput = (string)details.UserInput["message"];
-
-                var focusModel = new TodaysFocusModel()
-                {
-                    Message = userInput,
-                    Timestamp = DateTime.Now
-                };
-
-                AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(focusModel);
-
-                deferral.Complete();
-                return;
-            }
-
             var lastestFocus = GetLatestFocus();
+
+            // clear history to make sure that there are no multiple daily focus messages
+            _toastService.ClearHistory();
 
             // only one popup per day
             if (lastestFocus.Timestamp.Date != DateTime.Now.Date)
             {
-                // clear history to make sure that there are no multiple daily focus questions
-                _toastService.ClearHistory();
+                if (!string.IsNullOrEmpty(lastestFocus.Message))
+                    ResetTodaysFocusMessage(lastestFocus);
 
-                // create toast message
+                // create toast message when there was no focus message for today
                 var adaptiveToastModel = CreateToast();
+                var xml = adaptiveToastModel.GetXmlDocument().ToString();
                 var toastNotification = _toastService.AdaptiveFactory.Create(adaptiveToastModel);
                 _toastService.Show(toastNotification);
             }
@@ -74,6 +58,15 @@ namespace Momentum.Tasks
         {
             var focusJson = AppSettings.TodaysFocusJson.Value;
             return _serializationService.DeserializeJson<TodaysFocusModel>(focusJson);
+        }
+
+        /// <summary>
+        /// Resets the todays focus message, because it is expired.
+        /// </summary>
+        private void ResetTodaysFocusMessage(TodaysFocusModel lastestFocus)
+        {
+            lastestFocus.Message = string.Empty;
+            AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(lastestFocus);
         }
 
         /// <summary>
@@ -118,9 +111,10 @@ namespace Momentum.Tasks
                         new AdaptiveAction()
                         {
                             ActivationType = ToastActivationType.Background,
-                            Content = "OK",
-                            Arguments = "ok",
-                            HintInputId = "message"
+                            Content = "Save",
+                            Arguments = "save",
+                            HintInputId = "message",
+                            ImageUri = "/Assets/Images/ok.png"
                         }
                     }
                 }

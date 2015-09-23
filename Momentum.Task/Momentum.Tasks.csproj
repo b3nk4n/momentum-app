@@ -114,8 +114,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackgroundTask.cs" />
+    <Compile Include="TimedUpdaterTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToastNotificationSaveTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UWPCore.Framework\Framework\UWPCore.Framework\UWPCore.Framework.csproj">
