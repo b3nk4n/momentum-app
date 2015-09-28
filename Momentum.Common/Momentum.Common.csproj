@@ -115,6 +115,7 @@
     <PRIResource Include="Strings\de-DE\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppHelpers.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Models\BingImageModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
