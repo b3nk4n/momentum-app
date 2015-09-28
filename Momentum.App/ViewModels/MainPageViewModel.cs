@@ -58,10 +58,9 @@ namespace Momentum.App.ViewModels
             await LoadUserNameAsync();
         }
 
-        // TODO: FIXME - currently it is not garanteed that this event is called when the app is terminated/suspended... (save it directly or adjust the FW?)
-        public override void OnNavigatingFrom(NavigatingEventArgs args)
+        public async override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            base.OnNavigatingFrom(args);
+            await base.OnNavigatedFromAsync(state, suspending);
 
             ApplicationData.Current.DataChanged -= dataChangedHandler;
             dataChangedHandler = null;

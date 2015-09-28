@@ -1,14 +1,14 @@
 ﻿using System;
+using UWPCore.Framework.Controls;
 using UWPCore.Framework.Tasks;
 using Windows.ApplicationModel.Background;
-using Windows.UI.Xaml.Controls;
 
 namespace Momentum.App.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : UniversalPage
     {
         private static string BG_TASK_TIMED_NAME = "Momentum.TimedUpdaterTask";
         private static string BG_TASK_TOAST_NAME = "Momentum.ToastNotificationSaveTask";

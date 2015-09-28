@@ -1,5 +1,5 @@
 ﻿using Momentum.Common;
-using Windows.UI.Xaml.Controls;
+using UWPCore.Framework.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Momentum.App.Views
@@ -7,7 +7,7 @@ namespace Momentum.App.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsPage : Page
+    public sealed partial class SettingsPage : UniversalPage
     {
         public SettingsPage()
         {
@@ -21,10 +21,9 @@ namespace Momentum.App.Views
             UserNameTextBox.Text = AppSettings.UserName.Value;
         }
 
-        // TODO: FIXME - not OnNavigatedFrom event was used here, because it is called AFTER the OnNavigatedTo event of the next page...
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatingFrom(e);
+            base.OnNavigatedFrom(e);
 
             AppSettings.UserName.Value = UserNameTextBox.Text;
         }

@@ -1,10 +1,11 @@
-﻿<Page
+﻿<uwpcControls:UniversalPage
     x:Class="Momentum.App.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Momentum.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uwpcControls="using:UWPCore.Framework.Controls"
     xmlns:localViewModels="using:Momentum.App.ViewModels"
     mc:Ignorable="d">
 
@@ -48,4 +49,4 @@
 
         <TextBlock Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
     </Grid>
-</Page>
+</uwpcControls:UniversalPage>

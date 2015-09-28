@@ -13,7 +13,7 @@ namespace Momentum.App
     /// </summary>
     sealed partial class App : UniversalApp
     {
-        public App() : base(typeof(MainPage), AppBackButtonBehaviour.Terminate, "Momentum.App")
+        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, "Momentum.App")
         {
             InitializeComponent();
 
@@ -25,9 +25,9 @@ namespace Momentum.App
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
         }
 
-        public async override Task OnInitializeAsync()
+        public async override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            await base.OnInitializeAsync();
+            await base.OnInitializeAsync(args);
 
             var _statusBarService = new StatusBarService();
             await _statusBarService.HideAsync();
