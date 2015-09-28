@@ -12,7 +12,7 @@ namespace Momentum.Common.Services
     /// </summary>
     public class QuoteService : IQuoteService
     {
-        public const string QUOTE_URI = "http://www.bsautermeister.de/dailyfocus/api/quotes.php?format=json&method=random";
+        public const string QUOTE_URI = "http://www.bsautermeister.de/dailyfocus/api/quotes.php?format=json&method=random&lang=";
 
         IHttpService _httpService;
         ISerializationService _serializationService;
@@ -53,7 +53,7 @@ namespace Momentum.Common.Services
                 }
             }
 
-            var jsonString = await _httpService.GetAsync(new Uri(QUOTE_URI, UriKind.Absolute));
+            var jsonString = await _httpService.GetAsync(new Uri(QUOTE_URI + RegionLanguageIso, UriKind.Absolute));
 
             if (!string.IsNullOrEmpty(jsonString))
             {
@@ -72,7 +72,7 @@ namespace Momentum.Common.Services
             return GetDefaultQuote();
         }
 
-        public string RegionLanguageIso { get; set; } // TODO: use language info for localization
+        public string RegionLanguageIso { get; set; }
 
         /// <summary>
         /// Gets the default quote.
@@ -80,11 +80,22 @@ namespace Momentum.Common.Services
         /// <returns>Returns the default quote.</returns>
         private QuoteDataModel GetDefaultQuote()
         {
-            return new QuoteDataModel()
+            if (RegionLanguageIso == "de-DE")
             {
-                author = "Confucius",
-                quote = "\"Id does not matter how slowly you go as long as you do not stop.\""
-            };
+                return new QuoteDataModel()
+                {
+                    author = "Friedrich von Schiller",
+                    quote = "\"Jeder Tag ist eine neue Chance, das zu tun, was du möchtest.\""
+                };
+            }
+            else
+            {
+                return new QuoteDataModel()
+                {
+                    author = "Confucius",
+                    quote = "\"Id does not matter how slowly you go as long as you do not stop.\""
+                };
+            }
         }
 
         /// <summary>
