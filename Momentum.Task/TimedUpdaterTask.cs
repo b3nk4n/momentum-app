@@ -18,18 +18,16 @@ namespace Momentum.Tasks
     public sealed class TimedUpdaterTask : IBackgroundTask
     {
         private IToastService _toastService;
-        private ITileService _tileService;
+        private ITileUpdateService _tileUpdateService;
         private ISerializationService _serializationService;
-        private IImageService _imageService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
         public TimedUpdaterTask()
         {
             _toastService = new ToastService();
-            _tileService = new TileService();
+            _tileUpdateService = new TileUpdateService();
             _serializationService = new DataContractSerializationService();
-            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
         }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
@@ -40,7 +38,7 @@ namespace Momentum.Tasks
 
             UpdateToasts(latestFocus);
 
-            await UpdateLiveTile(latestFocus);
+            await _tileUpdateService.UpdateLiveTile(latestFocus);
 
             deferral.Complete();
         }
@@ -55,7 +53,7 @@ namespace Momentum.Tasks
             _toastService.ClearHistory();
 
             // only one (successfull) popup per day
-            if (AppHelpers.NeedsUpdate(latestFocus.Timestamp))
+            if (AppUtils.NeedsUpdate(latestFocus.Timestamp))
             {
                 // reset focus message
                 if (!string.IsNullOrEmpty(latestFocus.Message))
@@ -66,79 +64,6 @@ namespace Momentum.Tasks
                 var toastNotification = _toastService.AdaptiveFactory.Create(adaptiveToastModel);
                 _toastService.Show(toastNotification);
             }
-        }
-
-        /// <summary>
-        /// Updates the tile notifications.
-        /// </summary>
-        /// <param name="latestFocus">The latest focus message.</param>
-        private async Task UpdateLiveTile(TodaysFocusModel latestFocus)
-        {
-            var imageResult = await _imageService.LoadImageAsync();
-
-            var adaptiveTileModel = new AdaptiveTileModel()
-            {
-                Visual = new AdaptiveVisual()
-                {
-                    Branding = VisualBranding.NameAndLogo,
-                    Bindings =
-                    {
-                        new AdaptiveBinding()
-                        {
-                            Template = VisualTemplate.TileMedium,
-                            Children =
-                            {
-                                new AdaptiveImage()
-                                {
-                                    Source = imageResult?.ImagePath,
-                                    Placement = ImagePlacement.Background
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = "Today's focus",
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintWrap = true
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = latestFocus.Message,
-                                    HintStyle = TextStyle.Caption,
-                                    HintWrap = true
-                                }
-                            }
-                        },
-                        new AdaptiveBinding()
-                        {
-                            Template = VisualTemplate.TileWide,
-                            Children =
-                            {
-                                new AdaptiveImage()
-                                {
-                                    Source = imageResult?.ImagePath,
-                                    Placement = ImagePlacement.Background
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = "Tagesziel",
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintWrap = true
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = latestFocus.Message,
-                                    HintStyle = TextStyle.Body,
-                                    HintWrap = true
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            var tileNotification = _tileService.AdaptiveFactory.Create(adaptiveTileModel);
-
-            tileNotification.ExpirationTime = DateTimeOffset.Now.Date.AddDays(1);
-            _tileService.GetUpdaterForApplication().Update(tileNotification);
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace Momentum.Common
     /// <summary>
     /// A static helper class with common functions regarding the apps functionality.
     /// </summary>
-    public static class AppHelpers
+    public static class AppUtils
     {
         /// <summary>
         /// Checks whether an update of the data, image, message is required.

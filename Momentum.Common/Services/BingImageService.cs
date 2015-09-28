@@ -51,7 +51,7 @@ namespace Momentum.Common.Services
         public async Task<BingImageResult> LoadImageAsync()
         {
             // reuse the image, when we are at the same day
-            if (AppHelpers.NeedsUpdate(BackgroundImageDay.Value))
+            if (AppUtils.NeedsUpdate(BackgroundImageDay.Value))
             {
                 return new BingImageResult()
                 {

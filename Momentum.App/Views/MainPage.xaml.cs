@@ -1,5 +1,6 @@
 ﻿using System;
 using UWPCore.Framework.Controls;
+using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Tasks;
 using Windows.ApplicationModel.Background;
 
@@ -15,15 +16,21 @@ namespace Momentum.App.Views
 
         IBackgroundTaskService _backgroundTaskService;
 
+        IToastService _toastService;
+
         public MainPage()
         {
             InitializeComponent();
 
             _backgroundTaskService = new BackgroundTaskService();
+            _toastService = new ToastService();
 
             Loaded += (s, e) =>
             {
                 RegisterBackgroundTask();
+
+                // clear action center when app was launched 
+                _toastService.ClearHistory();
             };
         }
 

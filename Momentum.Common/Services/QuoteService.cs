@@ -42,7 +42,7 @@ namespace Momentum.Common.Services
         public async Task<QuoteDataModel> LoadQuoteAsync()
         {
             // reuse the quote, when we are at the same day
-            if (AppHelpers.NeedsUpdate(QuoteDay.Value))
+            if (AppUtils.NeedsUpdate(QuoteDay.Value))
             {
                 var quoteJson = LastQuoteDataModel.Value;
 

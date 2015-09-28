@@ -30,6 +30,7 @@ namespace Momentum.App.ViewModels
         private IQuoteService _quoteService;
         private IUserInfoService _userInfoService;
         private ISerializationService _serializationService;
+        private ITileUpdateService _tileUpdateService;
 
         TypedEventHandler<ApplicationData, object> dataChangedHandler = null;
 
@@ -42,6 +43,7 @@ namespace Momentum.App.ViewModels
             _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
             _userInfoService = new UserInfoService();
             _serializationService = new DataContractSerializationService();
+            _tileUpdateService = new TileUpdateService();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -74,7 +76,12 @@ namespace Momentum.App.ViewModels
                     Message = TodaysFocus,
                     Timestamp = _todaysFocusTimestamp
                 };
+
+                // save
                 AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(todaysFocusModel);
+
+                // update the live tile
+                await _tileUpdateService.UpdateLiveTile(todaysFocusModel);
             }
         }
 

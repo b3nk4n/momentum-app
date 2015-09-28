@@ -115,7 +115,7 @@
     <PRIResource Include="Strings\de-DE\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppHelpers.cs" />
+    <Compile Include="AppUtils.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Models\BingImageModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
@@ -129,7 +129,9 @@
     <Compile Include="Services\BingImageService.cs" />
     <Compile Include="Services\IImageService.cs" />
     <Compile Include="Services\IQuoteService.cs" />
+    <Compile Include="Services\ITileUpdateService.cs" />
     <Compile Include="Services\QuoteService.cs" />
+    <Compile Include="Services\TileUpdateService.cs" />
     <Content Include="Properties\Momentum.Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
