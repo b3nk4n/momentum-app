@@ -1,13 +1,11 @@
 ﻿using Momentum.Common.Models;
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Networking;
 using UWPCore.Framework.Storage;
 using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Momentum.Common.Services
 {
@@ -51,7 +49,7 @@ namespace Momentum.Common.Services
         public async Task<BingImageResult> LoadImageAsync()
         {
             // reuse the image, when we are at the same day
-            if (AppUtils.NeedsUpdate(BackgroundImageDay.Value))
+            if (!AppUtils.NeedsUpdate(BackgroundImageDay.Value))
             {
                 return new BingImageResult()
                 {
@@ -71,18 +69,14 @@ namespace Momentum.Common.Services
                     var imageItem = imageModel.images[0];
 
                     // download image
-                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME);
+                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME, NameCollisionOption.ReplaceExisting);
 
                     if (imageFile != null)
                     {
                         BackgroundImageDay.Value = DateTime.Now;
 
-                        // create image source
-                        var bitmapImage = new BitmapImage(new Uri(imageFile.Path));
-
                         var result = new BingImageResult()
                         {
-                            //ImageSource = bitmapImage,
                             ImagePath = imageFile.Path
                         };
 

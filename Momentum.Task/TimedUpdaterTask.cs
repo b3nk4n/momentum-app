@@ -8,7 +8,6 @@ using UWPCore.Framework.Data;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
-using Windows.Globalization;
 
 namespace Momentum.Tasks
 {
@@ -104,11 +103,11 @@ namespace Momentum.Tasks
                             {
                                 new AdaptiveText()
                                 {
-                                    Content = string.Format("Good morning, {0}.", AppSettings.UserName.Value)
+                                    Content = string.Format("{0}, {1}.", AppUtils.GetWelcomeMessageStart() , AppSettings.UserName.Value)
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = "It's me again..."
+                                    Content = "It's me again..." // TODO: which text here?
                                 }
                             }
                         }
@@ -127,7 +126,7 @@ namespace Momentum.Tasks
                         new AdaptiveAction()
                         {
                             ActivationType = ToastActivationType.Background,
-                            Content = "Save",
+                            Content = _localizer.Get("Save"),
                             Arguments = "save",
                             HintInputId = "message",
                             ImageUri = "/Assets/Images/ok.png"

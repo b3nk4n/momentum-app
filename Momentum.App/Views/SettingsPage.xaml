@@ -14,15 +14,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-
-        <TextBlock Text="SETTINGS" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock x:Uid="/Momentum.Common/Resources/SettingsTitle" Text="SETTINGS" Style="{StaticResource TitleTextBlockStyle}"/>
         <!-- TODO: redesign page title -->
-
 
         <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <TextBox x:Name="UserNameTextBox" Header="User name" Margin="4" />
+                    <TextBox x:Name="UserNameTextBox" x:Uid="/Momentum.Common/Resources/UserName" Header="How shall I call you?" Margin="4" />
                 </StackPanel>
                 
             </ScrollViewer>

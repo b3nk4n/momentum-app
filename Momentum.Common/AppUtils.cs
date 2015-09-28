@@ -1,4 +1,5 @@
 ﻿using System;
+using UWPCore.Framework.Common;
 
 namespace Momentum.Common
 {
@@ -7,6 +8,8 @@ namespace Momentum.Common
     /// </summary>
     public static class AppUtils
     {
+        private static Localizer localizer = new Localizer("Momentum.Common");
+
         /// <summary>
         /// Checks whether an update of the data, image, message is required.
         /// </summary>
@@ -16,6 +19,20 @@ namespace Momentum.Common
         {
             return latestUpdate.Date != DateTime.Now.Date
                 && DateTime.Now.Hour >= 8;
+        }
+
+        /// <summary>
+        /// Gets the starting part of the welcome message.
+        /// </summary>
+        /// <returns>Returns the welcome message start.</returns>
+        public static string GetWelcomeMessageStart()
+        {
+            if (DateTime.Now.Hour < 12)
+                return localizer.Get("Welcome.Morning");
+            if (DateTime.Now.Hour < 17)
+                return localizer.Get("Welcome.Afternoon");
+            else
+                return localizer.Get("Welcome.Evening");
         }
     }
 }

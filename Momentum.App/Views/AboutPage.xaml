@@ -16,15 +16,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        
-        <TextBlock Text="ABOUT" Style="{StaticResource TitleTextBlockStyle}"/> <!-- TODO: redesign page title -->
-            
+        <TextBlock x:Uid="/Momentum.Common/Resources/AboutTitle" Text="About" Style="{StaticResource TitleTextBlockStyle}"/> <!-- TODO: redesign page title --> 
 
         <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <uwpcControls:AboutControl Margin="16">
                     <uwpcControls:AboutControl.DataContext>
-                        <uwpcViewModels:AboutViewModel
+                        <uwpcViewModels:AboutViewModel x:Uid="/Momentum.Common/Resources/About"
                             AppTitle="Daily Focus"
                             AppDeveloper="Benjamin Sautermeister"
                             AppDescription="Daily Focus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
@@ -34,6 +32,7 @@
                             SendFeedbackEmailText="Send feedback"
                             RateAndReviewText="Rate and review"
                             MoreAppsText="More apps"
+                            ShareAppText="Share app"                                                       
                             ShareAppUri="http://www.windowsphone.com/s?appid=tbd"
                             PublisherName="Benjamin Sautermeister"
                             FeedbackToEmail="apps@bsautermeister.de"

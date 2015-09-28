@@ -117,6 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About.AppDescription" xml:space="preserve">
+    <value>Daily Focus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done.</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.AppVersion" xml:space="preserve">
+    <value>Version 1.0</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.MoreAppsText" xml:space="preserve">
+    <value>More apps</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.RateAndReviewText" xml:space="preserve">
+    <value>Rate and review</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.SendFeedbackEmailText" xml:space="preserve">
+    <value>Send feedback</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.ShareAppText" xml:space="preserve">
+    <value>Share app</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.ShowPrivacyInfoText" xml:space="preserve">
+    <value>Privicy info</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="AboutTitle.Text" xml:space="preserve">
+    <value>About</value>
+    <comment>AboutPage</comment>
+  </data>
   <data name="AppBarAbout.Label" xml:space="preserve">
     <value>About</value>
     <comment>AppBar</comment>
@@ -127,6 +159,30 @@
   </data>
   <data name="DefaultUserName" xml:space="preserve">
     <value>you</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="UserName.Header" xml:space="preserve">
+    <value>How shall I call you?</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Welcome.Afternoon" xml:space="preserve">
+    <value>Good afternoon,</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Welcome.Evening" xml:space="preserve">
+    <value>Good evening,</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Welcome.Morning" xml:space="preserve">
+    <value>Good morning,</value>
     <comment>MainPage</comment>
   </data>
   <data name="WhatsYourFocus.Text" xml:space="preserve">

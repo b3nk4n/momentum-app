@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UWPCore.Framework.Accounts;
+using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
@@ -31,6 +32,8 @@ namespace Momentum.App.ViewModels
         private IUserInfoService _userInfoService;
         private ISerializationService _serializationService;
         private ITileUpdateService _tileUpdateService;
+
+        private Localizer _localizer = new Localizer("Momentum.Common");
 
         TypedEventHandler<ApplicationData, object> dataChangedHandler = null;
 
@@ -143,8 +146,7 @@ namespace Momentum.App.ViewModels
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    var loaded = new ResourceLoader();
-                    UserName = loaded.GetString("DefaultUserName");
+                    UserName = _localizer.Get("DefaultUserName");
                 }
                 else
                 {
@@ -237,5 +239,13 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public string QuoteAuthor { get { return _quoteAuthor; } set { Set(ref _quoteAuthor, value); } }
         private string _quoteAuthor;
+
+        public string WelcomeStart
+        {
+            get
+            {
+                return AppUtils.GetWelcomeMessageStart();
+            }
+        }
     }
 }

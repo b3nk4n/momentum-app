@@ -117,6 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About.AppDescription" xml:space="preserve">
+    <value>Daily Focus hilft dir dabei gut in den Tag zu starten. Sete dein Ziel für den Tag und lass dich inspirieren. Damit wirst du alles erreichen. </value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.AppVersion" xml:space="preserve">
+    <value>Version 1.0</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.MoreAppsText" xml:space="preserve">
+    <value>Mehr Apps</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.RateAndReviewText" xml:space="preserve">
+    <value>Bewertung schreiben</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.SendFeedbackEmailText" xml:space="preserve">
+    <value>Feedback senden</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.ShareAppText" xml:space="preserve">
+    <value>Mit Freunden teilen</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="About.ShowPrivacyInfoText" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
+    <comment>AboutPage</comment>
+  </data>
+  <data name="AboutTitle.Text" xml:space="preserve">
+    <value>Info</value>
+    <comment>AboutPage</comment>
+  </data>
   <data name="AppBarAbout.Label" xml:space="preserve">
     <value>Info</value>
     <comment>AppBar</comment>
@@ -127,6 +159,30 @@
   </data>
   <data name="DefaultUserName" xml:space="preserve">
     <value>du</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Einstellungen</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="UserName.Header" xml:space="preserve">
+    <value>Wie darf ich dich nennen?</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="Welcome.Afternoon" xml:space="preserve">
+    <value>Guten Tag,</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Welcome.Evening" xml:space="preserve">
+    <value>Guten Abend,</value>
+    <comment>MainPage</comment>
+  </data>
+  <data name="Welcome.Morning" xml:space="preserve">
+    <value>Guten Morgen,</value>
     <comment>MainPage</comment>
   </data>
   <data name="WhatsYourFocus.Text" xml:space="preserve">

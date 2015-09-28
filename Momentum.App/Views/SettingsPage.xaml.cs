@@ -23,7 +23,8 @@ namespace Momentum.App.Views
 
             UserNameTextBox.Text = AppSettings.UserName.Value;
 
-            if (e.Parameter.ToString() == PARAM_CHANGE_NAME)
+            if (e.Parameter != null &&
+                e.Parameter.ToString() == PARAM_CHANGE_NAME)
             {
                 // wait shortly until the bindings have been taken
                 await Task.Delay(500);

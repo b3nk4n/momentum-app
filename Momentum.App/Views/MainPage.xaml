@@ -33,7 +33,7 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="10:45" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" TextAlignment="Center" DoubleTapped="NameDoulbeTapped">
-                <Run Text="Good morning," />
+                <Run Text="{Binding WelcomeStart}" />
                 <Run Text="{Binding UserName}" /><Run Text="." />
             </TextBlock>
 
