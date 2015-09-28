@@ -28,19 +28,24 @@ namespace Momentum.App.Views
         }
 
         /// <summary>
-        /// Registers the background task.
+        /// (Re)registers the background task.
         /// </summary>
         private async void RegisterBackgroundTask()
         {
+            // unregister previous one, to ensure the latest version is running
             if (_backgroundTaskService.RegistrationExists(BG_TASK_TIMED_NAME))
-                return;
+                _backgroundTaskService.Unregister(BG_TASK_TIMED_NAME);
 
             if (await _backgroundTaskService.RequestAccessAsync())
             {
                 _backgroundTaskService.Register(BG_TASK_TIMED_NAME, "Momentum.Tasks.TimedUpdaterTask", new TimeTrigger(60, false));
                 _backgroundTaskService.Register(BG_TASK_TOAST_NAME, "Momentum.Tasks.ToastNotificationSaveTask", new ToastNotificationActionTrigger());
-            }
-                
+            }     
+        }
+
+        private void NameDoulbeTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            NavigationService.Navigate(typeof(SettingsPage), SettingsPage.PARAM_CHANGE_NAME);
         }
     }
 }
