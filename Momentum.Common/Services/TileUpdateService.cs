@@ -1,6 +1,7 @@
 ﻿using Momentum.Common.Models;
 using System;
 using System.Threading.Tasks;
+using UWPCore.Framework.Common;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.Globalization;
@@ -12,8 +13,11 @@ namespace Momentum.Common.Services
     /// </summary>
     public class TileUpdateService : ITileUpdateService
     {
-        ITileService _tileService;
-        IImageService _imageService;
+        private ITileService _tileService;
+        private IImageService _imageService;
+        private IQuoteService _quoteService;
+
+        private Localizer _localizer = new Localizer("Momentum.Common");
 
         /// <summary>
         /// Creates a TileUpdateService instance.
@@ -21,12 +25,15 @@ namespace Momentum.Common.Services
         public TileUpdateService()
         {
             _tileService = new TileService();
-            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
+            var language = ApplicationLanguages.Languages[0];
+            _imageService = new BingImageService(language);
+            _quoteService = new QuoteService(language);
         }
 
         public async Task UpdateLiveTile(TodaysFocusModel latestFocus)
         {
             var imageResult = await _imageService.LoadImageAsync();
+            var quoteResult = await _quoteService.LoadQuoteAsync();
 
             var adaptiveTileModel = new AdaptiveTileModel()
             {
@@ -47,7 +54,7 @@ namespace Momentum.Common.Services
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = "Today's focus",
+                                    Content = _localizer.Get("TodaysFocus.Text"),
                                     HintStyle = TextStyle.CaptionSubtle,
                                     HintWrap = true
                                 },
@@ -71,7 +78,7 @@ namespace Momentum.Common.Services
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = "Tagesziel",
+                                    Content = _localizer.Get("TodaysFocus.Text"),
                                     HintStyle = TextStyle.CaptionSubtle,
                                     HintWrap = true
                                 },
@@ -80,6 +87,53 @@ namespace Momentum.Common.Services
                                     Content = latestFocus.Message,
                                     HintStyle = TextStyle.Body,
                                     HintWrap = true
+                                }
+                            }
+                        },
+                        new AdaptiveBinding()
+                        {
+                            Template = VisualTemplate.TileLarge,
+                            Children =
+                            {
+                                new AdaptiveImage()
+                                {
+                                    Source = imageResult?.ImagePath,
+                                    Placement = ImagePlacement.Background
+                                },
+
+                                // todays focus message
+                                new AdaptiveText()
+                                {
+                                    Content = _localizer.Get("TodaysFocus.Text"),
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintWrap = true,
+
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = latestFocus.Message,
+                                    HintStyle = TextStyle.Body,
+                                    HintWrap = true
+                                },
+
+                                // placeholder
+                                new AdaptiveText() { Content = string.Empty },
+                                new AdaptiveText() { Content = string.Empty },
+
+                                // quote
+                                new AdaptiveText()
+                                {
+                                    Content = quoteResult.quote,
+                                    HintStyle = TextStyle.Caption,
+                                    HintAlign = TextHintAlign.Center,
+                                    HintWrap = true
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = quoteResult.author,
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintAlign = TextHintAlign.Center,
+                                    HintWrap = false
                                 }
                             }
                         }

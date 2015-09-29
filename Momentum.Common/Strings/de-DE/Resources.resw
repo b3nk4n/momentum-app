@@ -169,6 +169,10 @@
     <value>Einstellungen</value>
     <comment>SettingsPage</comment>
   </data>
+  <data name="TodaysFocus.Text" xml:space="preserve">
+    <value>Tagesziel</value>
+    <comment>MainPage/Tile</comment>
+  </data>
   <data name="UserName.Header" xml:space="preserve">
     <value>Wie darf ich dich nennen?</value>
     <comment>SettingsPage</comment>
