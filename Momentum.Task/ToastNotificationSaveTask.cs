@@ -1,5 +1,6 @@
 ﻿using Momentum.Common;
 using Momentum.Common.Models;
+using Momentum.Common.Services;
 using System;
 using UWPCore.Framework.Data;
 using Windows.ApplicationModel.Background;
@@ -10,10 +11,12 @@ namespace Momentum.Tasks
     public sealed class ToastNotificationSaveTask : IBackgroundTask
     {
         private ISerializationService _serializationService;
+        private ITileUpdateService _tileUpdateService;
 
         public ToastNotificationSaveTask()
         {
             _serializationService = new DataContractSerializationService();
+            _tileUpdateService = new TileUpdateService();
         }
 
         public void Run(IBackgroundTaskInstance taskInstance)
@@ -33,6 +36,9 @@ namespace Momentum.Tasks
                 };
 
                 AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(focusModel);
+
+                // update tile
+                _tileUpdateService.UpdateLiveTile(focusModel);
             }
 
             deferral.Complete();
