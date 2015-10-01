@@ -23,6 +23,15 @@ using Windows.UI.Xaml.Navigation;
 namespace Momentum.App.ViewModels
 {
     /// <summary>
+    /// Callback interface to notify the UI to play animations.
+    /// </summary>
+    public interface MainViewModelCallbacks
+    {
+        void NotifyImageLoaded();
+        void NotifyQuoteLoaded();
+    }
+
+    /// <summary>
     /// The view model of the main page.
     /// </summary>
     public class MainViewModel : ViewModelBase
@@ -39,11 +48,15 @@ namespace Momentum.App.ViewModels
 
         private DispatcherTimer _timeUpdater;
 
+        private MainViewModelCallbacks _callbacks;
+
         /// <summary>
         /// Creates a MainPageViewModel instance.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(MainViewModelCallbacks callbacks)
         {
+            _callbacks = callbacks;
+
             _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
             _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
             _userInfoService = new UserInfoService();
@@ -58,6 +71,7 @@ namespace Momentum.App.ViewModels
             StartCurrentTimeUpdater();
 
             UpdateTodaysFocusFromSettings();
+            UpdateWhatsYourFocus();
 
             dataChangedHandler = new TypedEventHandler<ApplicationData, object>(DataChangedHandler);
             ApplicationData.Current.DataChanged += dataChangedHandler;
@@ -136,6 +150,7 @@ namespace Momentum.App.ViewModels
             {
                 UserName = AppSettings.UserName.Value;
                 UpdateTodaysFocusFromSettings();
+                UpdateWhatsYourFocus();
             });
         }
 
@@ -153,6 +168,8 @@ namespace Momentum.App.ViewModels
             {
                 BackgroundImageSource = new BitmapImage(new Uri(backgroundImageResult.ImagePath));
                 BackgroundCopyright = backgroundImageResult.Copryright;
+
+                _callbacks.NotifyImageLoaded();
             }
 
             IsLoadingBackground = false;
@@ -170,6 +187,8 @@ namespace Momentum.App.ViewModels
             {
                 QuoteText = quoteData.quote;
                 QuoteAuthor = quoteData.author;
+
+                _callbacks.NotifyQuoteLoaded();
             }
         }
 
@@ -221,6 +240,14 @@ namespace Momentum.App.ViewModels
         }
 
         /// <summary>
+        /// Updates the "Whats your focus" text label depending on whether the textbox is empty or not. 
+        /// </summary>
+        private void UpdateWhatsYourFocus()
+        {
+            RaisePropertyChanged("WhatsYourFocus");
+        }
+
+        /// <summary>
         /// Gets the command to navigate to the about page.
         /// </summary>
         public DelegateCommand NavigateAboutCommand { get { return _navigateAboutCommand ?? (_navigateAboutCommand = new DelegateCommand(ExecuteNavigateAbout)); } }
@@ -267,7 +294,18 @@ namespace Momentum.App.ViewModels
         /// <summary>
         /// Gets or sets the user todays focus message.
         /// </summary>
-        public string TodaysFocus { get { return _todaysFocusMessage; } set { Set(ref _todaysFocusMessage, value); } }
+        public string TodaysFocus
+        {
+            get
+            {
+                return _todaysFocusMessage;
+            }
+            set
+            {
+                Set(ref _todaysFocusMessage, value);
+                UpdateWhatsYourFocus();
+            }
+        }
         private string _todaysFocusMessage;
         private DateTime _todaysFocusTimestamp;
         private string _oldTodaysFocus;
@@ -289,6 +327,24 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public DateTimeOffset CurrentTime { get { return _currentTime; } set { Set(ref _currentTime, value); } }
         private DateTimeOffset _currentTime;
+
+        /// <summary>
+        /// Gets or sets the whats your focus title text, which depends on whether the textbox is empty or not.
+        /// </summary>
+        public string WhatsYourFocus
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(TodaysFocus))
+                {
+                    return _localizer.Get("WhatsYourFocus.Text");
+                }
+                else
+                {
+                    return _localizer.Get("TodaysFocus.Text");
+                }
+            }
+        }
 
         public string WelcomeStart
         {

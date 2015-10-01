@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Momentum.App.ViewModels;
+using System;
 using UWPCore.Framework.Controls;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Tasks;
@@ -9,7 +10,7 @@ namespace Momentum.App.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : UniversalPage
+    public sealed partial class MainPage : UniversalPage, MainViewModelCallbacks
     {
         private static string BG_TASK_TIMED_NAME = "Momentum.TimedUpdaterTask";
         private static string BG_TASK_TOAST_NAME = "Momentum.ToastNotificationSaveTask";
@@ -21,6 +22,8 @@ namespace Momentum.App.Views
         public MainPage()
         {
             InitializeComponent();
+
+            DataContext = new MainViewModel(this);
 
             _backgroundTaskService = new BackgroundTaskService();
             _toastService = new ToastService();
@@ -53,6 +56,17 @@ namespace Momentum.App.Views
         private void NameDoulbeTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
             NavigationService.Navigate(typeof(SettingsPage), SettingsPage.PARAM_CHANGE_NAME);
+        }
+
+        void MainViewModelCallbacks.NotifyImageLoaded()
+        {
+            ShowBackgroundImage.Begin();
+            StartupAnimation.Begin();
+        }
+
+        void MainViewModelCallbacks.NotifyQuoteLoaded()
+        {
+            ShowQuote.Begin();
         }
     }
 }

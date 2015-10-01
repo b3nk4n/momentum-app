@@ -7,11 +7,92 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwpcControls="using:UWPCore.Framework.Controls"
     xmlns:uwpcConverters="using:UWPCore.Framework.Converters"
-    xmlns:localViewModels="using:Momentum.App.ViewModels"
     mc:Ignorable="d">
 
     <Page.Resources>
         <uwpcConverters:StringFormatConverter x:Key="StringFormatConv" />
+        <Storyboard x:Name="ShowBackgroundImage">
+            <DoubleAnimation Duration="0:0:0.66" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:0.66" To="0.9" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="copyright" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="copyright">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase Amplitude="1" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="ShowQuote">
+            <DoubleAnimation Duration="0:0:0.66" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="quote" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:1" To="0" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="quote" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <BackEase Amplitude="1" EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="StartupAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="welcome" d:IsOptimized="True">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.5">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.25" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="welcome" d:IsOptimized="True">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.5">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.25" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimation BeginTime="0:0:0.75" Duration="0:0:0.75" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="clock" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation BeginTime="0:0:0.75" Duration="0:0:0.75" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="clock" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            
+            <DoubleAnimation BeginTime="0:0:1" Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="focus" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation BeginTime="0:0:1" Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="focus" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -23,36 +104,52 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Page.DataContext>
-        <localViewModels:MainViewModel />
-    </Page.DataContext>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           EntranceNavigationTransitionInfo.IsTargetElement="True">
 
-        <Button Width="1" Height="1" TabIndex="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" /> <!-- just here to steal the initial focus (workaround!) -->
+        <Button Width="1" Height="1" TabIndex="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+        <!-- just here to steal the initial focus (workaround!) -->
 
-        <Image Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.75" Margin="0,0,0,-24" />
+        <Image x:Name="image" Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.1" Margin="0,0,0,-24" />
 
         <ProgressRing Margin="0,0,0,240" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
-            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" TextAlignment="Center" DoubleTapped="NameDoulbeTapped">
+            <TextBlock x:Name="clock" Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" FontSize="84" FontWeight="SemiLight" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" >
+                <TextBlock.RenderTransform>
+                    <CompositeTransform ScaleX="0" ScaleY="0"/>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBlock x:Name="welcome" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="24" TextAlignment="Center" DoubleTapped="NameDoulbeTapped" RenderTransformOrigin="0.5,0.5">
+                <TextBlock.RenderTransform>
+                    <CompositeTransform ScaleX="0" ScaleY="0"/>
+                </TextBlock.RenderTransform>
                 <Run Text="{Binding WelcomeStart}" />
                 <Run Text="{Binding UserName}" /><Run Text="." />
             </TextBlock>
 
-            <TextBlock x:Uid="/Momentum.Common/Resources/WhatsYourFocus" Text="What is your focus for today?" Style="{StaticResource BodyTextBlockStyle}" TextAlignment="Center" Margin="0,32,0,0" />
-            <TextBox Text="{Binding TodaysFocus, Mode=TwoWay}" TextAlignment="Center" />
+            <StackPanel x:Name="focus" RenderTransformOrigin="0.5,0.5">
+                <StackPanel.RenderTransform>
+                    <CompositeTransform ScaleX="0" ScaleY="0"/>
+                </StackPanel.RenderTransform>
+                <TextBlock Text="{Binding WhatsYourFocus}" TextAlignment="Center" Margin="0,32,0,4" />
+                <TextBox Text="{Binding TodaysFocus, Mode=TwoWay}" TextAlignment="Center" />
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel Margin="0,0,0,32" VerticalAlignment="Bottom">
-            <TextBlock Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" TextAlignment="Center" MaxWidth="320" />
-            <TextBlock Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="11" TextAlignment="Center" />
+        <StackPanel x:Name="quote" Margin="0,0,0,12" VerticalAlignment="Bottom">
+            <StackPanel.Projection>
+                <PlaneProjection RotationX="90"/>
+            </StackPanel.Projection>
+            <TextBlock Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontSize="15" TextAlignment="Center" MaxWidth="320" />
+            <TextBlock Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="12" TextAlignment="Center" />
         </StackPanel>
-        
 
-        <TextBlock Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+
+        <TextBlock x:Name="copyright" Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontSize="12" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0" >
+            <TextBlock.Projection>
+                <PlaneProjection RotationX="90"/>
+            </TextBlock.Projection>
+        </TextBlock>
     </Grid>
 </uwpcControls:UniversalPage>
