@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About.AppDescription" xml:space="preserve">
-    <value>Daily Focus hilft dir dabei gut in den Tag zu starten. Sete dein Ziel für den Tag und lass dich inspirieren. Damit wirst du alles erreichen. </value>
+    <value>Daily Focus hilft dir dabei gut in den Tag zu starten. Setze dein Ziel für den Tag und lass dich inspirieren. Damit wirst du alles erreichen. </value>
     <comment>AboutPage</comment>
   </data>
   <data name="About.AppVersion" xml:space="preserve">
