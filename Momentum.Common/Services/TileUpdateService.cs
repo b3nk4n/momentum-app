@@ -35,6 +35,66 @@ namespace Momentum.Common.Services
             var imageResult = await _imageService.LoadImageAsync();
             var quoteResult = await _quoteService.LoadQuoteAsync();
 
+            var adaptiveLargeTemplate = new AdaptiveBinding()
+            {
+                Template = VisualTemplate.TileLarge,
+                Children =
+                            {
+                                new AdaptiveImage()
+                                {
+                                    Source = imageResult?.ImagePath,
+                                    Placement = ImagePlacement.Background
+                                },
+
+                                // todays focus message
+                                new AdaptiveText()
+                                {
+                                    Content = _localizer.Get("TodaysFocus.Text"),
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintWrap = true,
+
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = latestFocus.Message,
+                                    HintStyle = TextStyle.Body,
+                                    HintWrap = true
+                                },
+
+                                CreateTextPlaceholder(),
+
+                                // quote
+                                new AdaptiveText()
+                                {
+                                    Content = quoteResult.quote,
+                                    HintStyle = TextStyle.Caption,
+                                    HintAlign = TextHintAlign.Center,
+                                    HintWrap = true
+                                },
+                                new AdaptiveText()
+                                {
+                                    Content = quoteResult.author,
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintAlign = TextHintAlign.Center,
+                                    HintWrap = false
+                                }
+                            }
+            };
+
+            // add additional text place holder for short messages
+            if (latestFocus.Message != null && latestFocus.Message.Length < 80)
+            {
+                adaptiveLargeTemplate.Children.Insert(3, CreateTextPlaceholder());
+            }
+            if (latestFocus.Message != null && latestFocus.Message.Length < 50)
+            {
+                adaptiveLargeTemplate.Children.Insert(3, CreateTextPlaceholder());
+            }
+            if (latestFocus.Message != null && latestFocus.Message.Length < 25)
+            {
+                adaptiveLargeTemplate.Children.Insert(3, CreateTextPlaceholder());
+            }
+
             var adaptiveTileModel = new AdaptiveTileModel()
             {
                 Visual = new AdaptiveVisual()
@@ -90,53 +150,7 @@ namespace Momentum.Common.Services
                                 }
                             }
                         },
-                        new AdaptiveBinding()
-                        {
-                            Template = VisualTemplate.TileLarge,
-                            Children =
-                            {
-                                new AdaptiveImage()
-                                {
-                                    Source = imageResult?.ImagePath,
-                                    Placement = ImagePlacement.Background
-                                },
-
-                                // todays focus message
-                                new AdaptiveText()
-                                {
-                                    Content = _localizer.Get("TodaysFocus.Text"),
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintWrap = true,
-
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = latestFocus.Message,
-                                    HintStyle = TextStyle.Body,
-                                    HintWrap = true
-                                },
-
-                                // placeholder
-                                new AdaptiveText() { Content = string.Empty },
-                                new AdaptiveText() { Content = string.Empty },
-
-                                // quote
-                                new AdaptiveText()
-                                {
-                                    Content = quoteResult.quote,
-                                    HintStyle = TextStyle.Caption,
-                                    HintAlign = TextHintAlign.Center,
-                                    HintWrap = true
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = quoteResult.author,
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintAlign = TextHintAlign.Center,
-                                    HintWrap = false
-                                }
-                            }
-                        }
+                        adaptiveLargeTemplate
                     }
                 }
             };
@@ -145,6 +159,15 @@ namespace Momentum.Common.Services
 
             tileNotification.ExpirationTime = DateTimeOffset.Now.Date.AddDays(1);
             _tileService.GetUpdaterForApplication().Update(tileNotification);
+        }
+
+        /// <summary>
+        /// Creates a text placeholder.
+        /// </summary>
+        /// <returns>Returns a next adaptive text element with empty text.</returns>
+        private static AdaptiveText CreateTextPlaceholder()
+        {
+            return new AdaptiveText() { Content = string.Empty };
         }
     }
 }
