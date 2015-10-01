@@ -55,16 +55,18 @@ namespace Momentum.App.ViewModels
         {
             base.OnNavigatedTo(parameter, mode, state);
 
+            StartCurrentTimeUpdater();
+
             UpdateTodaysFocusFromSettings();
 
             dataChangedHandler = new TypedEventHandler<ApplicationData, object>(DataChangedHandler);
             ApplicationData.Current.DataChanged += dataChangedHandler;
 
-            await LoadBackgroundImageAsync();
-            await LoadQuoteAsync();
             await LoadUserNameAsync();
 
-            StartCurrentTimeUpdater();
+            await LoadBackgroundImageAsync();
+            await LoadQuoteAsync();
+            
         }
 
         /// <summary>
@@ -105,22 +107,24 @@ namespace Momentum.App.ViewModels
             ApplicationData.Current.DataChanged -= dataChangedHandler;
             dataChangedHandler = null;
 
+            var todaysFocusModel = new TodaysFocusModel()
+            {
+                Message = TodaysFocus,
+                Timestamp = _todaysFocusTimestamp
+            };
+
             // save when todays focus message has changed
             if (_oldTodaysFocus != TodaysFocus)
             {
                 _todaysFocusTimestamp = DateTime.Now;
-                var todaysFocusModel = new TodaysFocusModel()
-                {
-                    Message = TodaysFocus,
-                    Timestamp = _todaysFocusTimestamp
-                };
+                todaysFocusModel.Timestamp = _todaysFocusTimestamp;
 
                 // save
                 AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(todaysFocusModel);
-
-                // update the live tile
-                await _tileUpdateService.UpdateLiveTile(todaysFocusModel);
             }
+
+            // update the live tile always, because it could have been changed on a different machine meanwhile
+            await _tileUpdateService.UpdateLiveTile(todaysFocusModel);
 
             StopCurrentTimeUpdater();
         }
