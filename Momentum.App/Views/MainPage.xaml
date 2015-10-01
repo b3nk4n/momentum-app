@@ -17,7 +17,7 @@
                     <QuadraticEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Duration="0:0:0.66" To="0.9" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="copyright" d:IsOptimized="True">
+            <DoubleAnimation Duration="0:0:0.66" To="0.66" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="copyright" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
                     <QuadraticEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
@@ -272,7 +272,7 @@
         </StackPanel>
 
 
-        <TextBlock x:Name="copyright" Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontSize="12" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0" >
+        <TextBlock x:Name="copyright" Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontSize="11" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0" >
             <TextBlock.Projection>
                 <PlaneProjection RotationX="90"/>
             </TextBlock.Projection>

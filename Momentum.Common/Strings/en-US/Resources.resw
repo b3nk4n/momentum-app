@@ -146,7 +146,7 @@
     <comment>AboutPage</comment>
   </data>
   <data name="AboutTitle.Text" xml:space="preserve">
-    <value>About</value>
+    <value>ABOUT</value>
     <comment>AboutPage</comment>
   </data>
   <data name="AppBarAbout.Label" xml:space="preserve">
@@ -166,7 +166,7 @@
     <comment>MainPage</comment>
   </data>
   <data name="SettingsTitle.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>SETTINGS</value>
     <comment>SettingsPage</comment>
   </data>
   <data name="TodaysFocus.Text" xml:space="preserve">

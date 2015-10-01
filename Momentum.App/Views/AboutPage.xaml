@@ -24,11 +24,11 @@
 
         <Image Grid.RowSpan="2" Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.25" />
 
-        <TextBlock x:Uid="/Momentum.Common/Resources/AboutTitle" Text="About" Style="{StaticResource TitleTextBlockStyle}"/> <!-- TODO: redesign page title --> 
+        <TextBlock x:Uid="/Momentum.Common/Resources/AboutTitle" Text="ABOUT" Style="{StaticResource TitleTextBlockStyle}" Margin="12" />
 
         <Grid Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <uwpcControls:AboutControl Margin="16">
+                <uwpcControls:AboutControl Margin="4">
                     <uwpcControls:AboutControl.DataContext>
                         <uwpcViewModels:AboutViewModel x:Uid="/Momentum.Common/Resources/About"
                             AppTitle="Daily Focus"
