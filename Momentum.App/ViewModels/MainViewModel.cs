@@ -25,7 +25,7 @@ namespace Momentum.App.ViewModels
     /// <summary>
     /// The view model of the main page.
     /// </summary>
-    public class MainPageViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private IImageService _imageService;
         private IQuoteService _quoteService;
@@ -42,7 +42,7 @@ namespace Momentum.App.ViewModels
         /// <summary>
         /// Creates a MainPageViewModel instance.
         /// </summary>
-        public MainPageViewModel()
+        public MainViewModel()
         {
             _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
             _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
