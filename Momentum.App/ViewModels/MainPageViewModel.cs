@@ -11,11 +11,11 @@ using UWPCore.Framework.Data;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Globalization;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -35,7 +35,9 @@ namespace Momentum.App.ViewModels
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
-        TypedEventHandler<ApplicationData, object> dataChangedHandler = null;
+        private TypedEventHandler<ApplicationData, object> dataChangedHandler = null;
+
+        private DispatcherTimer _timeUpdater;
 
         /// <summary>
         /// Creates a MainPageViewModel instance.
@@ -61,6 +63,39 @@ namespace Momentum.App.ViewModels
             await LoadBackgroundImageAsync();
             await LoadQuoteAsync();
             await LoadUserNameAsync();
+
+            StartCurrentTimeUpdater();
+        }
+
+        /// <summary>
+        /// Starts the current time updater and updates the current time that is displayed.
+        /// </summary>
+        private void StartCurrentTimeUpdater()
+        {
+            if (_timeUpdater == null)
+            {
+                _timeUpdater = new DispatcherTimer();
+                _timeUpdater.Interval = TimeSpan.FromSeconds(60.1 - DateTimeOffset.Now.Second);
+                _timeUpdater.Tick += (s, e) =>
+                {
+                    _timeUpdater.Interval = TimeSpan.FromSeconds(60.1 - DateTimeOffset.Now.Second);
+                    CurrentTime = DateTimeOffset.Now;
+                };
+                _timeUpdater.Start();
+            }
+            CurrentTime = DateTimeOffset.Now;
+        }
+
+        /// <summary>
+        /// Stops the time updater.
+        /// </summary>
+        private void StopCurrentTimeUpdater()
+        {
+            if (_timeUpdater != null)
+            {
+                _timeUpdater.Stop();
+                _timeUpdater = null;
+            }
         }
 
         public async override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -86,6 +121,8 @@ namespace Momentum.App.ViewModels
                 // update the live tile
                 await _tileUpdateService.UpdateLiveTile(todaysFocusModel);
             }
+
+            StopCurrentTimeUpdater();
         }
 
         private async void DataChangedHandler(ApplicationData appData, object o)
@@ -161,6 +198,9 @@ namespace Momentum.App.ViewModels
             }
         }
 
+        /// <summary>
+        /// Updates the todays focus from app settings.
+        /// </summary>
         private void UpdateTodaysFocusFromSettings()
         {
             var todaysFocusJson = AppSettings.TodaysFocusJson.Value;
@@ -239,6 +279,12 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public string QuoteAuthor { get { return _quoteAuthor; } set { Set(ref _quoteAuthor, value); } }
         private string _quoteAuthor;
+
+        /// <summary>
+        /// Gets or sets the current time.
+        /// </summary>
+        public DateTimeOffset CurrentTime { get { return _currentTime; } set { Set(ref _currentTime, value); } }
+        private DateTimeOffset _currentTime;
 
         public string WelcomeStart
         {

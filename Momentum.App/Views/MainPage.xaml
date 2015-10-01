@@ -6,8 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwpcControls="using:UWPCore.Framework.Controls"
+    xmlns:uwpcConverters="using:UWPCore.Framework.Converters"
     xmlns:localViewModels="using:Momentum.App.ViewModels"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <uwpcConverters:StringFormatConverter x:Key="StringFormatConv" />
+    </Page.Resources>
 
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Minimal">
@@ -31,7 +36,7 @@
         <ProgressRing Margin="0,0,0,240" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="10:45" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
+            <TextBlock Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center" />
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" TextAlignment="Center" DoubleTapped="NameDoulbeTapped">
                 <Run Text="{Binding WelcomeStart}" />
                 <Run Text="{Binding UserName}" /><Run Text="." />

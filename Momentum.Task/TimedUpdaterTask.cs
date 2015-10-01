@@ -103,7 +103,7 @@ namespace Momentum.Tasks
                             {
                                 new AdaptiveText()
                                 {
-                                    Content = string.Format("{0}, {1}.", AppUtils.GetWelcomeMessageStart() , AppSettings.UserName.Value)
+                                    Content = string.Format("{0} {1}.", AppUtils.GetWelcomeMessageStart() , AppSettings.UserName.Value)
                                 },
                                 new AdaptiveText()
                                 {
