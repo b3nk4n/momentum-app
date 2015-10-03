@@ -120,7 +120,7 @@ namespace Momentum.Tasks
                         new AdaptiveInput()
                         {
                             Type = InputType.Text,
-                            PlaceHolderContent = _localizer.Get("WhatsYourFocus.Text"),
+                            PlaceHolderContent = _localizer.Get("WhatsYourFocus.PlaceholderText"),
                             Id = "message",
                         },
                         new AdaptiveAction()

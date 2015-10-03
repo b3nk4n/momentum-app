@@ -17,11 +17,6 @@
                     <QuadraticEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-            <DoubleAnimation Duration="0:0:0.66" To="0.66" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="copyright" d:IsOptimized="True">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="copyright">
                 <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
                     <EasingDoubleKeyFrame.EasingFunction>
@@ -31,11 +26,6 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Name="ShowQuote">
-            <DoubleAnimation Duration="0:0:0.66" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="quote" d:IsOptimized="True">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
             <DoubleAnimation Duration="0:0:1" To="0" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="quote" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
                     <BackEase Amplitude="1" EasingMode="EaseOut"/>
@@ -44,12 +34,12 @@
         </Storyboard>
         <Storyboard x:Name="StartupAnimation">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="welcome" d:IsOptimized="True">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.5">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.25">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut" />
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.25" />
                 <EasingDoubleKeyFrame KeyTime="0:0:1.25" Value="1">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut" />
@@ -58,12 +48,12 @@
             </DoubleAnimationUsingKeyFrames>
 
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="welcome" d:IsOptimized="True">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.5">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.25">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut" />
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.5" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.75" Value="1.25" />
                 <EasingDoubleKeyFrame KeyTime="0:0:1.25" Value="1">
                     <EasingDoubleKeyFrame.EasingFunction>
                         <QuadraticEase EasingMode="EaseOut" />
@@ -71,25 +61,15 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
 
-            <DoubleAnimation BeginTime="0:0:0.75" Duration="0:0:0.75" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="clock" d:IsOptimized="True">
+            <DoubleAnimation BeginTime="0:0:0.5" Duration="0:0:1" To="0" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="clock" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation BeginTime="0:0:0.75" Duration="0:0:0.75" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="clock" d:IsOptimized="True">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
+                    <BackEase Amplitude="1" EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
 
-            <DoubleAnimation BeginTime="0:0:1" Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="focus" d:IsOptimized="True">
+            <DoubleAnimation BeginTime="0:0:0.75" Duration="0:0:1" To="0" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)" Storyboard.TargetName="focus" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <DoubleAnimation BeginTime="0:0:1" Duration="0:0:0.5" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="focus" d:IsOptimized="True">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseOut"/>
+                    <BackEase Amplitude="1" EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
@@ -120,7 +100,7 @@
                                                     <VisualStateManager.VisualStateGroups>
                                                         <VisualStateGroup x:Name="CommonStates">
                                                             <VisualState x:Name="Normal" />
-                                                                <VisualState x:Name="PointerOver">
+                                                            <VisualState x:Name="PointerOver">
                                                                 <Storyboard>
                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="CircleElement">
                                                                         <DiscreteObjectKeyFrame KeyTime="0">
@@ -133,9 +113,6 @@
                                                             </VisualState>
                                                             <VisualState x:Name="Pressed">
                                                                 <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonLayoutGrid">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="GlyphElement">
                                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}"/>
                                                                     </ObjectAnimationUsingKeyFrames>
@@ -148,8 +125,8 @@
                                                             </VisualState>
                                                         </VisualStateGroup>
                                                     </VisualStateManager.VisualStateGroups>
-                                                    <Rectangle x:Name="CircleElement" Height="28" Width="28" Stroke="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" Visibility="Collapsed" />
-                                                    <TextBlock x:Name="GlyphElement" AutomationProperties.AccessibilityView="Raw" Foreground="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" FontStyle="Normal" FontWeight="Bold" FontSize="14" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="&#xE10A;" VerticalAlignment="Center"/>
+                                                    <Ellipse x:Name="CircleElement" Height="28" Width="28" Stroke="{ThemeResource SystemControlForegroundChromeBlackMediumBrush}" Visibility="Collapsed" />
+                                                    <TextBlock x:Name="GlyphElement" AutomationProperties.AccessibilityView="Raw" Foreground="{ThemeResource SystemControlForegroundChromeBlackMediumBrush}" FontStyle="Normal" FontWeight="Bold" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="&#xE10A;" VerticalAlignment="Center"/>
                                                 </Grid>
                                             </ControlTemplate>
                                         </Setter.Value>
@@ -204,16 +181,21 @@
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
+                                <VisualStateGroup x:Name="ButtonStates">
+                                    <VisualState x:Name="ButtonVisible" />
+                                    <VisualState x:Name="ButtonCollapsed"/>
+                                </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Margin="{TemplateBinding BorderThickness}" Opacity="{ThemeResource TextControlBackgroundRestOpacity}" Grid.Row="1" Grid.RowSpan="1"/>
+                            <Border x:Name="BackgroundElement" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Margin="{TemplateBinding BorderThickness}" Opacity="0" Grid.Row="1" Grid.RowSpan="1"/>
                             <ScrollViewer x:Name="ContentElement" AutomationProperties.AccessibilityView="Raw" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled"/>
-                            <ContentControl x:Name="PlaceholderTextContentPresenter" Grid.ColumnSpan="2" Content="{TemplateBinding PlaceholderText}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" IsHitTestVisible="False" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1"/>
-                            <Button x:Name="DeleteButton" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" FontSize="{TemplateBinding FontSize}" IsTabStop="False" Margin="0,0,-34,0" MinWidth="34" Grid.Row="1" Style="{StaticResource DeleteButtonStyle}" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <ContentControl x:Name="PlaceholderTextContentPresenter" Grid.ColumnSpan="2" Content="{TemplateBinding PlaceholderText}" HorizontalContentAlignment="Center" Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" IsTabStop="False" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Grid.Row="1" FontWeight="Light"/>
+                            <Button x:Name="DeleteButton" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" FontSize="{TemplateBinding FontSize}" IsTabStop="False" Margin="0,0,-2,0" MinWidth="34" Grid.Row="1" Style="{StaticResource DeleteButtonStyle}" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Right" Click="ClearFocusClicked"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -228,18 +210,98 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           EntranceNavigationTransitionInfo.IsTargetElement="True">
 
-        <Button Width="1" Height="1" TabIndex="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+
+                <VisualState x:Name="SplitModeLandscapeNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="520" MinWindowHeight="0"   />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="QuoteText.MaxWidth"
+                                Value="620" />
+                        <Setter Target="FocusTextBox.Width"
+                                Value="420" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SplitModeLandscape">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="520" MinWindowHeight="433"   />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="QuoteText.MaxWidth"
+                                Value="420" />
+                        <Setter Target="focus.Margin"
+                                Value="0,28,0,4" />
+                        <Setter Target="quote.Margin"
+                                Value="0,0,0,12" />
+                        <Setter Target="QuoteText.FontSize"
+                                Value="15" />
+                        <Setter Target="QuoteAuthor.FontSize"
+                                Value="12" />
+                        <Setter Target="FocusTextBox.Width"
+                                Value="420" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SplitModePortraitNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="640" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="focus.Margin"
+                                Value="0,28,0,4" />
+                        <Setter Target="quote.Margin"
+                                Value="0,0,0,12" />
+                        <Setter Target="QuoteText.FontSize"
+                                Value="15" />
+                        <Setter Target="QuoteAuthor.FontSize"
+                                Value="12" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="SplitModePortrait">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640" MinWindowHeight="640" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="QuoteText.MaxWidth"
+                                Value="620" />
+                        <Setter Target="focus.Margin"
+                                Value="0,28,0,4" />
+                        <Setter Target="quote.Margin"
+                                Value="0,0,0,12" />
+                        <Setter Target="QuoteText.FontSize"
+                                Value="15" />
+                        <Setter Target="QuoteAuthor.FontSize"
+                                Value="12" />
+                        <Setter Target="FocusTextBox.Width"
+                                Value="420" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+
+        </VisualStateManager.VisualStateGroups>
+
+        <Button Grid.Row="1" Width="1" Height="1" TabIndex="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
         <!-- just here to steal the initial focus (workaround!) -->
 
-        <Image x:Name="image" Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.1" Margin="0,0,0,-24" />
+        <Image Grid.RowSpan="2" x:Name="image" Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.1" Margin="0,0,0,-24" />
 
-        <ProgressRing Margin="0,0,0,240" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
+        <ProgressRing Grid.RowSpan="2" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="clock" Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" FontSize="84" FontWeight="SemiLight" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" >
-                <TextBlock.RenderTransform>
-                    <CompositeTransform ScaleX="0" ScaleY="0"/>
-                </TextBlock.RenderTransform>
+        <StackPanel Grid.Row="0" x:Name="contentContainer" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="clock" Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" FontSize="84" FontWeight="SemiLight" TextAlignment="Center" >
+                <TextBlock.Projection>
+                    <PlaneProjection RotationX="90"/>
+                </TextBlock.Projection>
             </TextBlock>
             <TextBlock x:Name="welcome" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="24" TextAlignment="Center" DoubleTapped="NameDoulbeTapped" RenderTransformOrigin="0.5,0.5">
                 <TextBlock.RenderTransform>
@@ -249,30 +311,26 @@
                 <Run Text="{Binding UserName}" /><Run Text="." />
             </TextBlock>
 
-            <StackPanel x:Name="focus" RenderTransformOrigin="0.5,0.5">
-                <StackPanel.RenderTransform>
-                    <CompositeTransform ScaleX="0" ScaleY="0"/>
-                </StackPanel.RenderTransform>
-                <TextBlock Text="{Binding WhatsYourFocus}" FontSize="18" TextAlignment="Center" Margin="0,32,0,4" />
-                <TextBox Text="{Binding TodaysFocus, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" Width="320" InputScope="Text" IsSpellCheckEnabled="False" FontWeight="Normal" FontSize="24" TextAlignment="Center" Style="{StaticResource FocusTextBoxStyle}" />
+            <StackPanel x:Name="focus" Margin="0,8,0,4">
+                <StackPanel.Projection>
+                    <PlaneProjection RotationX="90"/>
+                </StackPanel.Projection>
+                <TextBlock x:Uid="/Momentum.Common/Resources/TodaysFocus" FontSize="18" TextAlignment="Center" />
+                <TextBox x:Name="FocusTextBox" x:Uid="/Momentum.Common/Resources/WhatsYourFocus" Text="{Binding TodaysFocus, Mode=TwoWay}" Width="320" FontWeight="Normal" FontSize="20" TextAlignment="Center" Style="{StaticResource FocusTextBoxStyle}"
+                         AcceptsReturn="True" InputScope="Text" IsSpellCheckEnabled="False" TextWrapping="Wrap"/>
             </StackPanel>
         </StackPanel>
 
-        <!--<StackPanel Padding="10" Background="Red">
-            <TextBox Text="Test 123" TextAlignment="Center" Style="{StaticResource FocusTextBoxStyle}" />
-        </StackPanel>-->
-        
-
-        <StackPanel x:Name="quote" Margin="0,0,0,12" VerticalAlignment="Bottom">
+        <StackPanel Grid.Row="1" x:Name="quote" Margin="0,0,0,8" VerticalAlignment="Bottom" Tapped="QuoteTapped">
             <StackPanel.Projection>
                 <PlaneProjection RotationX="90"/>
             </StackPanel.Projection>
-            <TextBlock Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontSize="15" TextAlignment="Center" MaxWidth="320" />
-            <TextBlock Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="12" TextAlignment="Center" />
+            <TextBlock x:Name="QuoteText" Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontSize="14" TextAlignment="Center" MaxWidth="320" />
+            <TextBlock x:Name="QuoteAuthor" Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="11" TextAlignment="Center" />
         </StackPanel>
 
 
-        <TextBlock x:Name="copyright" Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontSize="11" FontStyle="Italic" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0" >
+        <TextBlock Grid.RowSpan="2" x:Name="copyright" Text="{Binding BackgroundCopyright}" Style="{StaticResource BodyTextBlockStyle}" FontSize="11" FontStyle="Italic" Margin="4,0,0,-20" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
             <TextBlock.Projection>
                 <PlaneProjection RotationX="90"/>
             </TextBlock.Projection>

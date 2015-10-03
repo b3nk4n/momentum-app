@@ -10,6 +10,7 @@ using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
+using UWPCore.Framework.Speech;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Globalization;
@@ -41,6 +42,7 @@ namespace Momentum.App.ViewModels
         private IUserInfoService _userInfoService;
         private ISerializationService _serializationService;
         private ITileUpdateService _tileUpdateService;
+        private ISpeechService _speechService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
@@ -62,6 +64,7 @@ namespace Momentum.App.ViewModels
             _userInfoService = new UserInfoService();
             _serializationService = new DataContractSerializationService();
             _tileUpdateService = new TileUpdateService();
+            _speechService = new SpeechService();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -71,7 +74,6 @@ namespace Momentum.App.ViewModels
             StartCurrentTimeUpdater();
 
             UpdateTodaysFocusFromSettings();
-            UpdateWhatsYourFocus();
 
             dataChangedHandler = new TypedEventHandler<ApplicationData, object>(DataChangedHandler);
             ApplicationData.Current.DataChanged += dataChangedHandler;
@@ -150,7 +152,6 @@ namespace Momentum.App.ViewModels
             {
                 UserName = AppSettings.UserName.Value;
                 UpdateTodaysFocusFromSettings();
-                UpdateWhatsYourFocus();
             });
         }
 
@@ -240,14 +241,6 @@ namespace Momentum.App.ViewModels
         }
 
         /// <summary>
-        /// Updates the "Whats your focus" text label depending on whether the textbox is empty or not. 
-        /// </summary>
-        private void UpdateWhatsYourFocus()
-        {
-            RaisePropertyChanged("WhatsYourFocus");
-        }
-
-        /// <summary>
         /// Gets the command to navigate to the about page.
         /// </summary>
         public DelegateCommand NavigateAboutCommand { get { return _navigateAboutCommand ?? (_navigateAboutCommand = new DelegateCommand(ExecuteNavigateAbout)); } }
@@ -265,6 +258,19 @@ namespace Momentum.App.ViewModels
         private void ExecuteNavigateSettings()
         {
             NavigationService.Navigate(typeof(SettingsPage));
+        }
+        
+        /// <summary>
+        /// Gets the command to read the quote.
+        /// </summary>
+        public DelegateCommand ReadQuoteCommand { get { return _readQuoteCommand ?? (_readQuoteCommand = new DelegateCommand(ExecuteReadQuote)); } }
+        DelegateCommand _readQuoteCommand = default(DelegateCommand);
+        private async void ExecuteReadQuote()
+        {
+            if (!string.IsNullOrWhiteSpace(QuoteText))
+            {
+                await _speechService.SpeakTextAsync(QuoteText);
+            }
         }
 
         /// <summary>
@@ -303,7 +309,6 @@ namespace Momentum.App.ViewModels
             set
             {
                 Set(ref _todaysFocusMessage, value);
-                UpdateWhatsYourFocus();
             }
         }
         private string _todaysFocusMessage;
@@ -327,24 +332,6 @@ namespace Momentum.App.ViewModels
         /// </summary>
         public DateTimeOffset CurrentTime { get { return _currentTime; } set { Set(ref _currentTime, value); } }
         private DateTimeOffset _currentTime;
-
-        /// <summary>
-        /// Gets or sets the whats your focus title text, which depends on whether the textbox is empty or not.
-        /// </summary>
-        public string WhatsYourFocus
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(TodaysFocus))
-                {
-                    return _localizer.Get("WhatsYourFocus.Text");
-                }
-                else
-                {
-                    return _localizer.Get("TodaysFocus.Text");
-                }
-            }
-        }
 
         public string WelcomeStart
         {

@@ -189,7 +189,7 @@
     <value>Good morning,</value>
     <comment>MainPage</comment>
   </data>
-  <data name="WhatsYourFocus.Text" xml:space="preserve">
+  <data name="WhatsYourFocus.PlaceholderText" xml:space="preserve">
     <value>What is your focus for today?</value>
     <comment>MainPage</comment>
   </data>

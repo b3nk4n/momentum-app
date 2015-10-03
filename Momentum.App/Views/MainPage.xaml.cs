@@ -68,5 +68,20 @@ namespace Momentum.App.Views
         {
             ShowQuote.Begin();
         }
+
+        private void ClearFocusClicked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            FocusTextBox.Text = string.Empty;
+        }
+
+        private void QuoteTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var viewModel = DataContext as MainViewModel;
+
+            if (viewModel != null)
+            {
+                viewModel.ReadQuoteCommand.Execute(null);
+            }
+        }
     }
 }
