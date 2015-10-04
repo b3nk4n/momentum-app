@@ -122,7 +122,7 @@
     <comment>AboutPage</comment>
   </data>
   <data name="About.AppVersion" xml:space="preserve">
-    <value>Version 1.0</value>
+    <value>Version 1.1</value>
     <comment>AboutPage</comment>
   </data>
   <data name="About.MoreAppsText" xml:space="preserve">
