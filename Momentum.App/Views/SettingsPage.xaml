@@ -29,6 +29,10 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <TextBox x:Name="UserNameTextBox" x:Uid="/Momentum.Common/Resources/UserName" Header="How shall I call you?" Width="300" HorizontalAlignment="Left" Margin="12" />
+
+                    <TimePicker x:Name="WeekDayTimePicker" x:Uid="/Momentum.Common/Resources/TimeWeekDay" Header="When do you wake up on a week day?" Width="300" Margin="12" />
+
+                    <TimePicker x:Name="WeekendTimePicker" x:Uid="/Momentum.Common/Resources/TimeWeekend" Header="When do you wake up on the weekend?" Width="300" Margin="12" />
                 </StackPanel>
                 
             </ScrollViewer>

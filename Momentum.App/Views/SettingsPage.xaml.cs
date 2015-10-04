@@ -22,6 +22,8 @@ namespace Momentum.App.Views
             base.OnNavigatedTo(e);
 
             UserNameTextBox.Text = AppSettings.UserName.Value;
+            WeekDayTimePicker.Time = AppSettings.WakeUpTimeWeekDay.Value;
+            WeekendTimePicker.Time = AppSettings.WakeUpTimeWeekend.Value;
 
             if (e.Parameter != null &&
                 e.Parameter.ToString() == PARAM_CHANGE_NAME)
@@ -39,6 +41,8 @@ namespace Momentum.App.Views
             base.OnNavigatedFrom(e);
 
             AppSettings.UserName.Value = UserNameTextBox.Text;
+            AppSettings.WakeUpTimeWeekDay.Value = WeekDayTimePicker.Time;
+            AppSettings.WakeUpTimeWeekend.Value = WeekendTimePicker.Time;
         }
     }
 }

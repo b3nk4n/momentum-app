@@ -17,8 +17,20 @@ namespace Momentum.Common
         /// <returns>Returns True when an update is required, else false.</returns>
         public static bool NeedsUpdate(DateTimeOffset latestUpdate)
         {
-            return latestUpdate.Date != DateTime.Now.Date
-                && DateTime.Now.Hour >= 8;
+            // only update when we have a new day
+            if (latestUpdate.Date == DateTimeOffset.Now.Date)
+                return false;
+
+            switch (DateTimeOffset.Now.DayOfWeek)
+            {
+                
+                case DayOfWeek.Saturday:
+                case DayOfWeek.Sunday:
+                    return (DateTimeOffset.Now - DateTimeOffset.Now.Date) > AppSettings.WakeUpTimeWeekend.Value;
+
+                default:
+                    return (DateTimeOffset.Now - DateTimeOffset.Now.Date) > AppSettings.WakeUpTimeWeekDay.Value;
+            }
         }
 
         /// <summary>

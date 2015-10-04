@@ -173,6 +173,14 @@
     <value>SETTINGS</value>
     <comment>SettingsPage</comment>
   </data>
+  <data name="TimeWeekDay.Header" xml:space="preserve">
+    <value>When do you wake up on a week day?</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="TimeWeekend.Header" xml:space="preserve">
+    <value>When do you wake up on the weekend?</value>
+    <comment>SettingsPage</comment>
+  </data>
   <data name="TodaysFocus.Text" xml:space="preserve">
     <value>Today's focus</value>
     <comment>MainPage/Tile</comment>

@@ -173,6 +173,14 @@
     <value>EINSTELLUNGEN</value>
     <comment>SettingsPage</comment>
   </data>
+  <data name="TimeWeekDay.Header" xml:space="preserve">
+    <value>Wann stehst du etwa unter der Woche auf?</value>
+    <comment>SettingsPage</comment>
+  </data>
+  <data name="TimeWeekend.Header" xml:space="preserve">
+    <value>Wann stehst du am Wochenende auf?</value>
+    <comment>SettingsPage</comment>
+  </data>
   <data name="TodaysFocus.Text" xml:space="preserve">
     <value>Tagesziel</value>
     <comment>MainPage/Tile</comment>
