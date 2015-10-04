@@ -161,6 +161,10 @@
     <value>du</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Quote.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Antippen und motivieren lassen...</value>
+    <comment>MainPage</comment>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
     <comment>MainPage</comment>

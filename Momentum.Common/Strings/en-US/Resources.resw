@@ -161,6 +161,10 @@
     <value>you</value>
     <comment>MainPage</comment>
   </data>
+  <data name="Quote.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tap here and get motivated...</value>
+    <comment>MainPage</comment>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
     <comment>MainPage</comment>

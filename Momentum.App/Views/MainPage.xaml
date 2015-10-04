@@ -310,11 +310,11 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" x:Name="quote" Margin="0,0,0,8" VerticalAlignment="Bottom" Tapped="QuoteTapped">
+        <StackPanel Grid.Row="1" x:Name="quote" Margin="0,0,0,8" VerticalAlignment="Bottom">
             <StackPanel.Projection>
                 <PlaneProjection RotationX="90"/>
             </StackPanel.Projection>
-            <TextBlock x:Name="QuoteText" Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontSize="14" TextAlignment="Center" MaxWidth="320" />
+            <TextBlock x:Name="QuoteText" Text="{Binding QuoteText}" Style="{StaticResource BodyTextBlockStyle}" FontSize="14" TextAlignment="Center" MaxWidth="320" x:Uid="/Momentum.Common/Resources/Quote" Tapped="QuoteTapped" />
             <TextBlock x:Name="QuoteAuthor" Text="{Binding QuoteAuthor}" Style="{StaticResource BodyTextBlockStyle}" FontStyle="Italic" FontSize="11" TextAlignment="Center" />
         </StackPanel>
 
