@@ -60,41 +60,48 @@ namespace Momentum.Common.Services
                 };
             }
 
-            var jsonString = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
-
-            if (!string.IsNullOrEmpty(jsonString))
+            try
             {
-                var imageModel = _serializationService.DeserializeJson<BingImageModel>(jsonString);
-                
-                if (imageModel.images.Count > 0)
+                var jsonString = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
+
+                if (!string.IsNullOrEmpty(jsonString))
                 {
-                    var imageItem = imageModel.images[0];
+                    var imageModel = _serializationService.DeserializeJson<BingImageModel>(jsonString);
 
-                    // download image
-                    var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME, NameCollisionOption.ReplaceExisting);
-
-                    if (imageFile != null)
+                    if (imageModel.images.Count > 0)
                     {
-                        BackgroundImageDay.Value = DateTime.Now;
+                        var imageItem = imageModel.images[0];
 
-                        var result = new BingImageResult()
-                        {
-                            ImagePath = imageFile.Path
-                        };
+                        // download image
+                        var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME, NameCollisionOption.ReplaceExisting);
 
-                        // trim copyright
-                        Regex regName = new Regex(@"\((.*)\)");
-                        Match match = regName.Match(imageItem.copyright);
-                        if (match.Success)
+                        if (imageFile != null)
                         {
-                            result.Copryright = match.Groups[1].Value;
+                            BackgroundImageDay.Value = DateTime.Now;
+
+                            var result = new BingImageResult()
+                            {
+                                ImagePath = imageFile.Path
+                            };
+
+                            // trim copyright
+                            Regex regName = new Regex(@"\((.*)\)");
+                            Match match = regName.Match(imageItem.copyright);
+                            if (match.Success)
+                            {
+                                result.Copryright = match.Groups[1].Value;
+                            }
+
+                            LastBackgroundImageCopyright.Value = result.Copryright;
+
+                            return result;
                         }
-
-                        LastBackgroundImageCopyright.Value = result.Copryright;
-
-                        return result;
                     }
                 }
+            }
+            catch (Exception)
+            {
+                // no network connectivity
             }
 
             return GetDefaultImage();
