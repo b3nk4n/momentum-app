@@ -107,7 +107,7 @@ namespace Momentum.Tasks
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = "It's me again..." // TODO: which text here?
+                                    Content = _localizer.Get("Toast.Subtitle")
                                 }
                             }
                         }

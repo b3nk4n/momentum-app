@@ -193,6 +193,10 @@
     <value>Wann stehst du am Wochenende auf?</value>
     <comment>SettingsPage</comment>
   </data>
+  <data name="Toast.Subtitle" xml:space="preserve">
+    <value>Heute wird ein toller Tag...</value>
+    <comment>Toast</comment>
+  </data>
   <data name="TodaysFocus.Text" xml:space="preserve">
     <value>Tagesziel</value>
     <comment>MainPage/Tile</comment>

@@ -127,7 +127,7 @@ namespace Momentum.Common.Services
         {
             return new BingImageResult()
             {
-                Copryright = "© Benjamin Sautermeister",
+                Copryright = "© Brad Goldpaint/Aurora Photos",
                 ImagePath = IOConstants.APPX_SCHEME + "/Assets/Images/default.jpg"
             };
         }

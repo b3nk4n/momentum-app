@@ -39,7 +39,6 @@ namespace Momentum.App
             if (launchArgs.IsValid)
             {
                 Logger.WriteLine("Started with launch args: args->{0}; tileId->{1}", launchArgs.Arguments, launchArgs.TileId);
-                // TODO: launched by toast notification?
             }
 
             // start the user experience

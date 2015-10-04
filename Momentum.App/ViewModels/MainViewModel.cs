@@ -270,7 +270,7 @@ namespace Momentum.App.ViewModels
                 --trimIndex; // to remove the separator
             }
 
-            if (trimIndex != -1)
+            if (trimIndex > 0)
             {
                 return text.Substring(0, trimIndex + 1);
             }
