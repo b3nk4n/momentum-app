@@ -153,6 +153,10 @@
     <value>About</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarLockscreen.Label" xml:space="preserve">
+    <value>Set as lockscreen</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="AppBarSettings.Label" xml:space="preserve">
     <value>Settings</value>
     <comment>AppBar</comment>
@@ -160,6 +164,14 @@
   <data name="DefaultUserName" xml:space="preserve">
     <value>you</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="DeviceNotSupportedDialog.Content" xml:space="preserve">
+    <value>Setting the lockscreen picture is currently not supported on your device.</value>
+    <comment>Dialog</comment>
+  </data>
+  <data name="DeviceNotSupportedDialog.Title" xml:space="preserve">
+    <value>Information</value>
+    <comment>Dialog</comment>
   </data>
   <data name="Quote.ToolTipService.ToolTip" xml:space="preserve">
     <value>Tap here and get motivated...</value>

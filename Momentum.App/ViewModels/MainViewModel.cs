@@ -4,13 +4,16 @@ using Momentum.Common.Models;
 using Momentum.Common.Services;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using UWPCore.Framework.Accounts;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
+using UWPCore.Framework.Devices;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
 using UWPCore.Framework.Speech;
+using UWPCore.Framework.UI;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Globalization;
@@ -43,6 +46,8 @@ namespace Momentum.App.ViewModels
         private ISerializationService _serializationService;
         private ITileUpdateService _tileUpdateService;
         private ISpeechService _speechService;
+        private ILockScreenService _lockScreenService;
+        private IDialogService _dialogService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
@@ -65,6 +70,8 @@ namespace Momentum.App.ViewModels
             _serializationService = new DataContractSerializationService();
             _tileUpdateService = new TileUpdateService();
             _speechService = new SpeechService();
+            _lockScreenService = new LockScreenService();
+            _dialogService = new DialogService();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -161,19 +168,19 @@ namespace Momentum.App.ViewModels
         /// <returns>The async task to wait for.</returns>
         private async Task LoadBackgroundImageAsync()
         {
-            IsLoadingBackground = true;
+            IsLoading = true;
 
             var backgroundImageResult = await _imageService.LoadImageAsync();
 
             if (backgroundImageResult != null)
             {
                 BackgroundImageSource = new BitmapImage(new Uri(backgroundImageResult.ImagePath));
-                BackgroundCopyright = backgroundImageResult.Copryright;
+                BackgroundCopyright = ShortifyText(backgroundImageResult.Copryright);
 
                 _callbacks.NotifyImageLoaded();
             }
 
-            IsLoadingBackground = false;
+            IsLoading = false;
         }
 
         /// <summary>
@@ -186,11 +193,89 @@ namespace Momentum.App.ViewModels
 
             if (quoteData != null)
             {
-                QuoteText = quoteData.quote;
-                QuoteAuthor = quoteData.author;
+                QuoteText = MultilinifyText(quoteData.quote);
+                QuoteAuthor = ShortifyText(quoteData.author);
 
                 _callbacks.NotifyQuoteLoaded();
             }
+        }
+
+        /// <summary>
+        /// Converts a text into mulitple lines.
+        /// </summary>
+        /// <param name="text">The text to edit.</param>
+        /// <returns>The edited text.</returns>
+        private string MultilinifyText(string text)
+        {
+            try // try catch just to make sure the app will not crash here ... :)
+            {
+                // should fit in one line
+                if (text.Length < 40)
+                    return text;
+
+                var sepIndexes = text.AllIndexesOf(new[] { ',', '.', ';' });
+
+                if (sepIndexes.Length < 2)
+                    return text;
+
+                int center = text.Length / 2;
+
+                // find separator which is the closes to the center
+                int currentIndex = -1;
+                int currentDiff = int.MaxValue;
+
+                for (int i = 0; i < sepIndexes.Length; ++i)
+                {
+                    int diff = Math.Abs(center - sepIndexes[i]);
+                    if (currentDiff > diff)
+                    {
+                        currentIndex = i;
+                        currentDiff = diff;
+                    }
+                }
+
+                // paranoia protector :)
+                if (currentIndex == -1)
+                    return text;
+
+                var sb = new StringBuilder();
+
+                string part1 = text.Substring(0, sepIndexes[currentIndex] + 1).TrimEnd();
+                string part2 = text.Substring(sepIndexes[currentIndex] + 1).TrimStart();
+                sb.AppendLine(part1);
+                sb.Append(part2);
+                return sb.ToString();
+            }
+            catch (Exception)
+            {
+                return text;
+            }
+        }
+
+        /// <summary>
+        /// Tries to make the text shorter.
+        /// </summary>
+        /// <param name="text">The text to edit.</param>
+        /// <returns>The edited text.</returns>
+        private string ShortifyText(string text)
+        {
+            if (text.Length < 30)
+                return text;
+
+            int trimIndex = text.IndexOfAny(new[] { ')', ']' });
+
+            if (trimIndex == -1)
+            {
+                trimIndex = text.IndexOfAny(new[] { ',', '.', ';' });
+                --trimIndex; // to remove the separator
+            }
+
+            if (trimIndex != -1)
+            {
+                return text.Substring(0, trimIndex + 1);
+            }
+
+            return text;
         }
 
         /// <summary>
@@ -259,7 +344,38 @@ namespace Momentum.App.ViewModels
         {
             NavigationService.Navigate(typeof(SettingsPage));
         }
-        
+
+        /// <summary>
+        /// Gets the command to set the lockscreen image.
+        /// </summary>
+        public DelegateCommand SetAsLockscreenCommand { get { return _setAsLockscreenCommand ?? (_setAsLockscreenCommand = new DelegateCommand(ExecuteSetAsLockscreen)); } }
+        DelegateCommand _setAsLockscreenCommand = default(DelegateCommand);
+        private async void ExecuteSetAsLockscreen()
+        {
+            IsLoading = true;
+
+            var image = await _imageService.GetBackgroundAsFileAsync();
+
+            bool result = false;
+
+            if (image != null)
+                result = await _lockScreenService.SetImageAsync(image);
+
+            
+
+            if (result)
+            {
+                // fake some progress
+                await Task.Delay(1000);
+            }
+            else
+            {
+                await _dialogService.ShowAsync(_localizer.Get("DeviceNotSupportedDialog.Content"), _localizer.Get("DeviceNotSupportedDialog.Title"));
+            }
+
+            IsLoading = false;
+        }
+
         /// <summary>
         /// Gets the command to read the quote.
         /// </summary>
@@ -286,10 +402,10 @@ namespace Momentum.App.ViewModels
         private string _backgroundCopyright;
 
         /// <summary>
-        /// Gets or sets whether the loading of the background image is in progress.
+        /// Gets or sets whether the loading of the background image or setting it is in progress.
         /// </summary>
-        public bool IsLoadingBackground { get { return _isLoadingBackground; } set { Set(ref _isLoadingBackground, value); } }
-        private bool _isLoadingBackground;
+        public bool IsLoading { get { return _isLoading; } set { Set(ref _isLoading, value); } }
+        private bool _isLoading;
 
         /// <summary>
         /// Gets or sets the user name.

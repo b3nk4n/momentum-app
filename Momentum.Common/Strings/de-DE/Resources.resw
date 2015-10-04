@@ -153,6 +153,10 @@
     <value>Info</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarLockscreen.Label" xml:space="preserve">
+    <value>Als Sperrbildschirm festlegen</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="AppBarSettings.Label" xml:space="preserve">
     <value>Einstellungen</value>
     <comment>AppBar</comment>
@@ -160,6 +164,14 @@
   <data name="DefaultUserName" xml:space="preserve">
     <value>du</value>
     <comment>MainPage</comment>
+  </data>
+  <data name="DeviceNotSupportedDialog.Content" xml:space="preserve">
+    <value>Das Setzen des Sperrbildschirms wird aktuell nur auf einem Windows PC oder Tablet unterstützt.</value>
+    <comment>Dialog</comment>
+  </data>
+  <data name="DeviceNotSupportedDialog.Title" xml:space="preserve">
+    <value>Information</value>
+    <comment>Dialog</comment>
   </data>
   <data name="Quote.ToolTipService.ToolTip" xml:space="preserve">
     <value>Antippen und motivieren lassen...</value>

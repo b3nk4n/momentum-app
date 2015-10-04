@@ -22,6 +22,7 @@ namespace Momentum.Common.Services
         IHttpService _httpService;
         ISerializationService _serializationService;
         IWebDownloadService _webDownloadService;
+        IStorageService _storageService;
 
         /// <summary>
         /// The time stamp the last time an image has been loaded successfully.
@@ -42,6 +43,7 @@ namespace Momentum.Common.Services
             _httpService = new HttpService();
             _serializationService = new DataContractSerializationService();
             _webDownloadService = new WebDownloadService();
+            _storageService = new LocalStorageService();
 
             RegionLanguageIso = regionLanguageIso;
         }
@@ -100,6 +102,16 @@ namespace Momentum.Common.Services
 
         public string RegionLanguageIso { get; set; }
 
+        public async Task<IStorageFile> GetBackgroundAsFileAsync()
+        {
+            if (await _storageService.ContainsFile(BACKGROUND_IMAGE_LOCAL_NAME))
+            {
+                return await _storageService.GetFileAsync(BACKGROUND_IMAGE_LOCAL_NAME);
+            }
+
+            return await _storageService.GetFileFromApplicationAsync(GetDefaultImage().ImagePath);
+        }
+
         /// <summary>
         /// Gets the default background image.
         /// </summary>
@@ -108,8 +120,8 @@ namespace Momentum.Common.Services
         {
             return new BingImageResult()
             {
-                Copryright = "© Dave Lane/NASA",
-                ImagePath = IOConstants.APPX_SCHEME + "/Assets/Images/CapReefMilky_EN-US.jpg"
+                Copryright = "© Benjamin Sautermeister",
+                ImagePath = IOConstants.APPX_SCHEME + "/Assets/Images/default.jpg"
             };
         }
     }

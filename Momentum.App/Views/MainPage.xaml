@@ -11,6 +11,8 @@
 
     <Page.Resources>
         <uwpcConverters:StringFormatConverter x:Key="StringFormatConv" />
+        <uwpcConverters:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+        
         <Storyboard x:Name="ShowBackgroundImage">
             <DoubleAnimation Duration="0:0:0.66" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
@@ -191,6 +193,7 @@
         <CommandBar ClosedDisplayMode="Minimal" Opacity="0.66">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarSettings" Label="Settings" Command="{Binding NavigateSettingsCommand}" />
+                <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarLockscreen" Label="Set as lockscreen" Command="{Binding SetAsLockscreenCommand}" />
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarAbout" Label="About" Command="{Binding NavigateAboutCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
@@ -284,8 +287,6 @@
 
         <Image Grid.RowSpan="2" x:Name="image" Source="{Binding BackgroundImageSource}" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.1" Margin="0,0,0,-24" />
 
-        <ProgressRing Grid.RowSpan="2" IsActive="{Binding IsLoadingBackground}" Width="64" Height="64" />
-
         <StackPanel Grid.Row="0" x:Name="contentContainer" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock x:Name="clock" Text="{Binding CurrentTime, Converter={StaticResource StringFormatConv}, ConverterParameter=HH:mm}" FontSize="84" FontWeight="SemiLight" TextAlignment="Center" >
                 <TextBlock.Projection>
@@ -324,5 +325,11 @@
                 <PlaneProjection RotationX="90"/>
             </TextBlock.Projection>
         </TextBlock>
+
+        <!-- progress overlay -->
+        <Rectangle Grid.RowSpan="2" Fill="{StaticResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConv}}" Opacity="0.75" />
+        <ProgressRing Grid.RowSpan="2" Width="64" Height="64" IsActive="{Binding IsLoading}" Foreground="{StaticResource SystemControlForegroundBaseHighBrush}" />
+
+
     </Grid>
 </uwpcControls:UniversalPage>

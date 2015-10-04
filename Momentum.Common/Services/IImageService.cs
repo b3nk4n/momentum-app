@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace Momentum.Common.Services
 {
@@ -12,6 +13,12 @@ namespace Momentum.Common.Services
         /// </summary>
         /// <returns>Returns the laoded image or NULL in case of an error.</returns>
         Task<BingImageResult> LoadImageAsync();
+
+        /// <summary>
+        /// Gets the background image as a file object.
+        /// </summary>
+        /// <returns>The background image file.</returns>
+        Task<IStorageFile> GetBackgroundAsFileAsync();
 
         /// <summary>
         /// Gets or sets the region language for the images to load.
