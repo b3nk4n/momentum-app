@@ -77,8 +77,6 @@ namespace Momentum.Common.Services
 
                         if (imageFile != null)
                         {
-                            BackgroundImageDay.Value = DateTime.Now;
-
                             var result = new BingImageResult()
                             {
                                 ImagePath = imageFile.Path
@@ -93,6 +91,8 @@ namespace Momentum.Common.Services
                             }
 
                             LastBackgroundImageCopyright.Value = result.Copryright;
+
+                            BackgroundImageDay.Value = DateTime.Now;
 
                             return result;
                         }

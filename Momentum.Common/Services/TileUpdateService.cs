@@ -35,50 +35,51 @@ namespace Momentum.Common.Services
             var imageResult = await _imageService.LoadImageAsync();
             var quoteResult = await _quoteService.LoadQuoteAsync();
 
+            var todaysFocusOrWhatsYoueFocus = (string.IsNullOrWhiteSpace(latestFocus.Message)) ? _localizer.Get("WhatsYourFocus.PlaceholderText") : _localizer.Get("TodaysFocus.Text");
+
             var adaptiveLargeTemplate = new AdaptiveBinding()
             {
                 Template = VisualTemplate.TileLarge,
-                Children =
-                            {
-                                new AdaptiveImage()
-                                {
-                                    Source = imageResult?.ImagePath,
-                                    Placement = ImagePlacement.Background
-                                },
+                Children = {
+                    new AdaptiveImage()
+                    {
+                        Source = imageResult?.ImagePath,
+                        Placement = ImagePlacement.Background
+                    },
 
-                                // todays focus message
-                                new AdaptiveText()
-                                {
-                                    Content = _localizer.Get("TodaysFocus.Text"),
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintWrap = true,
+                    // todays focus message
+                    new AdaptiveText()
+                    {
+                        Content = todaysFocusOrWhatsYoueFocus,
+                        HintStyle = TextStyle.CaptionSubtle,
+                        HintWrap = true,
 
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = latestFocus.Message,
-                                    HintStyle = TextStyle.Body,
-                                    HintWrap = true
-                                },
+                    },
+                    new AdaptiveText()
+                    {
+                        Content = latestFocus.Message,
+                        HintStyle = TextStyle.Body,
+                        HintWrap = true
+                    },
 
-                                CreateTextPlaceholder(),
+                    CreateTextPlaceholder(),
 
-                                // quote
-                                new AdaptiveText()
-                                {
-                                    Content = quoteResult.quote,
-                                    HintStyle = TextStyle.Caption,
-                                    HintAlign = TextHintAlign.Center,
-                                    HintWrap = true
-                                },
-                                new AdaptiveText()
-                                {
-                                    Content = quoteResult.author,
-                                    HintStyle = TextStyle.CaptionSubtle,
-                                    HintAlign = TextHintAlign.Center,
-                                    HintWrap = false
-                                }
-                            }
+                    // quote
+                    new AdaptiveText()
+                    {
+                        Content = quoteResult.quote,
+                        HintStyle = TextStyle.Caption,
+                        HintAlign = TextHintAlign.Center,
+                        HintWrap = true
+                    },
+                    new AdaptiveText()
+                    {
+                        Content = quoteResult.author,
+                        HintStyle = TextStyle.CaptionSubtle,
+                        HintAlign = TextHintAlign.Center,
+                        HintWrap = false
+                    }
+                }
             };
 
             // add additional text place holder for short messages
@@ -114,7 +115,7 @@ namespace Momentum.Common.Services
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = _localizer.Get("TodaysFocus.Text"),
+                                    Content = todaysFocusOrWhatsYoueFocus,
                                     HintStyle = TextStyle.CaptionSubtle,
                                     HintWrap = true
                                 },
@@ -138,7 +139,7 @@ namespace Momentum.Common.Services
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = _localizer.Get("TodaysFocus.Text"),
+                                    Content = todaysFocusOrWhatsYoueFocus,
                                     HintStyle = TextStyle.CaptionSubtle,
                                     HintWrap = true
                                 },

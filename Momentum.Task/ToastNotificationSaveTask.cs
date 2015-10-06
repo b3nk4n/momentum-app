@@ -29,16 +29,20 @@ namespace Momentum.Tasks
             {
                 var userInput = (string)details.UserInput["message"];
 
-                var focusModel = new TodaysFocusModel()
+                // only update when the user entered a value to ensure not override not a value of another device with empty text
+                if (!string.IsNullOrWhiteSpace(userInput))
                 {
-                    Message = userInput,
-                    Timestamp = DateTime.Now
-                };
+                    var focusModel = new TodaysFocusModel()
+                    {
+                        Message = userInput,
+                        Timestamp = DateTime.Now
+                    };
 
-                AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(focusModel);
+                    AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(focusModel);
 
-                // update tile
-                _tileUpdateService.UpdateLiveTile(focusModel);
+                    // update tile
+                    _tileUpdateService.UpdateLiveTile(focusModel);
+                }
             }
 
             deferral.Complete();

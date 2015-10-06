@@ -63,9 +63,9 @@ namespace Momentum.Common.Services
 
                     if (quoteResult.data != null)
                     {
-                        QuoteDay.Value = DateTimeOffset.Now;
-
                         LastQuoteDataModel.Value = _serializationService.SerializeJson(quoteResult.data);
+
+                        QuoteDay.Value = DateTimeOffset.Now;
 
                         return GetWithFixedQuotations(quoteResult.data);
                     }

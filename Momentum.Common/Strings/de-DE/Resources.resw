@@ -121,10 +121,6 @@
     <value>Daily Focus hilft dir dabei gut in den Tag zu starten. Setze dein Ziel für den Tag und lass dich inspirieren. Damit wirst du alles erreichen. </value>
     <comment>AboutPage</comment>
   </data>
-  <data name="About.AppVersion" xml:space="preserve">
-    <value>Version 1.1</value>
-    <comment>AboutPage</comment>
-  </data>
   <data name="About.MoreAppsText" xml:space="preserve">
     <value>Mehr Apps</value>
     <comment>AboutPage</comment>

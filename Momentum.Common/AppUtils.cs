@@ -21,15 +21,16 @@ namespace Momentum.Common
             if (latestUpdate.Date == DateTimeOffset.Now.Date)
                 return false;
 
+            var currentTimeSpan = DateTimeOffset.Now - DateTimeOffset.Now.Date;
+
             switch (DateTimeOffset.Now.DayOfWeek)
             {
-                
                 case DayOfWeek.Saturday:
                 case DayOfWeek.Sunday:
-                    return (DateTimeOffset.Now - DateTimeOffset.Now.Date) > AppSettings.WakeUpTimeWeekend.Value;
+                    return currentTimeSpan > AppSettings.WakeUpTimeWeekend.Value;
 
                 default:
-                    return (DateTimeOffset.Now - DateTimeOffset.Now.Date) > AppSettings.WakeUpTimeWeekDay.Value;
+                    return currentTimeSpan > AppSettings.WakeUpTimeWeekDay.Value;
             }
         }
 

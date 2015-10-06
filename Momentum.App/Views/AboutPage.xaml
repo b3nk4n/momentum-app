@@ -31,18 +31,14 @@
                 <uwpcControls:AboutControl Margin="4">
                     <uwpcControls:AboutControl.DataContext>
                         <uwpcViewModels:AboutViewModel x:Uid="/Momentum.Common/Resources/About"
-                            AppTitle="Daily Focus"
                             AppDeveloper="Benjamin Sautermeister"
                             AppDescription="Daily Focus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done."
-                            AppVersion="Version 1.0"
                             AppIcon="/Assets/Square150x150Logo.png"
                             ShowPrivacyInfoText="Privacy info"
                             SendFeedbackEmailText="Send feedback"
                             RateAndReviewText="Rate and review"
                             MoreAppsText="More apps"
                             ShareAppText="Share app"                                                       
-                            ShareAppUri="http://www.windowsphone.com/s?appid=tbd"
-                            PublisherName="Benjamin Sautermeister"
                             FeedbackToEmail="apps@bsautermeister.de"
                             PrivacyInfoUri="http://bsautermeister.de/privacy.php" />
                     </uwpcControls:AboutControl.DataContext>
