@@ -157,12 +157,16 @@
     <value>Einstellungen</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarWallpaper.Label" xml:space="preserve">
+    <value>Als Hintergrund festlegen</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="DefaultUserName" xml:space="preserve">
     <value>du</value>
     <comment>MainPage</comment>
   </data>
   <data name="DeviceNotSupportedDialog.Content" xml:space="preserve">
-    <value>Das Setzen des Sperrbildschirms wird aktuell nur auf einem Windows PC oder Tablet unterstützt.</value>
+    <value>Diese Funktion wird aktuell nur auf einem Windows PC oder Tablet unterstützt.</value>
     <comment>Dialog</comment>
   </data>
   <data name="DeviceNotSupportedDialog.Title" xml:space="preserve">

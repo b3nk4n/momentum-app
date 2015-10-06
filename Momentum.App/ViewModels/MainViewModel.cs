@@ -46,7 +46,7 @@ namespace Momentum.App.ViewModels
         private ISerializationService _serializationService;
         private ITileUpdateService _tileUpdateService;
         private ISpeechService _speechService;
-        private ILockScreenService _lockScreenService;
+        private IPersonalizationService _personalizationService;
         private IDialogService _dialogService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
@@ -70,7 +70,7 @@ namespace Momentum.App.ViewModels
             _serializationService = new DataContractSerializationService();
             _tileUpdateService = new TileUpdateService();
             _speechService = new SpeechService();
-            _lockScreenService = new LockScreenService();
+            _personalizationService = new PersonalizationService();
             _dialogService = new DialogService();
         }
 
@@ -359,9 +359,36 @@ namespace Momentum.App.ViewModels
             bool result = false;
 
             if (image != null)
-                result = await _lockScreenService.SetImageAsync(image);
+                result = await _personalizationService.SetLockScreenAsync(image);
 
-            
+            if (result)
+            {
+                // fake some progress
+                await Task.Delay(1000);
+            }
+            else
+            {
+                await _dialogService.ShowAsync(_localizer.Get("DeviceNotSupportedDialog.Content"), _localizer.Get("DeviceNotSupportedDialog.Title"));
+            }
+
+            IsLoading = false;
+        }
+
+        /// <summary>
+        /// Gets the command to set the wallpaper image.
+        /// </summary>
+        public DelegateCommand SetAsWallpaperCommand { get { return _setAsWallpaperCommand ?? (_setAsWallpaperCommand = new DelegateCommand(ExecuteSetAsWallpaper)); } }
+        DelegateCommand _setAsWallpaperCommand = default(DelegateCommand);
+        private async void ExecuteSetAsWallpaper()
+        {
+            IsLoading = true;
+
+            var image = await _imageService.GetBackgroundAsFileAsync();
+
+            bool result = false;
+
+            if (image != null)
+                result = await _personalizationService.SetWallpaperAsync(image);
 
             if (result)
             {

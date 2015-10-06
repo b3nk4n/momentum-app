@@ -157,12 +157,16 @@
     <value>Settings</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarWallpaper.Label" xml:space="preserve">
+    <value>Set as wallpaper</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="DefaultUserName" xml:space="preserve">
     <value>you</value>
     <comment>MainPage</comment>
   </data>
   <data name="DeviceNotSupportedDialog.Content" xml:space="preserve">
-    <value>Setting the lockscreen picture is currently not supported on your device.</value>
+    <value>This feature is currently not supported on your device.</value>
     <comment>Dialog</comment>
   </data>
   <data name="DeviceNotSupportedDialog.Title" xml:space="preserve">
