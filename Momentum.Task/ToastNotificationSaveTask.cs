@@ -1,8 +1,10 @@
 ﻿using Momentum.Common;
 using Momentum.Common.Models;
+using Momentum.Common.Modules;
 using Momentum.Common.Services;
 using System;
 using UWPCore.Framework.Data;
+using UWPCore.Framework.IoC;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 
@@ -15,8 +17,9 @@ namespace Momentum.Tasks
 
         public ToastNotificationSaveTask()
         {
-            _serializationService = new DataContractSerializationService();
-            _tileUpdateService = new TileUpdateService();
+            IInjector injector = new Injector(new DefaultModule(), new ReleaseModule());
+            _serializationService = injector.Get<ISerializationService>();
+            _tileUpdateService = injector.Get<ITileUpdateService>();
         }
 
         public void Run(IBackgroundTaskInstance taskInstance)

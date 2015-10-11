@@ -64,14 +64,14 @@ namespace Momentum.App.ViewModels
         {
             _callbacks = callbacks;
 
-            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
-            _quoteService = new QuoteService(ApplicationLanguages.Languages[0]);
-            _userInfoService = new UserInfoService();
-            _serializationService = new DataContractSerializationService();
-            _tileUpdateService = new TileUpdateService();
-            _speechService = new SpeechService();
-            _personalizationService = new PersonalizationService();
-            _dialogService = new DialogService();
+            _imageService = Injector.Get<IImageService>();
+            _quoteService = Injector.Get<IQuoteService>();
+            _userInfoService = Injector.Get<IUserInfoService>();
+            _serializationService = Injector.Get<ISerializationService>();
+            _tileUpdateService = Injector.Get<ITileUpdateService>();
+            _speechService = Injector.Get<ISpeechService>();
+            _personalizationService = Injector.Get<IPersonalizationService>();
+            _dialogService = Injector.Get<IDialogService>();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)

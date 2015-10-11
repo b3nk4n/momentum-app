@@ -124,6 +124,7 @@
     <Compile Include="Models\QuoteResultModel.cs" />
     <Compile Include="Models\TodaysFocusModel.cs" />
     <Compile Include="Models\TooltipsModel.cs" />
+    <Compile Include="Modules\ReleaseModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BingImageResult.cs" />
     <Compile Include="Services\BingImageService.cs" />

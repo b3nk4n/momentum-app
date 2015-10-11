@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UWPCore.Framework.Mvvm;
-using Windows.Globalization;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
@@ -19,7 +17,7 @@ namespace Momentum.App.ViewModels
 
         public SettingsAboutViewModel()
         {
-            _imageService = new BingImageService(ApplicationLanguages.Languages[0]);
+            _imageService = Injector.Get<IImageService>();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)

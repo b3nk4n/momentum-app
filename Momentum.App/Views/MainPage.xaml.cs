@@ -16,7 +16,6 @@ namespace Momentum.App.Views
         private static string BG_TASK_TOAST_NAME = "Momentum.ToastNotificationSaveTask";
 
         IBackgroundTaskService _backgroundTaskService;
-
         IToastService _toastService;
 
         public MainPage()
@@ -25,8 +24,8 @@ namespace Momentum.App.Views
 
             DataContext = new MainViewModel(this);
 
-            _backgroundTaskService = new BackgroundTaskService();
-            _toastService = new ToastService();
+            _backgroundTaskService = Injector.Get<IBackgroundTaskService>();
+            _toastService = Injector.Get<IToastService>();
 
             Loaded += (s, e) =>
             {

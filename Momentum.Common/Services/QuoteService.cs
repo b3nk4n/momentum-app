@@ -1,4 +1,5 @@
 ﻿using Momentum.Common.Models;
+using Ninject;
 using System;
 using System.Threading.Tasks;
 using UWPCore.Framework.Data;
@@ -31,10 +32,11 @@ namespace Momentum.Common.Services
         /// Creates a QuoteService instance.
         /// </summary>
         /// <param name="regionLanguageIso">The region language in ISO format.</param>
-        public QuoteService(string regionLanguageIso = "en-US")
+        [Inject]
+        public QuoteService(string regionLanguageIso, IHttpService httpService, ISerializationService serializationService)
         {
-            _httpService = new HttpService();
-            _serializationService = new DataContractSerializationService();
+            _httpService = httpService;
+            _serializationService = serializationService;
 
             RegionLanguageIso = regionLanguageIso;
         }

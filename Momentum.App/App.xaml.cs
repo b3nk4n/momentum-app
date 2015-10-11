@@ -5,6 +5,8 @@ using UWPCore.Framework.Logging;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel;
 using UWPCore.Framework.Devices;
+using UWPCore.Framework.IoC;
+using Momentum.Common.Modules;
 
 namespace Momentum.App
 {
@@ -13,7 +15,7 @@ namespace Momentum.App
     /// </summary>
     sealed partial class App : UniversalApp
     {
-        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, "Momentum.App")
+        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, "Momentum.App", new DefaultModule(), new ReleaseModule())
         {
             InitializeComponent();
 
@@ -29,7 +31,7 @@ namespace Momentum.App
         {
             await base.OnInitializeAsync(args);
 
-            var _statusBarService = new StatusBarService();
+            var _statusBarService = Injector.Get<IStatusBarService>();
             await _statusBarService.HideAsync();
         }
 

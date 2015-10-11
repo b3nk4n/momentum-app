@@ -1,4 +1,5 @@
 ﻿using Momentum.Common.Models;
+using Ninject;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -38,12 +39,13 @@ namespace Momentum.Common.Services
         /// Creates a BingImageService instance.
         /// </summary>
         /// <param name="regionLanguageIso">The region language in ISO format.</param>
-        public BingImageService(string regionLanguageIso = "en-US")
+        [Inject]
+        public BingImageService(string regionLanguageIso, IHttpService httpService, ISerializationService serializationService, IWebDownloadService webDownloadService, ILocalStorageService localStorageService)
         {
-            _httpService = new HttpService();
-            _serializationService = new DataContractSerializationService();
-            _webDownloadService = new WebDownloadService();
-            _storageService = new LocalStorageService();
+            _httpService = httpService;
+            _serializationService = serializationService;
+            _webDownloadService = webDownloadService;
+            _storageService = localStorageService;
 
             RegionLanguageIso = regionLanguageIso;
         }

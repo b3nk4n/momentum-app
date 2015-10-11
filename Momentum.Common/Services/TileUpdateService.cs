@@ -1,4 +1,5 @@
 ﻿using Momentum.Common.Models;
+using Ninject;
 using System;
 using System.Threading.Tasks;
 using UWPCore.Framework.Common;
@@ -22,12 +23,12 @@ namespace Momentum.Common.Services
         /// <summary>
         /// Creates a TileUpdateService instance.
         /// </summary>
-        public TileUpdateService()
+        [Inject]
+        public TileUpdateService(ITileService tileService, IImageService imageService, IQuoteService quoteService)
         {
-            _tileService = new TileService();
-            var language = ApplicationLanguages.Languages[0];
-            _imageService = new BingImageService(language);
-            _quoteService = new QuoteService(language);
+            _tileService = tileService;
+            _imageService = imageService;
+            _quoteService = quoteService;
         }
 
         public async Task UpdateLiveTile(TodaysFocusModel latestFocus)

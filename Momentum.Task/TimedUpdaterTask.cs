@@ -1,10 +1,12 @@
 ﻿using Momentum.Common;
 using Momentum.Common.Models;
+using Momentum.Common.Modules;
 using Momentum.Common.Services;
 using System;
 using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
+using UWPCore.Framework.IoC;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
 using Windows.ApplicationModel.Background;
@@ -24,9 +26,10 @@ namespace Momentum.Tasks
 
         public TimedUpdaterTask()
         {
-            _toastService = new ToastService();
-            _tileUpdateService = new TileUpdateService();
-            _serializationService = new DataContractSerializationService();
+            IInjector injector = new Injector(new DefaultModule(), new ReleaseModule());
+            _toastService = injector.Get<IToastService>();
+            _tileUpdateService = injector.Get<ITileUpdateService>();
+            _serializationService = injector.Get<ISerializationService>();
         }
 
         public async void Run(IBackgroundTaskInstance taskInstance)
