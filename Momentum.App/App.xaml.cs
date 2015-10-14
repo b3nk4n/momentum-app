@@ -17,7 +17,7 @@ namespace Momentum.App
     /// </summary>
     sealed partial class App : UniversalApp
     {
-        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, "Momentum.App", new DefaultModule(), new ReleaseModule())
+        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, new DefaultModule(), new ReleaseModule())
         {
             InitializeComponent();
 
