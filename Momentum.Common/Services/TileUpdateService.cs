@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Notifications.Models;
-using Windows.Globalization;
 
 namespace Momentum.Common.Services
 {

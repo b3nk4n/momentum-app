@@ -1,4 +1,5 @@
-﻿using Momentum.App.Views;
+﻿using System;
+using Momentum.App.Views;
 using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Logging;
@@ -7,6 +8,7 @@ using Windows.ApplicationModel;
 using UWPCore.Framework.Devices;
 using UWPCore.Framework.IoC;
 using Momentum.Common.Modules;
+using Windows.UI.Popups;
 
 namespace Momentum.App
 {
@@ -35,16 +37,25 @@ namespace Momentum.App
             await _statusBarService.HideAsync();
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args, ILaunchArgs launchArgs)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // check lauch arguments
-            if (launchArgs.IsValid)
+            var launchArgs = args as ILaunchActivatedEventArgs;
+            
+            if (launchArgs != null )
             {
-                Logger.WriteLine("Started with launch args: args->{0}; tileId->{1}", launchArgs.Arguments, launchArgs.TileId);
+                if (args.Kind == ActivationKind.Launch)
+                {
+                    Logger.WriteLine("Started with TILE and launch args: args->{0}; tileId->{1}", launchArgs.Arguments, launchArgs.TileId);
+                }
+                if (args.Kind == ActivationKind.ToastNotification)
+                {
+                    Logger.WriteLine("Started with TOAST and launch args: args->{0}; tileId->{1}", launchArgs.Arguments, launchArgs.TileId);
+                }
             }
 
             // start the user experience
             NavigationService.Navigate(DefaultPage);
+
             return Task.FromResult<object>(null);
         }
 

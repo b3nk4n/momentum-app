@@ -3,7 +3,6 @@ using Momentum.Common.Models;
 using Momentum.Common.Modules;
 using Momentum.Common.Services;
 using System;
-using System.Threading.Tasks;
 using UWPCore.Framework.Common;
 using UWPCore.Framework.Data;
 using UWPCore.Framework.IoC;
@@ -39,7 +38,6 @@ namespace Momentum.Tasks
             var latestFocus = GetLatestFocus();
 
             UpdateToasts(latestFocus);
-
             await _tileUpdateService.UpdateLiveTile(latestFocus);
 
             deferral.Complete();
@@ -55,7 +53,7 @@ namespace Momentum.Tasks
             _toastService.ClearHistory();
 
             // only one (successfull) popup per day
-            if (AppUtils.NeedsUpdate(latestFocus.Timestamp))
+            if (AppUtils.NeedsUpdate(latestFocus.Timestamp)) // TODO REMVOE
             {
                 // reset focus message
                 if (!string.IsNullOrEmpty(latestFocus.Message))
@@ -71,11 +69,20 @@ namespace Momentum.Tasks
         /// <summary>
         /// Gets the lastest focus from the roaming settings.
         /// </summary>
-        /// <returns>Returns the latest focus data.</returns>
+        /// <returns>Returns the latest focus data or a dummy.</returns>
         private TodaysFocusModel GetLatestFocus()
         {
             var focusJson = AppSettings.TodaysFocusJson.Value;
-            return _serializationService.DeserializeJson<TodaysFocusModel>(focusJson);
+            var data = _serializationService.DeserializeJson<TodaysFocusModel>(focusJson);
+
+            if (data == null)
+                data = new TodaysFocusModel()
+                {
+                    Message = string.Empty,
+                    Timestamp = new DateTime(2000, 01, 01) // not DateTime.MinValue, which caused an exception when calculating with it
+                };
+
+            return data;
         }
 
         /// <summary>

@@ -16,7 +16,6 @@ using UWPCore.Framework.Speech;
 using UWPCore.Framework.UI;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Globalization;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -137,7 +136,7 @@ namespace Momentum.App.ViewModels
             };
 
             // save when todays focus message has changed
-            if (_oldTodaysFocus != TodaysFocus)
+            if (_oldTodaysFocus != TodaysFocus && TodaysFocus != null)
             {
                 _todaysFocusTimestamp = DateTime.Now;
                 todaysFocusModel.Timestamp = _todaysFocusTimestamp;
@@ -322,6 +321,11 @@ namespace Momentum.App.ViewModels
                     TodaysFocus = todaysFocusModel.Message;
                     _oldTodaysFocus = todaysFocusModel.Message;
                 }
+            }
+            else
+            {
+                // make old value Empty and NOT NULL, because the app would think tha data has changed and upload a null value!
+                _oldTodaysFocus = string.Empty;
             }
         }
 
