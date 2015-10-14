@@ -53,7 +53,7 @@ namespace Momentum.Tasks
             _toastService.ClearHistory();
 
             // only one (successfull) popup per day
-            if (AppUtils.NeedsUpdate(latestFocus.Timestamp)) // TODO REMVOE
+            if (AppUtils.NeedsUpdate(latestFocus.Timestamp))
             {
                 // reset focus message
                 if (!string.IsNullOrEmpty(latestFocus.Message))
