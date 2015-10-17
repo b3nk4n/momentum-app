@@ -13,6 +13,7 @@ using UWPCore.Framework.Devices;
 using UWPCore.Framework.Mvvm;
 using UWPCore.Framework.Navigation;
 using UWPCore.Framework.Speech;
+using UWPCore.Framework.Store;
 using UWPCore.Framework.UI;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -39,6 +40,8 @@ namespace Momentum.App.ViewModels
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private const string PRO_VERSION = "DailyFocus_Pro";
+
         private IImageService _imageService;
         private IQuoteService _quoteService;
         private IUserInfoService _userInfoService;
@@ -47,6 +50,7 @@ namespace Momentum.App.ViewModels
         private ISpeechService _speechService;
         private IPersonalizationService _personalizationService;
         private IDialogService _dialogService;
+        private ILicenseService _licenseService;
 
         private Localizer _localizer = new Localizer("Momentum.Common");
 
@@ -71,6 +75,7 @@ namespace Momentum.App.ViewModels
             _speechService = Injector.Get<ISpeechService>();
             _personalizationService = Injector.Get<IPersonalizationService>();
             _dialogService = Injector.Get<IDialogService>();
+            _licenseService = Injector.Get<ILicenseService>();
         }
 
         public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -419,6 +424,26 @@ namespace Momentum.App.ViewModels
                 await _speechService.SpeakTextAsync(QuoteText);
             }
         }
+
+        /// <summary>
+        /// Gets the command to read the quote.
+        /// </summary>
+        public DelegateCommand PurchaseProVersionCommand { get { return _purchaseProVersionCommand ?? (_purchaseProVersionCommand = new DelegateCommand(ExecutePurchaseProVersion, CanExecutePurchaseProVersion)); } }
+        DelegateCommand _purchaseProVersionCommand = default(DelegateCommand);
+        private async void ExecutePurchaseProVersion()
+        {
+            await _licenseService.RequestProductPurchaseAsync(PRO_VERSION);
+            RaisePropertyChanged("IsAdVisible");
+        }
+        private bool CanExecutePurchaseProVersion()
+        {
+            return !_licenseService.IsProductActive(PRO_VERSION);
+        }
+
+        /// <summary>
+        /// Gets whether the pro version is inactive and the adverts should be visible.
+        /// </summary>
+        public bool IsAdVisible { get { return !_licenseService.IsProductActive(PRO_VERSION); } }
 
         /// <summary>
         /// Gets or sets the app background image.

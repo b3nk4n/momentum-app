@@ -149,6 +149,10 @@
     <value>About</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarIAP.Label" xml:space="preserve">
+    <value>In-App Purchases</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="AppBarLockscreen.Label" xml:space="preserve">
     <value>Set as lockscreen</value>
     <comment>AppBar</comment>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="20506BenjaminSautermeiste.Impetus" Publisher="CN=E658962E-3EEA-4A7B-9BDA-D69C021B84FB" Version="1.3.12.0" />
+  <Identity Name="20506BenjaminSautermeiste.Impetus" Publisher="CN=E658962E-3EEA-4A7B-9BDA-D69C021B84FB" Version="1.4.12.0" />
   <mp:PhoneIdentity PhoneProductId="0b8dc9f1-a787-4319-bebc-aaada0d17fad" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Daily Focus</DisplayName>
@@ -26,14 +26,14 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0063B1" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.ToastNotificationSaveTask">
-          <BackgroundTasks>
-            <Task Type="systemEvent" />
-          </BackgroundTasks>
-        </Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.TimedUpdaterTask">
           <BackgroundTasks>
             <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Momentum.Tasks.ToastNotificationSaveTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
           </BackgroundTasks>
         </Extension>
       </Extensions>

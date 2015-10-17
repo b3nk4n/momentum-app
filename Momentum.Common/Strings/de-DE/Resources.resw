@@ -149,6 +149,10 @@
     <value>Info</value>
     <comment>AppBar</comment>
   </data>
+  <data name="AppBarIAP.Label" xml:space="preserve">
+    <value>In-App Store</value>
+    <comment>AppBar</comment>
+  </data>
   <data name="AppBarLockscreen.Label" xml:space="preserve">
     <value>Als Sperrbildschirm festlegen</value>
     <comment>AppBar</comment>

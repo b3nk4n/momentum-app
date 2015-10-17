@@ -1,6 +1,9 @@
-﻿using Momentum.App.ViewModels;
+﻿using Microsoft.AdMediator.Core.Events;
+using Microsoft.AdMediator.Core.Models;
+using Momentum.App.ViewModels;
 using System;
 using UWPCore.Framework.Controls;
+using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Tasks;
 using Windows.ApplicationModel.Background;
@@ -34,6 +37,8 @@ namespace Momentum.App.Views
                 // clear action center when app was launched 
                 _toastService.ClearHistory();
             };
+
+            ConfigureAdverts();
         }
 
         /// <summary>
@@ -81,6 +86,43 @@ namespace Momentum.App.Views
             {
                 viewModel.ReadQuoteCommand.Execute(null);
             }
+        }
+
+        /// <summary>
+        /// Configures the adverts.
+        /// </summary>
+        private void ConfigureAdverts()
+        {
+            AdMediator.AdSdkError += AdMediator_AdError;
+            AdMediator.AdMediatorFilled += AdMediator_AdFilled;
+            AdMediator.AdMediatorError += AdMediator_AdMediatorError;
+            AdMediator.AdSdkEvent += AdMediator_AdSdkEvent;
+
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
+
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
+        }
+
+        void AdMediator_AdSdkEvent(object sender, AdSdkEventArgs e)
+        {
+            Logger.WriteLine("AdSdk event {0} by {1}", e.EventName, e.Name);
+        }
+
+        void AdMediator_AdMediatorError(object sender, AdMediatorFailedEventArgs e)
+        {
+            Logger.WriteLine("AdMediatorError:" + e.Error + " " + e.ErrorCode);
+        }
+
+        void AdMediator_AdFilled(object sender, AdSdkEventArgs e)
+        {
+            Logger.WriteLine("AdFilled:" + e.Name);
+        }
+
+        void AdMediator_AdError(object sender, AdFailedEventArgs e)
+        {
+            Logger.WriteLine("AdSdkError by {0} ErrorCode: {1} ErrorDescription: {2} Error: {3}", e.Name, e.ErrorCode, e.ErrorDescription, e.Error);
         }
     }
 }
