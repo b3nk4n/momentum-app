@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>Momentum.App_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>49BF4CDD0B37AD4DF1276AD4DA9E6AECD5F159F6</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
