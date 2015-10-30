@@ -348,10 +348,8 @@
         <ProgressRing Grid.RowSpan="2" Width="64" Height="64" IsActive="{Binding IsLoading}" Foreground="{StaticResource SystemControlForegroundBaseHighBrush}" />
 
         <!-- adverts -->
-        <Border>
-            <ads:AdMediatorControl x:Name="AdMediator" HorizontalAlignment="Center" VerticalAlignment="Top" Width="728" Height="90"
-                               Id="AdMediator-Id-1CC7F765-A367-4245-9463-BE365F85648E" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}" />
-        </Border>
+        <ads:AdMediatorControl x:Name="AdMediator" HorizontalAlignment="Center" VerticalAlignment="Top" Width="728" Height="90"
+                            Id="AdMediator-Id-1CC7F765-A367-4245-9463-BE365F85648E" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}" />
         
     </Grid>
 </uwpcControls:UniversalPage>
