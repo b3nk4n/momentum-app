@@ -98,7 +98,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="AdMediator.config" />
+    <None Include="AdMediator.config" />
     <None Include="Momentum.App_StoreKey.pfx" />
     <None Include="project.json" />
     <PRIResource Include="Strings\en-US\Resources.resw" />

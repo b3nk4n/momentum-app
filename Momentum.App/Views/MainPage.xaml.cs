@@ -100,6 +100,8 @@ namespace Momentum.App.Views
 
             AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
             AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
+            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
 
             AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
             AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;

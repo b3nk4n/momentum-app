@@ -213,6 +213,14 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
 
+                <VisualState x:Name="SplitModeMini">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" MinWindowHeight="0"   />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                
                 <VisualState x:Name="SplitModeLandscapeNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="520" MinWindowHeight="0"   />
@@ -260,10 +268,10 @@
                                 Value="15" />
                         <Setter Target="QuoteAuthor.FontSize"
                                 Value="12" />
-                        <Setter Target="AdMediator.Width"
+                        <!--<Setter Target="AdMediator.Width"
                                 Value="320" />
                         <Setter Target="AdMediator.Height"
-                                Value="50" />
+                                Value="50" />-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -340,7 +348,10 @@
         <ProgressRing Grid.RowSpan="2" Width="64" Height="64" IsActive="{Binding IsLoading}" Foreground="{StaticResource SystemControlForegroundBaseHighBrush}" />
 
         <!-- adverts -->
-        <ads:AdMediatorControl x:Name="AdMediator" HorizontalAlignment="Center" VerticalAlignment="Top" Width="728" Height="90"
+        <Border>
+            <ads:AdMediatorControl x:Name="AdMediator" HorizontalAlignment="Center" VerticalAlignment="Top" Width="728" Height="90"
                                Id="AdMediator-Id-1CC7F765-A367-4245-9463-BE365F85648E" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}" />
+        </Border>
+        
     </Grid>
 </uwpcControls:UniversalPage>
