@@ -52,7 +52,7 @@ namespace Momentum.App.Views
 
             if (await _backgroundTaskService.RequestAccessAsync())
             {
-                _backgroundTaskService.Register(BG_TASK_TIMED_NAME, "Momentum.Tasks.TimedUpdaterTask", new TimeTrigger(60, false));
+                _backgroundTaskService.Register(BG_TASK_TIMED_NAME, "Momentum.Tasks.TimedUpdaterTask", new TimeTrigger(60, false), new SystemCondition(SystemConditionType.InternetAvailable));
                 _backgroundTaskService.Register(BG_TASK_TOAST_NAME, "Momentum.Tasks.ToastNotificationSaveTask", new ToastNotificationActionTrigger());
             }     
         }
