@@ -3,6 +3,7 @@ using Microsoft.AdMediator.Core.Models;
 using Momentum.App.ViewModels;
 using System;
 using UWPCore.Framework.Controls;
+using UWPCore.Framework.Devices;
 using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Tasks;
@@ -18,8 +19,9 @@ namespace Momentum.App.Views
         private static string BG_TASK_TIMED_NAME = "Momentum.TimedUpdaterTask";
         private static string BG_TASK_TOAST_NAME = "Momentum.ToastNotificationSaveTask";
 
-        IBackgroundTaskService _backgroundTaskService;
-        IToastService _toastService;
+        private IBackgroundTaskService _backgroundTaskService;
+        private IToastService _toastService;
+        private IDeviceInfoService _deviceInfoService;
 
         public MainPage()
         {
@@ -29,6 +31,7 @@ namespace Momentum.App.Views
 
             _backgroundTaskService = Injector.Get<IBackgroundTaskService>();
             _toastService = Injector.Get<IToastService>();
+            _deviceInfoService = Injector.Get <IDeviceInfoService>();
 
             Loaded += (s, e) =>
             {
@@ -98,10 +101,18 @@ namespace Momentum.App.Views
             AdMediator.AdMediatorError += AdMediator_AdMediatorError;
             AdMediator.AdSdkEvent += AdMediator_AdSdkEvent;
 
+            if (_deviceInfoService.IsWindows)
+            {
+                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
+                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
+            }
+            else if (_deviceInfoService.IsPhone)
+            {
+                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 320;
+                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 50;
+            }
             AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
             AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
 
             AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
             AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
