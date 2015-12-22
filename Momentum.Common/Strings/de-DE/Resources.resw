@@ -197,8 +197,24 @@
     <value>Wann stehst du am Wochenende auf?</value>
     <comment>SettingsPage</comment>
   </data>
-  <data name="Toast.Subtitle" xml:space="preserve">
+  <data name="Toast.Subtitle1" xml:space="preserve">
     <value>Heute wird ein toller Tag...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle2" xml:space="preserve">
+    <value>Ein toller Tag steht bevor...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle3" xml:space="preserve">
+    <value>Ein schöner Tag steht bevor...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle4" xml:space="preserve">
+    <value>Ein neuer Tag steht bevor...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle5" xml:space="preserve">
+    <value>Neuer Tag, neues Glück...</value>
     <comment>Toast</comment>
   </data>
   <data name="TodaysFocus.Text" xml:space="preserve">

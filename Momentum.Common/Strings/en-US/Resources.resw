@@ -197,8 +197,24 @@
     <value>When do you wake up on the weekend?</value>
     <comment>SettingsPage</comment>
   </data>
-  <data name="Toast.Subtitle" xml:space="preserve">
+  <data name="Toast.Subtitle1" xml:space="preserve">
     <value>The day looks promising...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle2" xml:space="preserve">
+    <value>A new day has started...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle3" xml:space="preserve">
+    <value>The day looks perfect...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle4" xml:space="preserve">
+    <value>The days looks great...</value>
+    <comment>Toast</comment>
+  </data>
+  <data name="Toast.Subtitle5" xml:space="preserve">
+    <value>Another day, another dollar...</value>
     <comment>Toast</comment>
   </data>
   <data name="TodaysFocus.Text" xml:space="preserve">

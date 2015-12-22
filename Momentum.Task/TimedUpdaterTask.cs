@@ -21,6 +21,8 @@ namespace Momentum.Tasks
         private ITileUpdateService _tileUpdateService;
         private ISerializationService _serializationService;
 
+        private static Random rand = new Random();
+
         private Localizer _localizer = new Localizer("Momentum.Common");
 
         public TimedUpdaterTask()
@@ -101,6 +103,9 @@ namespace Momentum.Tasks
         /// <returns>The created toast notification.</returns>
         private AdaptiveToastModel CreateToast()
         {
+            var index = rand.Next(5) + 1;
+            var subtitleContent = _localizer.Get("Toast.Subtitle" + index);
+
             return new AdaptiveToastModel()
             {
                 Visual = new AdaptiveVisual()
@@ -118,7 +123,7 @@ namespace Momentum.Tasks
                                 },
                                 new AdaptiveText()
                                 {
-                                    Content = _localizer.Get("Toast.Subtitle")
+                                    Content = subtitleContent
                                 }
                             }
                         }
