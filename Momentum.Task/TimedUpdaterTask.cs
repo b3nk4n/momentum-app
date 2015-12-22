@@ -59,8 +59,9 @@ namespace Momentum.Tasks
             if (AppUtils.NeedsUpdate(latestFocus.Timestamp))
             {
                 // reset focus message
-                if (!string.IsNullOrEmpty(latestFocus.Message))
-                    ResetTodaysFocusMessage(latestFocus);
+                //if (!string.IsNullOrEmpty(latestFocus.Message))
+                //    ResetTodaysFocusMessage(latestFocus);
+                // DO NOT RESET THE MESSAGE, BECAUSE WE COULD OVERRIDE AN UNSYNCED CHANGE OF ANOTHER DEVICE
 
                 // create toast message
                 var adaptiveToastModel = CreateToast();
@@ -91,11 +92,11 @@ namespace Momentum.Tasks
         /// <summary>
         /// Resets the todays focus message, because it is expired.
         /// </summary>
-        private void ResetTodaysFocusMessage(TodaysFocusModel lastestFocus)
-        {
-            lastestFocus.Message = string.Empty;
-            AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(lastestFocus);
-        }
+        //private void ResetTodaysFocusMessage(TodaysFocusModel lastestFocus)
+        //{
+        //    lastestFocus.Message = string.Empty;
+        //    AppSettings.TodaysFocusJson.Value = _serializationService.SerializeJson(lastestFocus);
+        //}
 
         /// <summary>
         /// Creates the toast notification.

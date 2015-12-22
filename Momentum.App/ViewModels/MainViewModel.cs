@@ -329,8 +329,17 @@ namespace Momentum.App.ViewModels
                 if (todaysFocusModel != null)
                 {
                     _todaysFocusTimestamp = todaysFocusModel.Timestamp;
-                    TodaysFocus = todaysFocusModel.Message;
-                    _oldTodaysFocus = todaysFocusModel.Message;
+
+                    if (!AppUtils.NeedsUpdate(_todaysFocusTimestamp))
+                    {
+                        TodaysFocus = todaysFocusModel.Message;
+                        _oldTodaysFocus = todaysFocusModel.Message;
+                    }
+                    else
+                    {
+                        TodaysFocus = string.Empty;
+                        _oldTodaysFocus = string.Empty;
+                    }
                 }
             }
             else
