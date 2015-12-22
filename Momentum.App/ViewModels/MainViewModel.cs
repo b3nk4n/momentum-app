@@ -93,7 +93,13 @@ namespace Momentum.App.ViewModels
 
             await LoadBackgroundImageAsync();
             await LoadQuoteAsync();
-            
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            StartCurrentTimeUpdater();
         }
 
         /// <summary>

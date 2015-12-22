@@ -17,7 +17,8 @@ namespace Momentum.Tasks
 
         public ToastNotificationSaveTask()
         {
-            IInjector injector = new Injector(new DefaultModule(), new ReleaseModule());
+            IInjector injector = Injector.Instance;
+            injector.Init(new DefaultModule(), new ReleaseModule());
             _serializationService = injector.Get<ISerializationService>();
             _tileUpdateService = injector.Get<ITileUpdateService>();
         }

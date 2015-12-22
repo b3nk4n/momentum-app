@@ -57,19 +57,25 @@ namespace Momentum.Common.Services
 
             try
             {
-                var jsonString = await _httpService.GetAsync(new Uri(QUOTE_URI + RegionLanguageIso, UriKind.Absolute));
+                var res = await _httpService.GetAsync(new Uri(QUOTE_URI + RegionLanguageIso, UriKind.Absolute));
 
-                if (!string.IsNullOrEmpty(jsonString))
+                if (res != null &&
+                    res.IsSuccessStatusCode)
                 {
-                    var quoteResult = _serializationService.DeserializeJson<QuoteResultModel>(jsonString);
+                    var jsonString = await res.Content.ReadAsStringAsync();
 
-                    if (quoteResult.data != null)
+                    if (!string.IsNullOrEmpty(jsonString))
                     {
-                        LastQuoteDataModel.Value = _serializationService.SerializeJson(quoteResult.data);
+                        var quoteResult = _serializationService.DeserializeJson<QuoteResultModel>(jsonString);
 
-                        QuoteDay.Value = DateTimeOffset.Now;
+                        if (quoteResult.data != null)
+                        {
+                            LastQuoteDataModel.Value = _serializationService.SerializeJson(quoteResult.data);
 
-                        return GetWithFixedQuotations(quoteResult.data);
+                            QuoteDay.Value = DateTimeOffset.Now;
+
+                            return GetWithFixedQuotations(quoteResult.data);
+                        }
                     }
                 }
             }

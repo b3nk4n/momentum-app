@@ -25,7 +25,8 @@ namespace Momentum.Tasks
 
         public TimedUpdaterTask()
         {
-            IInjector injector = new Injector(new DefaultModule(), new ReleaseModule());
+            IInjector injector = Injector.Instance;
+            injector.Init(new DefaultModule(), new ReleaseModule());
             _toastService = injector.Get<IToastService>();
             _tileUpdateService = injector.Get<ITileUpdateService>();
             _serializationService = injector.Get<ISerializationService>();

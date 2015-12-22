@@ -8,7 +8,6 @@ using Windows.ApplicationModel;
 using UWPCore.Framework.Devices;
 using UWPCore.Framework.IoC;
 using Momentum.Common.Modules;
-using Windows.UI.Popups;
 
 namespace Momentum.App
 {
@@ -17,7 +16,7 @@ namespace Momentum.App
     /// </summary>
     sealed partial class App : UniversalApp
     {
-        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, new DefaultModule(), new ReleaseModule())
+        public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, false, new DefaultModule(), new ReleaseModule())
         {
             InitializeComponent();
 

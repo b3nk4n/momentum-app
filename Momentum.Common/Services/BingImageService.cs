@@ -64,39 +64,45 @@ namespace Momentum.Common.Services
 
             try
             {
-                var jsonString = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
+                var res = await _httpService.GetAsync(new Uri(IMAGE_SOURCE_URI + RegionLanguageIso, UriKind.Absolute));
 
-                if (!string.IsNullOrEmpty(jsonString))
+                if (res != null &&
+                    res.IsSuccessStatusCode)
                 {
-                    var imageModel = _serializationService.DeserializeJson<BingImageModel>(jsonString);
+                    var jsonString = await res.Content.ReadAsStringAsync();
 
-                    if (imageModel.images.Count > 0)
+                    if (!string.IsNullOrEmpty(jsonString))
                     {
-                        var imageItem = imageModel.images[0];
+                        var imageModel = _serializationService.DeserializeJson<BingImageModel>(jsonString);
 
-                        // download image
-                        var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME, NameCollisionOption.ReplaceExisting);
-
-                        if (imageFile != null)
+                        if (imageModel.images.Count > 0)
                         {
-                            var result = new BingImageResult()
-                            {
-                                ImagePath = imageFile.Path
-                            };
+                            var imageItem = imageModel.images[0];
 
-                            // trim copyright
-                            Regex regName = new Regex(@"\((.*)\)");
-                            Match match = regName.Match(imageItem.copyright);
-                            if (match.Success)
+                            // download image
+                            var imageFile = await _webDownloadService.DownloadAsync(new Uri(BASE_URI + imageItem.url, UriKind.Absolute), BACKGROUND_IMAGE_LOCAL_NAME, NameCollisionOption.ReplaceExisting);
+
+                            if (imageFile != null)
                             {
-                                result.Copryright = match.Groups[1].Value;
+                                var result = new BingImageResult()
+                                {
+                                    ImagePath = imageFile.Path
+                                };
+
+                                // trim copyright
+                                Regex regName = new Regex(@"\((.*)\)");
+                                Match match = regName.Match(imageItem.copyright);
+                                if (match.Success)
+                                {
+                                    result.Copryright = match.Groups[1].Value;
+                                }
+
+                                LastBackgroundImageCopyright.Value = result.Copryright;
+
+                                BackgroundImageDay.Value = DateTime.Now;
+
+                                return result;
                             }
-
-                            LastBackgroundImageCopyright.Value = result.Copryright;
-
-                            BackgroundImageDay.Value = DateTime.Now;
-
-                            return result;
                         }
                     }
                 }
