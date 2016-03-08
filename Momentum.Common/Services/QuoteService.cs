@@ -95,12 +95,20 @@ namespace Momentum.Common.Services
         /// <returns>Returns the default quote.</returns>
         private QuoteDataModel GetDefaultQuote()
         {
-            if (RegionLanguageIso == "de-DE")
+            if (RegionLanguageIso.StartsWith("de"))
             {
                 return new QuoteDataModel()
                 {
                     author = "Friedrich von Schiller",
                     quote = "\"Jeder Tag ist eine neue Chance, das zu tun, was du möchtest.\""
+                };
+            }
+            else if (RegionLanguageIso.StartsWith("tr"))
+            {
+                return new QuoteDataModel()
+                {
+                    author = "Çobanoğlu, Özkul",
+                    quote = "\"Sabır acıdır, meyvesi tatlıdır.\""
                 };
             }
             else

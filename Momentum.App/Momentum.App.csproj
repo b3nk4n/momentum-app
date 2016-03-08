@@ -101,6 +101,7 @@
     <None Include="AdMediator.config" />
     <None Include="Momentum.App_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\tr-TR\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\de-DE\Resources.resw" />
   </ItemGroup>
