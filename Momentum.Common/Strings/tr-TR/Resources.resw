@@ -121,6 +121,10 @@
     <value>Daily Focus, güzel bir güne başlamak için yardımcı olur. İlham almak ve günlük hedefini belirle.Bunu halletmek için yardımcı oluyoruz.</value>
     <comment>AboutPage</comment>
   </data>
+  <data name="About.ContributorsTitle" xml:space="preserve">
+    <value>Emeği geçenler:</value>
+    <comment>AboutPage</comment>
+  </data>
   <data name="About.MoreAppsText" xml:space="preserve">
     <value>Daha Fazla Uygulama</value>
     <comment>AboutPage</comment>

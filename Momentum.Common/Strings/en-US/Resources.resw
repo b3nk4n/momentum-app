@@ -121,6 +121,10 @@
     <value>Daily Focus helps you to start your day right. Get inspired and set your focus for the day. We help you to get it done.</value>
     <comment>AboutPage</comment>
   </data>
+  <data name="About.ContributorsTitle" xml:space="preserve">
+    <value>Contributors:</value>
+    <comment>AboutPage</comment>
+  </data>
   <data name="About.MoreAppsText" xml:space="preserve">
     <value>More apps</value>
     <comment>AboutPage</comment>
