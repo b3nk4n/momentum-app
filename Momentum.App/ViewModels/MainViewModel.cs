@@ -95,11 +95,16 @@ namespace Momentum.App.ViewModels
             await LoadQuoteAsync();
         }
 
-        public override void OnResume()
+        public async override void OnResume()
         {
             base.OnResume();
 
             StartCurrentTimeUpdater();
+
+            // reload new data on resume
+            UpdateTodaysFocusFromSettings();
+            await LoadBackgroundImageAsync();
+            await LoadQuoteAsync();
         }
 
         /// <summary>
