@@ -1,13 +1,13 @@
-﻿using Microsoft.AdMediator.Core.Events;
-using Microsoft.AdMediator.Core.Models;
-using Momentum.App.ViewModels;
+﻿using Momentum.App.ViewModels;
 using System;
 using UWPCore.Framework.Controls;
 using UWPCore.Framework.Devices;
-using UWPCore.Framework.Logging;
 using UWPCore.Framework.Notifications;
 using UWPCore.Framework.Tasks;
 using Windows.ApplicationModel.Background;
+using Microsoft.Advertising.WinRT.UI;
+using Windows.System.Profile;
+using Windows.UI.Xaml;
 
 namespace Momentum.App.Views
 {
@@ -27,6 +27,8 @@ namespace Momentum.App.Views
         {
             InitializeComponent();
 
+            ConfigureAdverts();
+
             DataContext = new MainViewModel(this);
 
             _backgroundTaskService = Injector.Get<IBackgroundTaskService>();
@@ -40,8 +42,6 @@ namespace Momentum.App.Views
                 // clear action center when app was launched 
                 _toastService.ClearHistory();
             };
-
-            ConfigureAdverts();
         }
 
         /// <summary>
@@ -91,51 +91,198 @@ namespace Momentum.App.Views
             }
         }
 
-        /// <summary>
-        /// Configures the adverts.
-        /// </summary>
-        private void ConfigureAdverts()
-        {
-            AdMediator.AdSdkError += AdMediator_AdError;
-            AdMediator.AdMediatorFilled += AdMediator_AdFilled;
-            AdMediator.AdMediatorError += AdMediator_AdMediatorError;
-            AdMediator.AdSdkEvent += AdMediator_AdSdkEvent;
+        #region Adverts
 
-            if (_deviceInfoService.IsWindows)
+        private const int AD_WIDTH = 320;
+        private const int AD_HEIGHT = 50;
+        private const int HOUSE_AD_WEIGHT = 5; // 5% AdHouse ads
+        private const int AD_REFRESH_SECONDS = 35;
+        private const int MAX_ERRORS_PER_REFRESH = 3;
+        private const string WAPPLICATIONID = "891da8fa-fe3b-4aab-b9f5-8da90fceb155";
+        private const string WADUNITID_PAID = "251980";
+        private const string WADUNITID_HOUSE = "252004";
+        private const string MAPPLICATIONID = "574b9a13-5c75-4ef8-9776-6f50d7734a7c";
+        private const string MADUNITID_PAID = "251977";
+        private const string MADUNITID_HOUSE = "252008";
+        private const string ADDUPLEX_APPKEY = "4e7ab990-2cf9-4a79-8a35-0b8e1f4a671a";
+        private const string ADDUPLEX_ADUNIT = "172239";
+
+        // Dispatch timer to fire at each ad refresh interval.
+        private DispatcherTimer myAdRefreshTimer = new DispatcherTimer();
+
+        // Global variables used for mediation decisions.
+        private Random randomGenerator = new Random();
+        private int errorCountCurrentRefresh = 0;  // Prevents infinite redirects.
+        private int adDuplexWeight = 0;            // Will be set by GetAdDuplexWeight().
+
+        // Microsoft and AdDuplex controls for banner ads.
+        private AdControl myMicrosoftBanner = null;
+        private AdDuplex.AdControl myAdDuplexBanner = null;
+
+        // Application ID and ad unit ID values for Microsoft advertising. By default,
+        // assign these to non-mobile ad unit info.
+        private string myMicrosoftAppId = WAPPLICATIONID;
+        private string myMicrosoftPaidUnitId = WADUNITID_PAID;
+        private string myMicrosoftHouseUnitId = WADUNITID_HOUSE;
+
+        public void ConfigureAdverts()
+        {
+            myAdGrid.Width = AD_WIDTH;
+            myAdGrid.Height = AD_HEIGHT;
+            adDuplexWeight = 0;
+            RefreshBanner();
+
+            // Start the timer to refresh the banner at the desired interval.
+            myAdRefreshTimer.Interval = new TimeSpan(0, 0, AD_REFRESH_SECONDS);
+            myAdRefreshTimer.Tick += myAdRefreshTimer_Tick;
+            myAdRefreshTimer.Start();
+
+            // For mobile device families, use the mobile ad unit info.
+            if ("Windows.Mobile" == AnalyticsInfo.VersionInfo.DeviceFamily)
             {
-                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 728;
-                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 90;
+                myMicrosoftAppId = MAPPLICATIONID;
+                myMicrosoftPaidUnitId = MADUNITID_PAID;
+                myMicrosoftHouseUnitId = MADUNITID_HOUSE;
             }
-            else if (_deviceInfoService.IsPhone)
+        }
+
+        private void ActivateMicrosoftBanner()
+        {
+            // Return if you hit the error limit for this refresh interval.
+            if (errorCountCurrentRefresh >= MAX_ERRORS_PER_REFRESH)
             {
-                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Width"] = 320;
-                AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["Height"] = 50;
+                myAdGrid.Visibility = Visibility.Collapsed;
+                return;
             }
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.MicrosoftAdvertising]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
 
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["HorizontalAlignment"] = Windows.UI.Xaml.HorizontalAlignment.Center;
-            AdMediator.AdSdkOptionalParameters[AdSdkNames.AdDuplex]["VerticalAlignment"] = Windows.UI.Xaml.VerticalAlignment.Top;
+            // Use random number generator and house ads weight to determine whether
+            // to use paid ads or house ads. Paid is the default. You could alternatively
+            // write a method similar to GetAdDuplexWeight and override by region.
+            string myAdUnit = myMicrosoftPaidUnitId;
+            int houseWeight = HOUSE_AD_WEIGHT;
+            int randomInt = randomGenerator.Next(0, 100);
+            if (randomInt < houseWeight)
+            {
+                myAdUnit = myMicrosoftHouseUnitId;
+            }
+
+            // Hide the AdDuplex control if it is showing.
+            if (null != myAdDuplexBanner)
+            {
+                myAdDuplexBanner.Visibility = Visibility.Collapsed;
+                myAdGrid.Children.Remove(myAdDuplexBanner);
+                myAdDuplexBanner = null;
+            }
+
+            // Initialize or display the Microsoft control.
+            if (null == myMicrosoftBanner)
+            {
+                myMicrosoftBanner = new AdControl();
+                myMicrosoftBanner.ApplicationId = myMicrosoftAppId;
+                myMicrosoftBanner.AdUnitId = myAdUnit;
+                myMicrosoftBanner.Width = AD_WIDTH;
+                myMicrosoftBanner.Height = AD_HEIGHT;
+                myMicrosoftBanner.IsAutoRefreshEnabled = false;
+
+                myMicrosoftBanner.AdRefreshed += myMicrosoftBanner_AdRefreshed;
+                myMicrosoftBanner.ErrorOccurred += myMicrosoftBanner_ErrorOccurred;
+
+                myAdGrid.Children.Add(myMicrosoftBanner);
+            }
+            else
+            {
+                myMicrosoftBanner.AdUnitId = myAdUnit;
+                myMicrosoftBanner.Visibility = Visibility.Visible;
+                myMicrosoftBanner.Refresh();
+            }
         }
 
-        void AdMediator_AdSdkEvent(object sender, AdSdkEventArgs e)
+        private void ActivateAdDuplexBanner()
         {
-            Logger.WriteLine("AdSdk event {0} by {1}", e.EventName, e.Name);
+            // Return if you hit the error limit for this refresh interval.
+            if (errorCountCurrentRefresh >= MAX_ERRORS_PER_REFRESH)
+            {
+                myAdGrid.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            // Hide the Microsoft control if it is showing.
+            if (null != myMicrosoftBanner)
+            {
+                myMicrosoftBanner.Visibility = Visibility.Collapsed;
+                myAdGrid.Children.Remove(myMicrosoftBanner);
+                myMicrosoftBanner = null;
+            }
+
+            // Initialize or display the AdDuplex control.
+            if (null == myAdDuplexBanner)
+            {
+                myAdDuplexBanner = new AdDuplex.AdControl();
+                myAdDuplexBanner.AppKey = ADDUPLEX_APPKEY;
+                myAdDuplexBanner.AdUnitId = ADDUPLEX_ADUNIT;
+                myAdDuplexBanner.Width = AD_WIDTH;
+                myAdDuplexBanner.Height = AD_HEIGHT;
+                myAdDuplexBanner.RefreshInterval = AD_REFRESH_SECONDS;
+
+                myAdDuplexBanner.AdLoaded += myAdDuplexBanner_AdLoaded;
+                myAdDuplexBanner.AdCovered += myAdDuplexBanner_AdCovered;
+                myAdDuplexBanner.AdLoadingError += myAdDuplexBanner_AdLoadingError;
+                myAdDuplexBanner.NoAd += myAdDuplexBanner_NoAd;
+
+                myAdGrid.Children.Add(myAdDuplexBanner);
+            }
+            myAdDuplexBanner.Visibility = Visibility.Visible;
         }
 
-        void AdMediator_AdMediatorError(object sender, AdMediatorFailedEventArgs e)
+        private void myAdRefreshTimer_Tick(object sender, object e)
         {
-            Logger.WriteLine("AdMediatorError:" + e.Error + " " + e.ErrorCode);
+            RefreshBanner();
         }
 
-        void AdMediator_AdFilled(object sender, AdSdkEventArgs e)
+        private void RefreshBanner()
         {
-            Logger.WriteLine("AdFilled:" + e.Name);
+            // Reset the error counter for this refresh interval and
+            // make sure the ad grid is visible.
+            errorCountCurrentRefresh = 0;
+            myAdGrid.Visibility = Visibility.Visible;
+
+            ActivateMicrosoftBanner();
         }
 
-        void AdMediator_AdError(object sender, AdFailedEventArgs e)
+        private void myMicrosoftBanner_AdRefreshed(object sender, RoutedEventArgs e)
         {
-            Logger.WriteLine("AdSdkError by {0} ErrorCode: {1} ErrorDescription: {2} Error: {3}", e.Name, e.ErrorCode, e.ErrorDescription, e.Error);
+            // Add your code here as necessary.
         }
+
+        private void myMicrosoftBanner_ErrorOccurred(object sender, AdErrorEventArgs e)
+        {
+            errorCountCurrentRefresh++;
+            ActivateAdDuplexBanner();
+        }
+
+        private void myAdDuplexBanner_AdLoaded(object sender, AdDuplex.Banners.Models.BannerAdLoadedEventArgs e)
+        {
+            // Add your code here as necessary.
+        }
+
+        private void myAdDuplexBanner_NoAd(object sender, AdDuplex.Common.Models.NoAdEventArgs e)
+        {
+            errorCountCurrentRefresh++;
+            ActivateMicrosoftBanner();
+        }
+
+        private void myAdDuplexBanner_AdLoadingError(object sender, AdDuplex.Common.Models.AdLoadingErrorEventArgs e)
+        {
+            errorCountCurrentRefresh++;
+            ActivateMicrosoftBanner();
+        }
+
+        private void myAdDuplexBanner_AdCovered(object sender, AdDuplex.Banners.Core.AdCoveredEventArgs e)
+        {
+            errorCountCurrentRefresh++;
+            ActivateMicrosoftBanner();
+        }
+
+        #endregion
     }
 }

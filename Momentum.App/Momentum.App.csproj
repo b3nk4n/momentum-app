@@ -17,8 +17,8 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Momentum.App_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>49BF4CDD0B37AD4DF1276AD4DA9E6AECD5F159F6</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>Momentum.App_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>62750845D7C3670E7187B1BA717F65C668C63166</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
@@ -181,9 +181,6 @@
     <AppxSystemBinary Include="Momentum.App.dll" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.AdMediator.Universal, Version=1.0">
-      <Name>Microsoft Advertising Universal SDK</Name>
-    </SDKReference>
     <SDKReference Include="Microsoft.Advertising.Xaml, Version=10.0">
       <Name>Microsoft Advertising SDK for XAML</Name>
     </SDKReference>

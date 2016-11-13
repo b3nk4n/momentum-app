@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uwpcControls="using:UWPCore.Framework.Controls"
     xmlns:uwpcConverters="using:UWPCore.Framework.Converters"
-    xmlns:ads="using:Microsoft.AdMediator.Universal"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -230,8 +229,6 @@
                                 Value="620" />
                         <Setter Target="FocusTextBox.Width"
                                 Value="420" />
-                        <Setter Target="AdMediator.Opacity"
-                                Value="0" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -268,10 +265,6 @@
                                 Value="15" />
                         <Setter Target="QuoteAuthor.FontSize"
                                 Value="12" />
-                        <!--<Setter Target="AdMediator.Width"
-                                Value="320" />
-                        <Setter Target="AdMediator.Height"
-                                Value="50" />-->
                     </VisualState.Setters>
                 </VisualState>
 
@@ -346,10 +339,9 @@
         <!-- progress overlay -->
         <Rectangle Grid.RowSpan="2" Fill="{StaticResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConv}}" Opacity="0.75" />
         <ProgressRing Grid.RowSpan="2" Width="64" Height="64" IsActive="{Binding IsLoading}" Foreground="{StaticResource SystemControlForegroundBaseHighBrush}" />
-
-        <!-- adverts -->
-        <ads:AdMediatorControl x:Name="AdMediator" HorizontalAlignment="Center" VerticalAlignment="Top" Width="728" Height="90"
-                            Id="AdMediator-Id-1CC7F765-A367-4245-9463-BE365F85648E" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}" />
         
+        <!-- adverts -->
+        <Grid x:Name="myAdGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="320" Height="50" Margin="0,100,0,0"
+              Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}"/>
     </Grid>
 </uwpcControls:UniversalPage>

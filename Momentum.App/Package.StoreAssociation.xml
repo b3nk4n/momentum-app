@@ -376,7 +376,6 @@
     <MainPackageIdentityName>20506BenjaminSautermeiste.Pintostart</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.pocketBRAIN</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.powernAPP</MainPackageIdentityName>
-    <MainPackageIdentityName>20506BenjaminSautermeiste.QRCloud</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.ScribbleHunter</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.seeMENSA</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.SpacepiXX</MainPackageIdentityName>
@@ -385,5 +384,5 @@
     <MainPackageIdentityName>20506BenjaminSautermeiste.VaderpiXX</MainPackageIdentityName>
     <MainPackageIdentityName>20506BenjaminSautermeiste.voiceTIMER</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH5XKW9" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH5XKW9" />
 </StoreAssociation>
