@@ -44,6 +44,11 @@
                             <uwpcViewModels:AboutViewModel.Contributors>
                                 <uwpcModels:ContributorModel Title="Erdem Uştuk" Icon="/Assets/Images/turkish.png" />
                             </uwpcViewModels:AboutViewModel.Contributors>
+                            <uwpcViewModels:AboutViewModel.ThirdParties>
+                                <uwpcModels:ThirdPartyModel Title="Ninject for Portable Class Libraries" Author="Oren Novotny"
+                                                            Icon="/Assets/Images/ninject-logo.png" License="Apache 2.0, MS-PL"
+                                                            Link="https://www.nuget.org/packages/Portable.Ninject/"/>
+                            </uwpcViewModels:AboutViewModel.ThirdParties>
                         </uwpcViewModels:AboutViewModel>
                     </uwpcControls:AboutControl.DataContext>
                 </uwpcControls:AboutControl>

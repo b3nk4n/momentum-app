@@ -131,6 +131,7 @@
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\Images\default.jpg" />
+    <Content Include="Assets\Images\ninject-logo.png" />
     <Content Include="Assets\Images\ok.png" />
     <Content Include="Assets\Images\turkish.png" />
     <Content Include="Assets\Square310x310Logo.scale-200.png" />
