@@ -130,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\IAP\WindowsStoreProxy.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\Images\default.jpg" />
     <Content Include="Assets\Images\ninject-logo.png" />
     <Content Include="Assets\Images\ok.png" />

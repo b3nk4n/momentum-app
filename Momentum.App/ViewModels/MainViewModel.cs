@@ -452,7 +452,7 @@ namespace Momentum.App.ViewModels
         DelegateCommand _purchaseProVersionCommand = default(DelegateCommand);
         private async void ExecutePurchaseProVersion()
         {
-            await _licenseService.RequestProductPurchaseAsync(PRO_VERSION);
+            var res = await _licenseService.RequestProductPurchaseAsync(PRO_VERSION);
             RaisePropertyChanged("IsAdVisible");
         }
         private bool CanExecutePurchaseProVersion()
@@ -463,7 +463,13 @@ namespace Momentum.App.ViewModels
         /// <summary>
         /// Gets whether the pro version is inactive and the adverts should be visible.
         /// </summary>
-        public bool IsAdVisible { get { return !_licenseService.IsProductActive(PRO_VERSION); } }
+        public bool IsAdVisible {
+            get
+            {
+                var isActive = _licenseService.IsProductActive(PRO_VERSION);
+                return !isActive;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the app background image.

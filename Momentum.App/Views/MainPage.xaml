@@ -12,7 +12,7 @@
     <Page.Resources>
         <uwpcConverters:StringFormatConverter x:Key="StringFormatConv" />
         <uwpcConverters:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
-        
+
         <Storyboard x:Name="ShowBackgroundImage">
             <DoubleAnimation Duration="0:0:0.66" To="0.75" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
@@ -103,7 +103,7 @@
                                                         <VisualStateGroup x:Name="CommonStates">
                                                             <VisualState x:Name="Normal" />
                                                             <VisualState x:Name="PointerOver" />
-                                                                <VisualState x:Name="Pressed">
+                                                            <VisualState x:Name="Pressed">
                                                                 <Storyboard>
                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="GlyphElement">
                                                                         <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltChromeWhiteBrush}"/>
@@ -186,7 +186,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -195,7 +195,7 @@
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarSettings" Label="Settings" Command="{Binding NavigateSettingsCommand}" />
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarLockscreen" Label="Set as lockscreen" Command="{Binding SetAsLockscreenCommand}" />
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarWallpaper" Label="Set as wallpaper" Command="{Binding SetAsWallpaperCommand}" />
-                <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarIAP" Label="Set as wallpaper" Command="{Binding PurchaseProVersionCommand}" />
+                <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarIAP" Label="Purchase Pro Version" Command="{Binding PurchaseProVersionCommand}" />
                 <AppBarButton x:Uid="/Momentum.Common/Resources/AppBarAbout" Label="About" Command="{Binding NavigateAboutCommand}" />
             </CommandBar.SecondaryCommands>
         </CommandBar>
@@ -219,7 +219,7 @@
                     <VisualState.Setters>
                     </VisualState.Setters>
                 </VisualState>
-                
+
                 <VisualState x:Name="SplitModeLandscapeNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="520" MinWindowHeight="0"   />
@@ -339,9 +339,9 @@
         <!-- progress overlay -->
         <Rectangle Grid.RowSpan="2" Fill="{StaticResource SystemControlBackgroundAltHighBrush}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConv}}" Opacity="0.75" />
         <ProgressRing Grid.RowSpan="2" Width="64" Height="64" IsActive="{Binding IsLoading}" Foreground="{StaticResource SystemControlForegroundBaseHighBrush}" />
-        
+
         <!-- adverts -->
-        <Grid x:Name="myAdGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="320" Height="50" Margin="0,100,0,0"
-              Visibility="{Binding IsAdVisible, Converter={StaticResource BoolToVisConv}}"/>
+        <Grid x:Name="myAdGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Width="320" Height="50"
+              Visibility="{x:Bind ViewModel.IsAdVisible, Mode=OneWay, Converter={StaticResource BoolToVisConv}}"/>
     </Grid>
 </uwpcControls:UniversalPage>

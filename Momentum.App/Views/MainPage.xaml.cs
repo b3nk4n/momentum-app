@@ -23,13 +23,17 @@ namespace Momentum.App.Views
         private IToastService _toastService;
         private IDeviceInfoService _deviceInfoService;
 
+        // for x:Bind, since classic binding was not working for somehow...
+        public MainViewModel ViewModel { get; private set; }
+
         public MainPage()
         {
             InitializeComponent();
 
             ConfigureAdverts();
 
-            DataContext = new MainViewModel(this);
+            ViewModel = new MainViewModel(this);
+            DataContext = ViewModel;
 
             _backgroundTaskService = Injector.Get<IBackgroundTaskService>();
             _toastService = Injector.Get<IToastService>();
@@ -151,7 +155,7 @@ namespace Momentum.App.Views
             // Return if you hit the error limit for this refresh interval.
             if (errorCountCurrentRefresh >= MAX_ERRORS_PER_REFRESH)
             {
-                myAdGrid.Visibility = Visibility.Collapsed;
+                //myAdGrid.Visibility = Visibility.Collapsed;
                 return;
             }
 
@@ -169,7 +173,7 @@ namespace Momentum.App.Views
             // Hide the AdDuplex control if it is showing.
             if (null != myAdDuplexBanner)
             {
-                myAdDuplexBanner.Visibility = Visibility.Collapsed;
+                //myAdDuplexBanner.Visibility = Visibility.Collapsed;
                 myAdGrid.Children.Remove(myAdDuplexBanner);
                 myAdDuplexBanner = null;
             }
@@ -202,7 +206,7 @@ namespace Momentum.App.Views
             // Return if you hit the error limit for this refresh interval.
             if (errorCountCurrentRefresh >= MAX_ERRORS_PER_REFRESH)
             {
-                myAdGrid.Visibility = Visibility.Collapsed;
+                //myAdGrid.Visibility = Visibility.Collapsed;
                 return;
             }
 
@@ -244,7 +248,7 @@ namespace Momentum.App.Views
             // Reset the error counter for this refresh interval and
             // make sure the ad grid is visible.
             errorCountCurrentRefresh = 0;
-            myAdGrid.Visibility = Visibility.Visible;
+            //myAdGrid.Visibility = Visibility.Visible;
 
             ActivateMicrosoftBanner();
         }

@@ -8,6 +8,7 @@ using Windows.ApplicationModel;
 using UWPCore.Framework.Devices;
 using UWPCore.Framework.IoC;
 using Momentum.Common.Modules;
+using UWPCore.Framework.Store;
 
 namespace Momentum.App
 {
@@ -16,9 +17,13 @@ namespace Momentum.App
     /// </summary>
     sealed partial class App : UniversalApp
     {
+        private ILicenseService _licenseService;
+
         public App() : base(typeof(MainPage), AppBackButtonBehaviour.KeepAlive, false, new DefaultModule(), new ReleaseModule())
         {
             InitializeComponent();
+
+            _licenseService = Injector.Get<ILicenseService>();
 
             ShowShellBackButton = true;
 
@@ -34,6 +39,10 @@ namespace Momentum.App
 
             var _statusBarService = Injector.Get<IStatusBarService>();
             await _statusBarService.HideAsync();
+
+#if DEBUG
+            await _licenseService.RefeshSimulator();
+#endif
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
